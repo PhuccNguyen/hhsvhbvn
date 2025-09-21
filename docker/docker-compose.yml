@@ -1,0 +1,14 @@
+services:
+  hhsvhbvn-website:
+    container_name: hhsvhbvn-website
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    ports:
+      - "3301:3000"   # local dùng 3301 để tránh va chạm
+    env_file:
+      - ../.env.local
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_SITE_URL=http://localhost:3301
+    restart: unless-stopped
