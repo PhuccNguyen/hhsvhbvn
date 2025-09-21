@@ -1,6 +1,6 @@
-@tailwind base;
-@tailwind components;
 @tailwind utilities;
+@import "tailwindcss/preflight"; /* thay cho @tailwind base */
+@tailwind utilities;             /* thay cho components + utilities */
 
 /* reset cứng để tránh margin mặc định */
 html, body, #__next {

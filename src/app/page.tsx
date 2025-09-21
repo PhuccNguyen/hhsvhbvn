@@ -11,10 +11,13 @@ const OG_IMAGE = `${SITE_URL}/images/og/hhsvhbvn-og.jpg`
 
 // ===== SEO Metadata =====
 export const metadata: Metadata = {
+  // Giúp Next.js chuẩn hóa URL tuyệt đối
+  metadataBase: new URL(SITE_URL),
   title: 'Hoa Hậu Sinh Viên Hòa Bình Việt Nam 2025',
   description:
     'Trang chính thức Hoa Hậu Sinh Viên Hòa Bình Việt Nam 2025. Đang mở tuyển sinh – gửi thông tin trong 30 giây để Check-in tham dự.',
-  alternates: { canonical: '/' },
+  // Canonical TUYỆT ĐỐI để tránh cảnh báo
+  alternates: { canonical: SITE_URL },
   keywords: [
     'hoa hậu sinh viên',
     'HHSV 2025',
@@ -43,37 +46,39 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <main className="relative min-h-screen">
-      {/* Hero phải đứng trước Sticky để SEO đọc đúng H1 */}
+      {/* Để Hero (có H1) trước, giúp crawler hiểu đúng nội dung chính */}
       <HeroSection />
       <HowItWorks />
       <FAQ />
 
-      {/* JSON-LD Schema */}
-      <Script id="ld-org" type="application/ld+json"
+      {/* JSON-LD cho riêng trang Home: WebPage + BreadcrumbList
+         (Organization / WebSite / Event đặt ở layout.tsx để tránh trùng lặp) */}
+      <Script
+        id="ld-webpage"
+        type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             '@context': 'https://schema.org',
-            '@type': 'Organization',
-            name: 'Hoa Hậu Sinh Viên Hòa Bình Việt Nam',
+            '@type': 'WebPage',
+            name: 'Hoa Hậu Sinh Viên Hòa Bình Việt Nam 2025',
             url: SITE_URL,
-            logo: `${SITE_URL}/images/logo/hhsv-logo.png`,
-            sameAs: ['https://www.facebook.com/...'] // thêm link thật
-          })
+            description:
+              'Trang chính thức Hoa Hậu Sinh Viên Hòa Bình Việt Nam 2025. Đang mở tuyển sinh – gửi thông tin trong 30 giây để Check-in tham dự.',
+            isPartOf: { '@type': 'WebSite', name: 'HHSV 2025', url: SITE_URL },
+          }).replace(/</g, '\\u003c'),
         }}
       />
-      <Script id="ld-website" type="application/ld+json"
+      <Script
+        id="ld-breadcrumb"
+        type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             '@context': 'https://schema.org',
-            '@type': 'WebSite',
-            name: 'HHSV Hòa Bình Việt Nam 2025',
-            url: SITE_URL,
-            potentialAction: {
-              '@type': 'SearchAction',
-              target: `${SITE_URL}/search?q={query}`,
-              'query-input': 'required name=query'
-            }
-          })
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              { '@type': 'ListItem', position: 1, name: 'Trang chủ', item: SITE_URL },
+            ],
+          }).replace(/</g, '\\u003c'),
         }}
       />
     </main>

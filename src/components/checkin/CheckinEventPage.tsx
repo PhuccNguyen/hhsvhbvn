@@ -159,7 +159,7 @@ const CheckinEventPage = ({ event }: CheckinEventPageProps) => {
               </Link>
               
               <a 
-                href="https://facebook.com/hhsvhbvn" 
+                href="https://facebook.com/tpaentertainment" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className={styles.followPage}

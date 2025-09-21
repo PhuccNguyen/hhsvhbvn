@@ -223,9 +223,9 @@ const Footer = () => {
                     whileHover={{ x: 6 }}
                     whileTap={{ scale: 0.98 }}
                   >
-                    <Link href={link.href} className={styles.footerLink}>
+                    <Link href={link.href}  className={styles.footerLink}>
                       <Icon size={16} />
-                      <span>{link.label}</span>
+                      <span>{link.label} </span>
                     </Link>
                   </motion.div>
                 )
