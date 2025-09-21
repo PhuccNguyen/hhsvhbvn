@@ -2,79 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  * {
-    @apply border-border;
-  }
-  
-  body {
-    @apply bg-slate-900 text-slate-100;
-    font-feature-settings: "rlig" 1, "calt" 1;
-  }
-
-  html {
-    scroll-behavior: smooth;
-  }
+/* reset cứng để tránh margin mặc định */
+html, body, #__next {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
 }
 
-@layer utilities {
-  .glass-effect {
-    @apply backdrop-blur-xl bg-white/5 border border-white/10;
-  }
-  
-  .glass-card {
-    @apply glass-effect rounded-2xl p-6 shadow-2xl;
-  }
-  
-  .gradient-text {
-    @apply bg-gradient-to-r from-primary-400 via-secondary-400 to-accent-400 bg-clip-text text-transparent;
-  }
-  
-  .floating-animation {
-    animation: float 6s ease-in-out infinite;
-  }
-  
-  .glow-effect {
-    @apply shadow-lg shadow-primary-500/25;
-  }
-  
-  .hero-gradient {
-    background: linear-gradient(135deg, 
-      rgba(15, 23, 42, 0.95) 0%,
-      rgba(30, 41, 59, 0.9) 25%,
-      rgba(51, 65, 85, 0.85) 50%,
-      rgba(71, 85, 105, 0.8) 75%,
-      rgba(100, 116, 139, 0.75) 100%);
-  }
+/* nền tổng + chặn tràn ngang gây viền */
+body {
+  background: #0a0f1c;
+  color: #fff;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  @apply bg-slate-800;
-}
-
-::-webkit-scrollbar-thumb {
-  @apply bg-gradient-to-b from-primary-500 to-secondary-500 rounded-full;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  @apply from-primary-400 to-secondary-400;
-}
-
-/* Mobile scroll fix */
-@media (max-width: 640px) {
-  body {
-    overflow-x: hidden;
-  }
-}
-
-/* Focus styles */
-button:focus-visible,
-input:focus-visible,
-textarea:focus-visible {
-  @apply outline-none ring-2 ring-primary-400 ring-offset-2 ring-offset-slate-900;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }

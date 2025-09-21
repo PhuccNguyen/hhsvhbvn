@@ -1,0 +1,876 @@
+
+
+/* Mobile Layout */
+.mobileLayout {
+  display: block;
+}
+
+
+
+.hero {
+  position: relative;
+  background: #F6FBFF;
+  padding-top: calc(env(safe-area-inset-top, 0px) + var(--mobile-header-h));
+}
+
+/* Mobile Section 1: Clean Banner */
+.mobileBannerSection {
+  position: relative;
+  width: 100%;
+  margin-top: 64px; /* = chiều cao header của bạn */
+  margin-bottom: 11px;
+}
+
+.mobileBannerImage {
+  display: block;    /* xóa khoảng trắng inline */
+  width: 100%;       /* full chiều ngang */
+  height: auto;      /* tự tính chiều cao theo tỉ lệ gốc */
+  object-fit: contain;  /* giữ full ảnh */
+  object-position: center;
+}
+
+/* Mobile Content Section */
+.mobileContentSection {
+  position: relative;
+  min-height: 60vh;
+  padding: 0;
+  background: linear-gradient(135deg, #F6FBFF 0%, #ECF5FF 50%, #CFEAFF 100%);
+}
+
+.mobileBlurredBg {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.mobileBlurredImage {
+  object-fit: cover;
+  object-position: center;
+  filter: blur(18px) saturate(110%) brightness(0.9);
+}
+
+.mobileContentOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(6, 12, 18, 0.75) 0%,
+    rgba(6, 12, 18, 0.35) 40%,
+    rgba(6, 12, 18, 0) 60%
+  );
+}
+
+.mobileContent {
+  position: relative;
+  z-index: 2;
+  padding: 1rem;
+  margin-top: -12px;
+}
+
+/* Frosted Card */
+.frostedCard {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 20px 18px;
+  background: rgba(8, 18, 28, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Desktop Layout */
+
+.desktopLayout {
+  display: none;
+}
+
+.desktopBackground {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.desktopBannerImage {
+  object-fit: cover;
+  object-position: center;
+}
+
+.desktopOverlay {
+  position: absolute;
+  inset: 0;
+  /* Từ BOTTOM → TOP, mờ dần đến 50% rồi trong suốt */
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.75) 0%,
+    rgba(0, 0, 0, 0.55) 15%,
+    rgba(0, 0, 0, 0.25) 30%,
+    rgba(0, 0, 0, 0.08) 45%,
+    rgba(0, 0, 0, 0) 50%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+.desktopContainer {
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;   /* 👉 thay vì flex-end */
+  justify-content: center; /* 👉 căn giữa ngang (nếu muốn) */
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+
+.desktopContent {
+  max-width: 100%;
+  padding-bottom: 4rem;
+    text-align: center;       /* căn giữa text */
+
+  
+}
+
+/* Header Section */
+.headerSection {
+  margin-bottom: 16px;
+  text-align: center;
+  text-align: center;   /* căn giữa ngang */
+  padding-bottom: 3rem;
+
+}
+
+.headline {
+  font-size: 1.5rem;
+    text-align: center;
+
+  font-weight: 600;
+  line-height: 1.25;
+  color: #F6FBFF;
+  margin: 0 0 8px 0;
+  letter-spacing: -0.02em;
+}
+
+.slogan {
+  font-size: 0.9rem;
+  font-weight: 500;
+    text-align: center;
+
+  color: rgba(246, 251, 255, 0.9);
+  margin: 0;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+}
+
+/* Highlights */
+.highlights {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.highlightChip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 36px;
+  padding: 8px 10px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 9999px;
+  backdrop-filter: blur(6px);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: rgba(246, 251, 255, 0.95);
+  text-align: center;
+}
+
+.highlightChip svg {
+  color: #8CCBFF;
+  flex-shrink: 0;
+}
+
+/* CTA Section */
+.ctaSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;   /* 👉 căn giữa ngang */
+  justify-content: center; /* 👉 căn giữa dọc (nếu cha đủ cao) */
+  gap: 8px;
+  margin: 20px auto;     /* 👉 căn giữa block */
+  text-align: center;    /* 👉 căn giữa text con */
+}
+
+.primaryCTA {
+  text-decoration: none;
+  border-radius: 12px;
+  overflow: hidden;
+  width: 100%;
+}
+
+.ctaButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 52px;
+  padding: 0 20px;
+  background: linear-gradient(135deg, #E7C873 0%, #F4D03F 100%);
+  color: #0B2743;
+  font-weight: 700;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 32px rgba(231, 200, 115, 0.3);
+}
+
+.ctaButton:hover {
+  background: linear-gradient(135deg, #F4D03F 0%, #E7C873 100%);
+  box-shadow: 0 12px 40px rgba(231, 200, 115, 0.4);
+}
+
+.ctaMicrocopy {
+  font-size: 0.75rem;
+  color: rgba(246, 251, 255, 0.75);
+  margin: 0;
+  font-weight: 500;
+}
+
+.eligibilityNote {
+  font-size: 0.7rem;
+  color: rgba(246, 251, 255, 0.65);
+  margin: 0;
+  line-height: 1.3;
+  font-weight: 400;
+  text-align: center;
+}
+
+.miniTimeline {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 16px 0;
+  padding: 0 8px;
+}
+
+.timelineItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.timelineItem::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: transparent;
+  transition: background 0.3s ease;
+}
+
+.timelineItem.active::before {
+  background: #E7C873;
+}
+
+.timelineItem:hover {
+  background: rgba(255, 255, 255, 0.12);
+  transform: translateY(-2px);
+}
+
+.timelineItem.active {
+  background: rgba(231, 200, 115, 0.15);
+  border-color: rgba(231, 200, 115, 0.3);
+}
+
+.timelineIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: rgba(140, 203, 255, 0.2);
+  border-radius: 50%;
+  color: #8CCBFF;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.timelineItem.active .timelineIcon {
+  background: rgba(231, 200, 115, 0.3);
+  color: #E7C873;
+  transform: scale(1.1);
+}
+
+.timelineContent {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.timelineLabel {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: rgba(246, 251, 255, 0.95);
+  line-height: 1.3;
+}
+
+.timelineStatus {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: rgba(246, 251, 255, 0.7);
+  line-height: 1.3;
+}
+
+.timelineDetails {
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: rgba(246, 251, 255, 0.6);
+  line-height: 1.3;
+}
+
+.timelineButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  color: rgba(246, 251, 255, 0.7);
+  transition: all 0.3s ease;
+}
+
+.timelineButton:hover {
+  background: rgba(231, 200, 115, 0.3);
+  color: #E7C873;
+}
+
+.timelineItem.active .timelineButton {
+  background: rgba(231, 200, 115, 0.2);
+  color: #E7C873;
+}
+
+.timelineLink {
+  text-decoration: none;
+  color: inherit;
+}
+/* Credits */
+.credits {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+}
+
+.creditItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.7rem;
+}
+
+.creditLabel {
+  color: rgba(246, 251, 255, 0.6);
+  font-weight: 400;
+}
+
+.creditName {
+  color: rgba(246, 251, 255, 0.8);
+  font-weight: 500;
+}
+
+.creditLogoTPA {
+  filter: brightness(0) invert(1);
+  opacity: 0.8;
+}
+
+.creditLogoTingNect {
+  /* Keep original colors for TingNect icon */
+  opacity: 1;
+}
+
+/* Tablet Styles */
+@media (min-width: 640px) {
+  .frostedCard {
+    padding: 24px;
+  }
+
+  .headline {
+    font-size: 1.7rem;
+  }
+
+  .slogan {
+    font-size: 1rem;
+  }
+
+  .highlights {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  .highlightChip {
+    height: 38px;
+    font-size: 0.8rem;
+    padding: 10px 12px;
+    gap: 8px;
+  }
+
+  .miniTimeline {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .timelineItem {
+    flex-direction: column;
+    text-align: center;
+    padding: 12px;
+    flex: 1;
+    max-width: 120px;
+  }
+
+  .timelineContent {
+    align-items: center;
+  }
+
+  .credits {
+    flex-direction: row;
+    gap: 24px;
+    justify-content: center;
+  }
+}
+
+/* Desktop Styles */
+@media (min-width: 1024px) {
+  .mobileLayout { display: none; }
+
+
+  .desktopLayout {
+    display: block;
+    position: relative;        /* ✅ Tạo containing block */
+    min-height: 100vh;         /* ✅ Có chiều cao để fill */
+  }
+  .desktopBackground {
+    position: absolute;        /* ok */
+    inset: 0;                  /* phủ toàn bộ .desktopLayout */
+    z-index: 0;                /* nằm dưới nội dung */
+  }
+    .desktopContainer {
+    position: relative;        /* ✅ nổi lên trên nền */
+    z-index: 1;
+    min-height: 100vh;         /* giữ layout đầy màn */
+    display: flex;
+  align-items: center;      /* giữa theo chiều dọc */
+  justify-content: center;  
+  align-items: center;      /* giữa theo chiều dọc */
+    align-items: flex-end;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+  .hero {
+    min-height: 100vh;
+  }
+
+.headerSection {
+  margin-bottom: -5px;
+  text-align: center;
+}
+
+.headline {
+  font-size: 3.5rem;
+  font-weight: 800;
+  line-height: 1.2;
+  background: linear-gradient(90deg, #E7C873, #F4D03F);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.slogan {
+  margin-top: 16px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.85);
+  text-transform: uppercase;
+}
+
+
+  .highlights {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 50px;
+  }
+
+  .highlightChip {
+    height: 40px;
+    font-size: 0.9rem;
+    padding: 12px 16px;
+    gap: 8px;
+    width: auto;
+  }
+
+  .ctaSection {
+    gap: 18px;
+    margin-bottom: 20px;
+    
+  }
+
+  .primaryCTA {
+    width: auto;
+    min-width: 280px;
+  }
+
+  .ctaButton {
+    height: 56px;
+    padding: 0 32px;
+    font-size: 1.1rem;
+    gap: 12px;
+  }
+
+  .ctaMicrocopy {
+    font-size: 0.8rem;
+  }
+
+  .eligibilityNote {
+    font-size: 0.75rem;
+    text-align: left;
+  }
+
+  .miniTimeline {
+    flex-direction: row;
+    gap: 0;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+  }
+
+  .timelineItem {
+    flex-direction: row;
+    padding: 12px 16px;
+    max-width: none;
+    background: transparent;
+    border: none;
+  }
+
+  .timelineIcon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .timelineText {
+    text-align: left;
+  }
+
+  .timelineLabel {
+    font-size: 0.85rem;
+  }
+
+  .timelineStatus {
+    font-size: 0.75rem;
+  }
+
+  .credits {
+    flex-direction: row;
+    gap: 32px;
+    justify-content: flex-start;
+    font-size: 0.8rem;
+  }
+
+  .creditItem {
+    gap: 8px;
+  }
+}
+
+/* Extra Large Desktop */
+@media (min-width: 1280px) {
+  .desktopContainer {
+    padding: 0 48px;
+  }
+
+  .headline {
+    font-size: 3.25rem;
+  }
+
+  .slogan {
+    font-size: 1.375rem;
+  }
+}
+
+/* Extra Small Mobile */
+@media (max-width: 380px) {
+  .headline {
+    font-size: 1.25rem;
+  }
+
+  .slogan {
+    font-size: 0.8rem;
+  }
+
+  .highlights {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .highlightChip {
+    height: 34px;
+    font-size: 0.7rem;
+    padding: 6px 8px;
+  }
+
+  .ctaMicrocopy {
+    font-size: 0.7rem;
+  }
+
+  .eligibilityNote {
+    font-size: 0.65rem;
+  }
+
+  .timelineLabel {
+    font-size: 0.75rem;
+  }
+
+  .timelineStatus {
+    font-size: 0.65rem;
+  }
+
+  .creditItem {
+    font-size: 0.65rem;
+  }
+}
+
+
+/* Tablet Styles */
+@media (min-width: 640px) {
+  .mobileContent {
+    padding: 0 2rem;
+  }
+
+  .headline {
+    font-size: 1.5rem;
+  }
+
+  .slogan {
+    font-size: 1rem;
+  }
+
+  .highlights {
+    gap: 0.75rem;
+  }
+
+  .highlightChip {
+    font-size: 0.85rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .miniTimeline {
+    flex-direction: row;
+    justify-content: space-around;
+  }
+
+  .timelineItem {
+    flex-direction: column;
+    text-align: center;
+    flex: 1;
+    max-width: 120px;
+  }
+
+  .timelineText {
+    align-items: center;
+    text-align: center;
+  }
+
+  .credits {
+    flex-direction: row;
+    gap: 2rem;
+    justify-content: center;
+  }
+}
+
+/* Desktop Styles */
+@media (min-width: 1024px) {
+  .mobileLayout {
+    display: none;
+  }
+
+  .desktopLayout {
+    display: block;
+  }
+
+  .hero {
+    min-height: 100vh;
+  }
+
+  .contentInner {
+    max-width: 700px;
+    gap: 2rem;
+  }
+
+  .headline {
+    font-size: 2.25rem;
+  }
+
+  .slogan {
+    font-size: 1.125rem;
+  }
+
+  .highlights {
+    gap: 1rem;
+  }
+
+  .highlightChip {
+    font-size: 0.9rem;
+    padding: 0.6rem 1.2rem;
+  }
+
+  .primaryCTA {
+    max-width: 320px;
+  }
+
+  .ctaButton {
+    padding: 1.2rem 2rem;
+    font-size: 1rem;
+  }
+
+  .ctaMicrocopy {
+    font-size: 0.8rem;
+  }
+
+  .eligibilityNote {
+    font-size: 0.75rem;
+  }
+
+  .miniTimeline {
+    flex-direction: row;
+    gap: 2rem;
+    justify-content: center;
+  }
+
+  .timelineItem {
+    flex-direction: row;
+    max-width: none;
+    padding: 0.75rem 1.5rem;
+  }
+
+  .timelineIcon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .timelineLabel {
+    font-size: 0.85rem;
+  }
+
+  .timelineStatus {
+    font-size: 0.8rem;
+  }
+
+  .credits {
+    font-size: 0.8rem;
+  }
+
+  .creditItem {
+    gap: 0.75rem;
+  }
+}
+
+/* Large Desktop */
+@media (min-width: 1280px) {
+  .desktopContainer {
+    padding: 0 3rem;
+  }
+
+  .contentInner {
+    max-width: 800px;
+  }
+
+  .headline {
+    font-size: 2.5rem;
+  }
+
+  .slogan {
+    font-size: 1.25rem;
+  }
+}
+
+/* Extra Small Mobile */
+@media (max-width: 380px) {
+  .headline {
+    font-size: 1.25rem;
+  }
+
+  .slogan {
+    font-size: 0.85rem;
+  }
+
+  .highlightChip {
+    font-size: 0.75rem;
+    padding: 0.35rem 0.6rem;
+  }
+
+  .ctaMicrocopy {
+    font-size: 0.7rem;
+  }
+
+  .eligibilityNote {
+    font-size: 0.65rem;
+  }
+
+  .timelineLabel {
+    font-size: 0.75rem;
+  }
+
+  .timelineStatus {
+    font-size: 0.7rem;
+  }
+}
+
+/* Performance */
+.hero,
+.ctaButton {
+  will-change: transform;
+}
+
+/* Accessibility */
+.primaryCTA:focus-visible {
+  outline: 2px solid #8CCBFF;
+  outline-offset: 3px;
+}
+
+/* High Contrast */
+@media (prefers-contrast: high) {
+  .highlightChip,
+  .timelineItem {
+    border-width: 2px;
+  }
+
+  .ctaButton {
+    border: 2px solid #0B2743;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .mobileContent,
+  .desktopContent,
+  .ctaButton {
+    transform: none !important;
+  }
+}
