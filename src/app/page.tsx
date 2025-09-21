@@ -1,103 +1,167 @@
-import Image from "next/image";
+import type { Metadata } from 'next'
+import { Inter } from 'next/font/google'
+import './globals.css';
+import Header from '@/components/layout/Header'
+// import Footer from '@/components/layout/Footer'
+import BackgroundEffects from '@/components/ui/BackgroundEffects'
+import Script from 'next/script'
 
-export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+const inter = Inter({ subsets: ['latin', 'vietnamese'] })
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://hhsvhbvn.tingnect.com'
+const OG_IMAGE = `${SITE_URL}/images/og/hhsvhbvn-og.jpg` // 1200x630 hoặc 1200x628
+
+export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: 'Hoa Hậu Sinh Viên Hòa Bình Việt Nam 2025',
+    template: '%s | HHSV Hòa Bình Việt Nam 2025',
+  },
+  description:
+    'Cuộc thi Hoa Hậu Sinh Viên Hòa Bình Việt Nam 2025 – sân chơi uy tín dành cho nữ sinh viên Việt Nam: Xinh đẹp – Trí tuệ – Bản lĩnh – Nhân ái.',
+  keywords: [
+    'hoa hậu sinh viên',
+    'hoa hậu sinh viên 2025',
+    'hoa hậu hòa bình việt nam',
+    'cuộc thi sắc đẹp sinh viên',
+    'HHSV 2025',
+    'check-in thí sinh',
+    'đăng ký dự thi',
+    'voting online',
+  ],
+  alternates: {
+    canonical: '/',
+    languages: { vi: '/', en: '/en' }, // nếu có bản EN sau này
+  },
+  openGraph: {
+    type: 'website',
+    url: SITE_URL,
+    siteName: 'Hoa Hậu Sinh Viên Hòa Bình Việt Nam',
+    title: 'Hoa Hậu Sinh Viên Hòa Bình Việt Nam 2025',
+    description: 'Xinh đẹp – Trí tuệ – Bản lĩnh – Nhân ái',
+    locale: 'vi_VN',
+    images: [
+      {
+        url: OG_IMAGE,
+        width: 1200,
+        height: 630,
+        alt: 'Hoa Hậu Sinh Viên Hòa Bình Việt Nam 2025',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Hoa Hậu Sinh Viên Hòa Bình Việt Nam 2025',
+    description:
+      'Cuộc thi HHSV 2025 – sân chơi uy tín của nữ sinh viên Việt Nam.',
+    images: [OG_IMAGE],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  themeColor: '#0B1220',
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 5,
+  },
+  icons: {
+    icon: [
+      { url: '/favicon.ico' },
+      { url: '/icons/icon-32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/icons/icon-192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/icons/icon-512.png', sizes: '512x512', type: 'image/png' },
+    ],
+    apple: [{ url: '/icons/apple-touch-icon.png', sizes: '180x180' }],
+  },
+  verification: {
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION, // thêm token nếu có
+  },
 }
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="vi" className="scroll-smooth">
+      <body className={`${inter.className} bg-slate-900 text-white antialiased`}>
+        {/* JSON-LD: Organization + WebSite + Event */}
+        <Script id="ld-org" type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Organization',
+              name: 'Hoa Hậu Sinh Viên Hòa Bình Việt Nam',
+              url: SITE_URL,
+              logo: `${SITE_URL}/images/logo/hhsv-logo.png`,
+              sameAs: [
+                'https://www.facebook.com/', // cập nhật link chính thức nếu có
+                'https://www.instagram.com/',
+              ],
+            }),
+          }}
+        />
+        <Script id="ld-website" type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'WebSite',
+              name: 'Hoa Hậu Sinh Viên Hòa Bình Việt Nam 2025',
+              url: SITE_URL,
+              potentialAction: {
+                '@type': 'SearchAction',
+                target: `${SITE_URL}/search?q={query}`,
+                'query-input': 'required name=query',
+              },
+            }),
+          }}
+        />
+        <Script id="ld-event" type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Event',
+              name: 'Hoa Hậu Sinh Viên Hòa Bình Việt Nam 2025',
+              startDate: '2025-10-01', // cập nhật mốc thật
+              endDate: '2026-01-31',   // cập nhật mốc thật
+              eventStatus: 'https://schema.org/EventScheduled',
+              eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+              location: {
+                '@type': 'Place',
+                name: 'Tiên Sơn Palace, Đà Nẵng',
+                address: 'Số …, Hải Châu, Đà Nẵng, Việt Nam',
+              },
+              image: [OG_IMAGE],
+              description:
+                'Sân chơi uy tín dành cho nữ sinh viên Việt Nam: Xinh đẹp – Trí tuệ – Bản lĩnh – Nhân ái.',
+              organizer: {
+                '@type': 'Organization',
+                name: 'Ban Tổ Chức HHSV 2025',
+                url: SITE_URL,
+              },
+              offers: {
+                '@type': 'Offer',
+                url: SITE_URL,
+                availability: 'https://schema.org/InStock',
+                price: '0',
+                priceCurrency: 'VND',
+              },
+            }),
+          }}
+        />
+
+        <BackgroundEffects />
+        <Header />
+        <main className="relative z-10">{children}</main>
+        {/* <Footer /> */}
+      </body>
+    </html>
+  )
+}
+           
