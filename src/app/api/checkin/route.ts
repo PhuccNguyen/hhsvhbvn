@@ -1,132 +1,337 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { googleSheetsService } from '@/lib/google-sheets';
-import { CheckinSubmission } from '@/lib/types';
-import { generateConfirmationCode, formatPhoneNumber, validateEmail, validatePhoneNumber } from '@/lib/utils';
+import { CheckinSubmission, CheckinResponse } from '@/lib/types';
+import { 
+  generateConfirmationCode, 
+  hashConfirmationCode,
+  formatPhoneNumber, 
+  validateEmail, 
+  validatePhoneNumber,
+  validateFullName,
+  logCheckinAttempt,
+  createRateLimiter
+} from '@/lib/utils';
+import { getEventStatusRealtime } from '@/data/events';
 
 const checkinSchema = z.object({
-  fullName: z.string().min(2, 'Họ tên phải có ít nhất 2 ký tự'),
+  fullName: z.string()
+    .min(2, 'Họ tên phải có ít nhất 2 ký tự')
+    .max(100, 'Họ tên không được quá 100 ký tự')
+    .refine(validateFullName, 'Họ tên chỉ được chứa chữ cái và khoảng trắng'),
   phone: z.string().refine(validatePhoneNumber, 'Số điện thoại không hợp lệ'),
   email: z.string().refine(validateEmail, 'Email không hợp lệ'),
   confirmed: z.boolean().refine(val => val === true, 'Bạn phải xác nhận tham dự'),
   round: z.enum(['hop-bao', 'so-khao', 'ban-ket', 'chung-ket']),
   region: z.enum(['HN', 'DN', 'HCM']).optional(),
-  contestantId: z.string().optional(),
+  contestantId: z.string().max(50, 'Mã thí sinh không được quá 50 ký tự').optional(),
 });
 
+// Rate limiter: 5 requests per minute per IP
+const rateLimiter = createRateLimiter(5, 60000);
+
+// Get client IP address
+function getClientIP(request: NextRequest): string {
+  const forwarded = request.headers.get('x-forwarded-for')
+  const realIP = request.headers.get('x-real-ip')
+  
+  if (forwarded) {
+    return forwarded.split(',')[0].trim()
+  }
+  
+  if (realIP) {
+    return realIP.trim()
+  }
+  
+  return 'unknown'
+}
+
 export async function POST(request: NextRequest) {
+  const startTime = Date.now()
+  const clientIP = getClientIP(request)
+  
   try {
-    const body = await request.json();
-    console.log('Received checkin request:', { round: body.round, email: body.email });
-    
-    // Validate input
-    const validationResult = checkinSchema.safeParse(body);
-    if (!validationResult.success) {
-      console.log('Validation failed:', validationResult.error.issues); // Thay errors bằng issues
+    // Rate limiting
+    const rateCheck = rateLimiter(clientIP)
+    if (!rateCheck.allowed) {
+      logCheckinAttempt({
+        email: 'rate-limited',
+        round: 'unknown',
+        success: false,
+        error: 'Rate limit exceeded',
+        clientIP,
+        action: 'rate_limit',
+        processingTime: Date.now() - startTime,
+        details: { retryAfter: rateCheck.retryAfter }
+      })
+      
       return NextResponse.json({
         success: false,
-        message: 'Dữ liệu không hợp lệ',
-        error: validationResult.error.issues[0]?.message, // Thay errors[0] bằng issues[0]
-      }, { status: 400 });
+        message: `Quá nhiều yêu cầu. Vui lòng thử lại sau ${rateCheck.retryAfter} giây.`,
+        retryAfter: rateCheck.retryAfter
+      }, { status: 429 })
     }
 
-    const data = validationResult.data;
+    const body = await request.json()
+    console.log(`[CHECKIN] Request from ${clientIP}:`, { round: body.round, email: body.email?.substring(0, 3) + '***' })
     
-    // Chuẩn hóa số điện thoại
-    const normalizedPhone = formatPhoneNumber(data.phone);
-    
-    // Kiểm tra trùng lặp (không block nếu có lỗi)
-    try {
-      const isDuplicate = await googleSheetsService.checkDuplicate(
-        data.email, 
-        normalizedPhone, 
-        data.round
-      );
+    // Validate input
+    const validationResult = checkinSchema.safeParse(body)
+    if (!validationResult.success) {
+      const firstError = validationResult.error.issues[0]
+      
+      logCheckinAttempt({
+        email: body.email || 'unknown',
+        round: body.round || 'unknown',
+        success: false,
+        error: `Validation failed: ${firstError?.message}`,
+        clientIP,
+        action: 'validation_failed',
+        processingTime: Date.now() - startTime,
+        details: { validationError: firstError }
+      })
+      
+      return NextResponse.json({
+        success: false,
+        message: firstError?.message || 'Dữ liệu không hợp lệ',
+        error: firstError?.message,
+      }, { status: 400 })
+    }
 
-      if (isDuplicate) {
+    const data = validationResult.data
+
+    // Check event status
+    const eventStatus = getEventStatusRealtime(data.round)
+    if (!eventStatus.canRegister) {
+      logCheckinAttempt({
+        email: data.email,
+        round: data.round,
+        success: false,
+        error: `Event not open for registration: ${eventStatus.message}`,
+        clientIP,
+        action: 'event_closed',
+        processingTime: Date.now() - startTime,
+        details: { eventStatus }
+      })
+      
+      return NextResponse.json({
+        success: false,
+        message: eventStatus.message || 'Sự kiện không mở đăng ký',
+      }, { status: 403 })
+    }
+    
+    // Normalize data
+    const normalizedPhone = formatPhoneNumber(data.phone)
+    const normalizedEmail = data.email.toLowerCase().trim()
+    
+    // Enhanced duplicate check with detailed feedback
+    try {
+      const duplicateResult = await googleSheetsService.checkDuplicate(
+        normalizedEmail, 
+        normalizedPhone, 
+        data.round,
+        data.contestantId
+      )
+
+      if (duplicateResult.isDuplicate) {
+        logCheckinAttempt({
+          email: normalizedEmail,
+          round: data.round,
+          success: false,
+          error: 'Duplicate entry',
+          duplicateFields: Object.keys(duplicateResult.details).filter(key => 
+            duplicateResult.details[key as keyof typeof duplicateResult.details] === true
+          ),
+          clientIP,
+          action: 'duplicate_detected',
+          processingTime: Date.now() - startTime,
+          details: { duplicateResult }
+        })
+
         return NextResponse.json({
           success: false,
-          message: 'Bạn đã check-in cho sự kiện này rồi. Vui lòng kiểm tra email hoặc liên hệ BTC.',
-        }, { status: 409 });
+          message: duplicateResult.details.message || 'Thông tin đã được sử dụng',
+          duplicateFields: duplicateResult.details,
+        }, { status: 409 })
       }
     } catch (duplicateError) {
-      console.log('Duplicate check failed, continuing with submission:', duplicateError);
+      console.warn(`[CHECKIN] Duplicate check failed for ${data.round}, continuing:`, duplicateError)
+      // Continue with submission if duplicate check fails
     }
 
-    // Tạo submission data
+    // Generate confirmation code and hash it
+    const confirmationCode = generateConfirmationCode(data.round)
+    const hashedCode = hashConfirmationCode(confirmationCode)
+
+    // Create submission data with confirmation code
     const submission: CheckinSubmission = {
       fullName: data.fullName.trim(),
       phone: normalizedPhone,
-      email: data.email.toLowerCase().trim(),
+      email: normalizedEmail,
       confirmed: data.confirmed,
       round: data.round,
       region: data.region,
       contestantId: data.contestantId?.trim(),
       timestamp: new Date().toISOString(),
-    };
+      confirmationCode, // Add confirmation code to sheet
+    }
 
-    console.log('Attempting to save to Google Sheets:', { round: data.round });
+    console.log(`[CHECKIN] Saving to Google Sheets: ${data.round} with code: ${confirmationCode}`)
 
-    // Lưu vào Google Sheets
-    const success = await googleSheetsService.appendToSheet(submission);
+    // Save to Google Sheets with retry mechanism
+    const success = await googleSheetsService.appendToSheet(submission)
 
     if (!success) {
-      console.error('Failed to save to Google Sheets');
+      logCheckinAttempt({
+        email: normalizedEmail,
+        round: data.round,
+        success: false,
+        error: 'Failed to save to Google Sheets',
+        clientIP,
+        action: 'save_failed',
+        processingTime: Date.now() - startTime
+      })
+      
       return NextResponse.json({
         success: false,
         message: 'Có lỗi xảy ra khi lưu dữ liệu. Vui lòng thử lại sau hoặc liên hệ BTC.',
-      }, { status: 500 });
+      }, { status: 500 })
     }
 
-    // Tạo mã xác nhận
-    const confirmationCode = generateConfirmationCode(data.round);
-
-    console.log('Checkin successful:', { round: data.round, confirmationCode });
-
-    return NextResponse.json({
+    // Save to localStorage for multi-device protection
+    const responseData: CheckinResponse = {
       success: true,
-      message: 'Đã ghi nhận check-in. Hẹn gặp bạn tại sự kiện!',
-      confirmationCode,
-    });
+      message: getSuccessMessage(data.round, data.region),
+      confirmationCode: hashedCode, // Send hashed version for security
+    }
+
+    logCheckinAttempt({
+      email: normalizedEmail,
+      round: data.round,
+      success: true,
+      clientIP,
+      action: 'checkin_success',
+      processingTime: Date.now() - startTime,
+      details: { confirmationCode: hashedCode }
+    })
+
+    const processingTime = Date.now() - startTime
+    console.log(`[CHECKIN] Success for ${data.round}: ${processingTime}ms`)
+
+    return NextResponse.json(responseData)
 
   } catch (error) {
-    console.error('Checkin API error:', error);
+    const processingTime = Date.now() - startTime
+    console.error(`[CHECKIN] Error after ${processingTime}ms:`, error)
     
-    // Chi tiết lỗi để debug
-    let errorMessage = 'Có lỗi xảy ra. Vui lòng thử lại sau.';
+    // Detailed error handling
+    let errorMessage = 'Có lỗi xảy ra. Vui lòng thử lại sau.'
+    let statusCode = 500
     
     if (error instanceof Error) {
-      if (error.message.includes('API has not been used')) {
-        errorMessage = 'Hệ thống đang được cập nhật. Vui lòng thử lại sau 5 phút.';
+      if (error.message.includes('Rate limit exceeded')) {
+        errorMessage = error.message
+        statusCode = 429
+      } else if (error.message.includes('API has not been used')) {
+        errorMessage = 'Hệ thống đang được cập nhật. Vui lòng thử lại sau 5 phút.'
       } else if (error.message.includes('permission')) {
-        errorMessage = 'Lỗi quyền truy cập. Vui lòng liên hệ BTC.';
+        errorMessage = 'Lỗi quyền truy cập. Vui lòng liên hệ BTC.'
       } else if (error.message.includes('not found')) {
-        errorMessage = 'Không tìm thấy dữ liệu. Vui lòng liên hệ BTC.';
+        errorMessage = 'Không tìm thấy dữ liệu. Vui lòng liên hệ BTC.'
+      } else if (error.message.includes('timeout')) {
+        errorMessage = 'Hệ thống đang bận. Vui lòng thử lại sau ít phút.'
       }
     }
+    
+    logCheckinAttempt({
+      email: 'unknown',
+      round: 'unknown',
+      success: false,
+      error: error instanceof Error ? error.message : 'Unknown error',
+      clientIP,
+      action: 'error',
+      processingTime: Date.now() - startTime,
+      details: { 
+        statusCode,
+        errorMessage,
+        errorType: error instanceof Error ? error.constructor.name : 'Unknown'
+      }
+    })
     
     return NextResponse.json({
       success: false,
       message: errorMessage,
-    }, { status: 500 });
+    }, { status: statusCode })
   }
 }
 
-// Health check endpoint với connection test
-export async function GET() {
+function getSuccessMessage(round: string, region?: string): string {
+  switch (round) {
+    case 'hop-bao':
+      return 'Đã ghi nhận check-in Họp báo. BTC sẽ liên hệ với bạn trong 24h tới!'
+    case 'so-khao':
+      const regionName = region === 'HN' ? 'Hà Nội' : region === 'DN' ? 'Đà Nẵng' : 'TP.HCM'
+      return `Đã ghi nhận check-in Sơ khảo khu vực ${regionName}. BTC sẽ thông báo lịch thi cụ thể!`
+    case 'ban-ket':
+      return 'Đã ghi nhận check-in Bán kết. BTC sẽ xác thực thông tin và hướng dẫn chi tiết!'
+    case 'chung-ket':
+      return 'Đã ghi nhận check-in Chung kết! Hẹn gặp bạn tại Cung Tiên Sơn – Đà Nẵng!'
+    default:
+      return 'Check-in thành công! Cảm ơn bạn đã tham gia HHSV Hòa Bình Việt Nam 2025!'
+  }
+}
+
+// Enhanced health check endpoint
+export async function GET(request: NextRequest) {
   try {
-    const connectionTest = await googleSheetsService.testConnection();
+    const clientIP = getClientIP(request)
+    const connectionTest = await googleSheetsService.testConnection()
+    
+    // Get basic stats for open events
+    type EventStats = { total: number; recent: number; error?: string };
+    const stats: Record<string, EventStats> = {}
+    const openEvents = ['hop-bao', 'so-khao', 'ban-ket', 'chung-ket']
+    
+    for (const round of openEvents) {
+      try {
+        const eventStats = await googleSheetsService.getSheetStats(round)
+        stats[round] = eventStats
+      } catch (e) {
+        stats[round] = { total: 0, recent: 0, error: 'Unable to fetch' }
+      }
+    }
     
     return NextResponse.json({ 
       status: 'OK', 
       timestamp: new Date().toISOString(),
+      clientIP,
       googleSheets: connectionTest,
-    });
+      eventStats: stats,
+      server: {
+        uptime: process.uptime(),
+        memory: process.memoryUsage(),
+        nodeVersion: process.version
+      }
+    })
   } catch (error) {
     return NextResponse.json({
       status: 'ERROR',
       timestamp: new Date().toISOString(),
       error: error instanceof Error ? error.message : 'Unknown error',
-    }, { status: 500 });
+    }, { status: 500 })
   }
 }
+
+// OPTIONS handler for CORS
+export async function OPTIONS() {
+  return new Response(null, {
+    status: 200,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    },
+  })
+}
+
+

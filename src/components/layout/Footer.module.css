@@ -10,6 +10,8 @@
   backdrop-filter: blur(20px);
   border-top: 2px solid rgba(231, 200, 115, 0.2);
   overflow: hidden;
+  z-index: 60;         /* đủ cao hơn mọi lớp nền */
+  isolation: isolate; 
 }
 
 .container {

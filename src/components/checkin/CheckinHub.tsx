@@ -15,7 +15,6 @@ import {
 } from 'lucide-react'
 import { events } from '@/data/events'
 import StatusPill from './StatusPill'
-import Timeline from './Timeline'
 import styles from './CheckinHub.module.css'
 
 const CheckinHub = () => {
@@ -88,7 +87,7 @@ const CheckinHub = () => {
             </motion.div>
             
             <h1 className={styles.heroTitle}>
-              Check-in HHSV 2025
+              Check In - HHSVHB Việt Nam 2025
             </h1>
             
             <p className={styles.heroSubtitle}>
