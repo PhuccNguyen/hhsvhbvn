@@ -3,7 +3,7 @@ import type { MetadataRoute } from 'next'
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'Hoa Hậu Sinh Viên Hòa Bình Việt Nam 2025',
+    name: 'Hoa Hậu Sinh Viên Hòa Bình Việt Nam 2025 ',
     short_name: 'HHSV 2025',
     description:
       'Trang chính thức Hoa Hậu Sinh Viên Hòa Bình Việt Nam 2025. Đang mở tuyển sinh – gửi thông tin trong 30 giây để Check-in tham dự.',
