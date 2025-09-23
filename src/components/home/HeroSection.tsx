@@ -137,7 +137,7 @@ const HeroSection = () => {
             <div className={styles.frostedCard}>
               {/* Headline & Slogan */}
 <motion.div 
-  className={styles.headerSection}
+  className={styles.headerSectionmobile}
   initial={{ opacity: 0, y: 20 }}
   animate={{ opacity: 1, y: 0 }}
   transition={{ duration: 0.6, delay: 0.4 }}

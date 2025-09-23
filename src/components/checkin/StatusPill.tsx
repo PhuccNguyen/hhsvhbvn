@@ -79,7 +79,7 @@ const StatusPill = ({
         }
       case 'upcoming':
         return {
-          text: 'Sắp mở đăng ký',
+          text: 'Sắp mở diễn ra có thể đăng ký',
           icon: Clock,
           className: styles.upcoming
         }

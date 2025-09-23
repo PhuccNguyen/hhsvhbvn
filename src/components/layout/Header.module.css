@@ -725,3 +725,73 @@
     justify-content: center; 
   }
 }
+
+
+/* iPhone 12/13/14 (390px) & tương đương: thu nhỏ nhẹ */
+@media (max-width: 400px) {
+  .logoImage { max-height: 34px; }
+  .mobileCheckinButton {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.85rem;
+    gap: 0.45rem;
+    max-width: 150px;
+  }
+}
+
+/* iPhone XR/11 (414px): giữ đủ chỗ cho menu bằng cách ẩn label khi hẹp */
+@media (max-width: 414px) {
+  .logoWrapper { gap: 8px; }
+  .mobileCheckinButton > span { display: none; } /* chỉ còn icon */
+  .mobileCheckinButton {
+    width: 40px;
+    padding: 0.5rem;
+    justify-content: center;
+    max-width: none;      /* khi icon-only thì không cần giới hạn */
+  }
+}
+
+
+/* ===== Compact tablet / foldable (768–920px) ===== */
+@media (min-width: 768px) and (max-width: 920px) {
+  /* 3 cột: Logo | Nav (scroll) | CTA */
+  .container {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 0.5rem;
+    padding-left: max(12px, env(safe-area-inset-left));
+    padding-right: max(12px, env(safe-area-inset-right));
+  }
+
+  .logoImage { max-height: 34px; }
+
+  /* Nav co gọn + kéo ngang, không wrap */
+  .desktopNav {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    gap: 0.5rem;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    /* fade 2 mép cho đẹp khi scroll */
+    mask-image: linear-gradient(to right,
+      transparent 0, black 24px, black calc(100% - 24px), transparent 100%);
+  }
+  .desktopNav::-webkit-scrollbar { display: none; }
+
+  .navItemWrapper { flex: 0 0 auto; }
+  .navLink { padding: 0.5rem 0.75rem; font-size: 0.85rem; gap: 0.4rem; }
+  /* tiết kiệm vài px: ẩn mũi tên dropdown */
+  .dropdown .navLink .lucide-chevron-down { display: none; }
+
+  /* CTA nhỏ lại chút để chừa chỗ */
+  .checkinButton { padding: 0.6rem 0.9rem; font-size: 0.85rem; }
+}
+
+/* ===== Rất hẹp trong dải tablet (768–830px): CTA icon-only ===== */
+@media (min-width: 768px) and (max-width: 830px) {
+  .checkinButton > span { display: none; }
+  .checkinButton { width: 44px; justify-content: center; gap: 0; }
+}

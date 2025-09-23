@@ -4,6 +4,7 @@ import { useRef, useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { 
   AlertCircle,
+  ArrowLeft,
   Check,
   CheckCircle,
   Clock,
@@ -19,9 +20,8 @@ import {
   Phone,
   RefreshCw,
   Shield,
-  User
+  User,
 } from 'lucide-react'
-import { Tooltip } from '@/components/ui/tooltip'
 import styles from './CheckinForm.module.css'
 import { 
   validateFullName, 
@@ -87,9 +87,11 @@ const CheckinForm = ({ event, onSuccess }: CheckinFormProps) => {
   const formRef = useRef<HTMLFormElement>(null)
   const firstFieldRef = useRef<HTMLInputElement>(null)
   const submitButtonRef = useRef<HTMLButtonElement>(null)
+  const [tipOpen, setTipOpen] = useState(false)
 
   // Initialize form with saved data and check event status
   useEffect(() => {
+    console.log('useEffect triggered with event:', event) // Debug
     // Load saved user data
     const savedData = getUserData()
     if (savedData) {
@@ -103,6 +105,7 @@ const CheckinForm = ({ event, onSuccess }: CheckinFormProps) => {
 
     // Check if already checked in
     const checkinStatus = getCheckinStatus(event.slug)
+    console.log('Checkin status:', checkinStatus) // Debug
     if (checkinStatus) {
       setState(prev => ({
         ...prev,
@@ -166,17 +169,13 @@ const CheckinForm = ({ event, onSuccess }: CheckinFormProps) => {
 
   // Handle input changes with real-time validation
   const handleInputChange = (field: keyof FormData, value: string | boolean) => {
-    // Update form data
     setFormData(prev => ({ ...prev, [field]: value }))
-
-    // Clear field-specific errors
     setState(prev => ({
       ...prev,
       fieldErrors: prev.fieldErrors.filter(error => error.field !== field),
       globalError: null
     }))
 
-    // Real-time validation for blur events
     if (typeof value === 'string' && value.trim()) {
       const fieldError = validateField(field, value)
       if (fieldError) {
@@ -195,13 +194,10 @@ const CheckinForm = ({ event, onSuccess }: CheckinFormProps) => {
   // Comprehensive form validation
   const validateForm = (): FormFieldError[] => {
     const errors: FormFieldError[] = []
-    
-    // Validate all fields
     Object.keys(formData).forEach(key => {
       const field = key as keyof FormData
       const value = formData[field]
       const error = validateField(field, value)
-      
       if (error) {
         errors.push({
           field,
@@ -210,7 +206,6 @@ const CheckinForm = ({ event, onSuccess }: CheckinFormProps) => {
         })
       }
     })
-
     return errors
   }
 
@@ -218,7 +213,6 @@ const CheckinForm = ({ event, onSuccess }: CheckinFormProps) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    // Validate form
     const validationErrors = validateForm()
     if (validationErrors.length > 0) {
       setState(prev => ({
@@ -226,8 +220,6 @@ const CheckinForm = ({ event, onSuccess }: CheckinFormProps) => {
         fieldErrors: validationErrors,
         globalError: 'Vui lòng kiểm tra và sửa các lỗi bên dưới'
       }))
-
-      // Focus first error field
       setTimeout(() => {
         const firstErrorField = document.querySelector(`[data-field="${validationErrors[0].field}"]`) as HTMLInputElement
         if (firstErrorField) {
@@ -238,7 +230,6 @@ const CheckinForm = ({ event, onSuccess }: CheckinFormProps) => {
       return
     }
 
-    // Check event status before submission
     if (!state.eventStatus?.canRegister) {
       setState(prev => ({
         ...prev,
@@ -247,7 +238,6 @@ const CheckinForm = ({ event, onSuccess }: CheckinFormProps) => {
       return
     }
 
-    // Start submission
     setState(prev => ({ ...prev, isSubmitting: true, globalError: null, fieldErrors: [] }))
 
     try {
@@ -264,43 +254,38 @@ const CheckinForm = ({ event, onSuccess }: CheckinFormProps) => {
       })
 
       const result: CheckinResponse = await response.json()
+      console.log('API response:', result) // Debug API response
 
       if (result.success) {
-        // Save user data for future use
         saveUserData({
           fullName: formData.fullName,
           email: formData.email,
           phone: formData.phone
         })
 
-        // Save checkin status
         if (result.confirmationCode) {
           saveCheckinStatus(event.slug, formData.email, result.confirmationCode)
         }
 
-        // Update state
         setState(prev => ({
           ...prev,
           isSuccess: true,
           confirmationCode: result.confirmationCode || null,
-          isSubmitting: false
+          isSubmitting: false,
+          hasCheckedIn: true,
+          fieldErrors: [],
+          globalError: null
         }))
 
-        // Callback
-        onSuccess?.(result)
-
-        // Smooth scroll to success
-        setTimeout(() => {
+        requestAnimationFrame(() => {
+          onSuccess?.(result)
           const successElement = document.querySelector(`.${styles.successCard}`)
           if (successElement) {
             successElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
           }
-        }, 200)
-
+        })
       } else {
-        // Handle API errors
         if (response.status === 409 && result.duplicateFields) {
-          // Handle duplicate field errors
           const duplicateErrors: FormFieldError[] = []
           Object.entries(result.duplicateFields).forEach(([field, isDuplicate]) => {
             if (isDuplicate && field !== 'message') {
@@ -333,7 +318,6 @@ const CheckinForm = ({ event, onSuccess }: CheckinFormProps) => {
             isSubmitting: false
           }))
         } else {
-          // General error
           setState(prev => ({
             ...prev,
             globalError: result.message || 'Có lỗi xảy ra, vui lòng thử lại',
@@ -342,6 +326,7 @@ const CheckinForm = ({ event, onSuccess }: CheckinFormProps) => {
         }
       }
     } catch (error) {
+      console.error('Submission error:', error)
       setState(prev => ({
         ...prev,
         globalError: 'Không thể kết nối đến server. Vui lòng kiểm tra kết nối internet.',
@@ -352,6 +337,8 @@ const CheckinForm = ({ event, onSuccess }: CheckinFormProps) => {
 
   // Handle retry
   const handleRetry = () => {
+    console.log('handleRetry called') // Debug
+    localStorage.removeItem(`checkin_${event.slug}`) // Clear check-in status
     setState(prev => ({
       ...prev,
       isSuccess: false,
@@ -360,6 +347,15 @@ const CheckinForm = ({ event, onSuccess }: CheckinFormProps) => {
       fieldErrors: [],
       confirmationCode: null
     }))
+    setFormData({
+      fullName: '',
+      phone: '',
+      email: '',
+      confirmed: false,
+      region: event.hasRegion ? '' : undefined,
+      contestantId: event.hasContestantId ? '' : undefined
+    })
+    onSuccess?.({ success: false, message: 'User requested retry' })
   }
 
   // Copy confirmation code
@@ -421,6 +417,8 @@ const CheckinForm = ({ event, onSuccess }: CheckinFormProps) => {
 
   // Success state
   if (state.isSuccess) {
+    const toggleTip = () => setTipOpen(v => !v)
+
     return (
       <motion.div
         className={styles.successCard}
@@ -459,6 +457,7 @@ const CheckinForm = ({ event, onSuccess }: CheckinFormProps) => {
           ))}
         </div>
 
+        {/* Success icon */}
         <motion.div 
           className={styles.successIcon}
           initial={{ scale: 0, rotate: -180 }}
@@ -468,6 +467,7 @@ const CheckinForm = ({ event, onSuccess }: CheckinFormProps) => {
           <CheckCircle size={56} />
         </motion.div>
         
+        {/* Title and message */}
         <motion.h3 
           className={styles.successTitle}
           initial={{ opacity: 0, y: 20 }}
@@ -489,6 +489,22 @@ const CheckinForm = ({ event, onSuccess }: CheckinFormProps) => {
           <strong>{formData.email}</strong> hoặc{' '}
           <strong>{formData.phone}</strong> trong vòng 24 giờ tới.
         </motion.p>
+
+        {/* Important note */}
+        <motion.div 
+          className={styles.importantNote}
+          initial={{ opacity: 0, scale: 0.98 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.6 }}
+        >
+          <AlertCircle size={16} />
+          <div className={styles.noteContent}>
+            <span className={styles.noteTitle}>Lưu ý quan trọng</span>
+            <p className={styles.noteText}>
+              Để đăng ký lại hoặc chỉnh sửa thông tin, vui lòng nhấn nút &ldquo;Đăng ký lại&rdquo; hoặc tải lại trang.
+            </p>
+          </div>
+        </motion.div>
 
         {/* Information summary */}
         <motion.div 
@@ -532,32 +548,51 @@ const CheckinForm = ({ event, onSuccess }: CheckinFormProps) => {
             <div className={styles.codeHeader}>
               <span className={styles.codeLabel}>
                 Mã tham chiếu
-                <Tooltip
-                  title="Dùng mã này để tra cứu & xác nhận với BTC"
-                  placement="top"
-                >
-                  <span className={styles.infoIcon}>
-                    <Info size={14} />
-                  </span>
-                </Tooltip>
+                <span className={styles.infoWrap}>
+                  <button
+                    type="button"
+                    className={styles.infoBtn}
+                    onClick={toggleTip}
+                    aria-expanded={tipOpen}
+                    aria-controls="tip-refcode"
+                  >
+                    <Info size={18} />
+                  </button>
+                  <AnimatePresence>
+                    {tipOpen && (
+                      <motion.span
+                        id="ref-code-tip"
+                        role="tooltip"
+                        initial={{ opacity: 0, y: 6, scale: 0.98 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: 6, scale: 0.98 }}
+                        transition={{ duration: 0.18, ease: 'easeOut' }}
+                        className={styles.tooltipBubble}
+                      >
+                        Dùng mã này để tra cứu &amp; xác nhận với BTC và đối chiếu khi check-in.
+                        <i className={styles.tooltipArrow} aria-hidden="true" />
+                      </motion.span>
+                    )}
+                  </AnimatePresence>
+                </span>
               </span>
               <motion.button
                 className={styles.copyButton}
                 onClick={handleCopyCode}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                aria-label="Sao chép mã"
-                title={state.isCodeCopied ? "Đã sao chép" : "Sao chép mã"}
+                aria-label="Copy"
+                title={state.isCodeCopied ? "Copy" : "Copied"}
               >
                 {state.isCodeCopied ? (
                   <>
                     <Check size={14} />
-                    <span className={styles.copyStatus}>Đã sao chép</span>
+                    <span className={styles.copyStatus}>Copied</span>
                   </>
                 ) : (
                   <>
                     <Copy size={14} />
-                    <span className={styles.copyStatus}>Sao chép</span>
+                    <span className={styles.copyStatus}>Copy</span>
                   </>
                 )}
               </motion.button>
@@ -572,7 +607,8 @@ const CheckinForm = ({ event, onSuccess }: CheckinFormProps) => {
             </div>
           </motion.div>
         )}
-        
+
+        {/* Action buttons */}
         <motion.div 
           className={styles.successActions}
           initial={{ opacity: 0, y: 20 }}
@@ -591,12 +627,22 @@ const CheckinForm = ({ event, onSuccess }: CheckinFormProps) => {
           
           <motion.button
             className={styles.secondaryButton}
-            onClick={() => window.open('https://tingvote.com', '_blank')}
+            onClick={() => window.open('/checkin', '_blank')}
             whileHover={{ scale: 1.02, y: -1 }}
             whileTap={{ scale: 0.98 }}
           >
             <ExternalLink size={18} />
             Xem sự kiện khác
+          </motion.button>
+          
+          <motion.button
+            className={styles.secondaryButton}
+            onClick={handleRetry}
+            whileHover={{ scale: 1.02, y: -1 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            <RefreshCw size={16} />
+            Đăng ký lại
           </motion.button>
         </motion.div>
 

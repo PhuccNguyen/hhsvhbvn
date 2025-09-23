@@ -159,9 +159,8 @@ export async function POST(request: NextRequest) {
       // Continue with submission if duplicate check fails
     }
 
-    // Generate confirmation code and hash it
+    // Generate confirmation code for both sheet and client
     const confirmationCode = generateConfirmationCode(data.round)
-    const hashedCode = hashConfirmationCode(confirmationCode)
 
     // Create submission data with confirmation code
     const submission: CheckinSubmission = {
@@ -202,7 +201,7 @@ export async function POST(request: NextRequest) {
     const responseData: CheckinResponse = {
       success: true,
       message: getSuccessMessage(data.round, data.region),
-      confirmationCode: hashedCode, // Send hashed version for security
+      confirmationCode: confirmationCode, // Send original code to client
     }
 
     logCheckinAttempt({
@@ -212,7 +211,7 @@ export async function POST(request: NextRequest) {
       clientIP,
       action: 'checkin_success',
       processingTime: Date.now() - startTime,
-      details: { confirmationCode: hashedCode }
+      details: { confirmationCode: confirmationCode } // Log original code
     })
 
     const processingTime = Date.now() - startTime

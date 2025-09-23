@@ -3,6 +3,8 @@ import type { Metadata } from 'next'
 import Script from 'next/script'
 
 import HeroSection from '@/components/home/HeroSection'
+import Purpose from '@/components/home/Purpose'
+import SlideImage from '@/components/home/SlideImage'
 import HowItWorks from '@/components/home/HowItWorks'
 import FAQ from '@/components/home/FAQ'
 
@@ -48,6 +50,8 @@ export default function HomePage() {
     <main className="relative min-h-screen">
       {/* Để Hero (có H1) trước, giúp crawler hiểu đúng nội dung chính */}
       <HeroSection />
+      <SlideImage />
+      <Purpose />
       <HowItWorks />
       <FAQ />
 

@@ -54,7 +54,7 @@ export const events: EventInfo[] = [
     date: '28/12/2025',
     endDate: '28/12/2025',
     registrationDeadline: '25/12/2025 23:59',
-    description: 'Số lượng có hạn — vui lòng xác nhận sớm.',
+    description: 'Số lượng có hạn - vui lòng xác nhận sớm.',
     bgImage: '/images/background/bg2.png',
     sheetName: 'ChungKet',
     maxCapacity: 300,

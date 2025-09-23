@@ -1,34 +1,32 @@
-/* Footer Styles - HHSV 2025 */
+/* Footer Styles - Mobile-First & Optimized */
 .footer {
   position: relative;
   background: linear-gradient(135deg,
     rgba(8, 26, 43, 0.98) 0%,
-    rgba(11, 36, 71, 0.95) 25%,
-    rgba(15, 23, 42, 0.98) 50%,
-    rgba(20, 61, 102, 0.95) 75%,
+    rgba(11, 36, 71, 0.95) 50%,
     rgba(8, 26, 43, 0.98) 100%);
   backdrop-filter: blur(20px);
   border-top: 2px solid rgba(231, 200, 115, 0.2);
   overflow: hidden;
-  z-index: 60;         /* đủ cao hơn mọi lớp nền */
-  isolation: isolate; 
+  z-index: 60;
+  isolation: isolate;
 }
 
 .container {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 4rem 1.5rem 2rem;
+  padding: clamp(2rem, 5vw, 4rem) clamp(0.75rem, 3vw, 1.5rem) clamp(1rem, 3vw, 2rem);
   position: relative;
   z-index: 2;
 }
 
-/* Brand Section */
+/* Brand Section - Mobile Optimized */
 .brandSection {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
-  margin-bottom: 4rem;
+  gap: clamp(1.25rem, 4vw, 2rem);
+  margin-bottom: clamp(2rem, 6vw, 3rem);
   text-align: center;
 }
 
@@ -36,21 +34,24 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.5rem;
+  gap: clamp(1rem, 3vw, 1.5rem);
 }
 
 .logoWrapper {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
-  padding: 1.5rem 2rem;
+  gap: clamp(0.75rem, 3vw, 1.25rem);
+  padding: clamp(0.75rem, 3vw, 1.25rem) clamp(1rem, 4vw, 1.75rem);
   background: linear-gradient(135deg,
     rgba(244, 247, 250, 0.08) 0%,
     rgba(244, 247, 250, 0.04) 100%);
   border: 1px solid rgba(231, 200, 115, 0.25);
-  border-radius: 1.5rem;
+  border-radius: clamp(1rem, 3vw, 1.5rem);
   backdrop-filter: blur(15px);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .tingnectLogo,
@@ -61,72 +62,82 @@
 .logoImage {
   object-fit: contain;
   filter: brightness(1.1);
+  max-width: 100%;
+  height: auto;
 }
 
 .logoCross {
-  font-size: 2rem;
+  font-size: clamp(1.25rem, 4vw, 1.75rem);
   font-weight: 300;
   color: rgba(231, 200, 115, 0.8);
-  margin: 0 0.5rem;
+  margin: 0 clamp(0.25rem, 1vw, 0.5rem);
 }
 
 .brandText {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: clamp(0.25rem, 1vw, 0.5rem);
 }
 
 .brandTitle {
-  font-size: 1.8rem;
-  font-weight: 700;
+  font-size: clamp(1.2rem, 4.5vw, 1.8rem);
+  font-weight: 800;
   background: linear-gradient(135deg, #E7C873, #F4D03F, #2AF4FF);
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
   line-height: 1.2;
   letter-spacing: -0.02em;
+  margin: 0;
 }
 
 .brandSubtitle {
-  font-size: 1.1rem;
+  font-size: clamp(0.8rem, 3vw, 1rem);
   color: rgba(244, 247, 250, 0.8);
   font-weight: 500;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.02em;
+  margin: 0;
 }
 
+/* CTA Group - Mobile Optimized */
 .ctaGroup {
   display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
-  justify-content: center;
+  gap: clamp(0.6rem, 2vw, 1rem);
+  width: 100%;
+  max-width: 100%;
+  flex-wrap: nowrap;
 }
 
 .cta {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 1rem 2rem;
+  justify-content: center;
+  gap: clamp(0.4rem, 2vw, 0.6rem);
+  padding: clamp(0.75rem, 3vw, 1rem) clamp(1rem, 4vw, 1.5rem);
   border-radius: 9999px;
   text-decoration: none;
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: clamp(0.8rem, 3.5vw, 0.95rem);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
   backdrop-filter: blur(10px);
   border: 2px solid transparent;
+  flex: 1 1 0;
+  min-width: 0;
+  white-space: nowrap;
 }
 
 .primaryCTA {
   background: linear-gradient(135deg, #E7C873, #F4D03F, #F39C12);
   color: #0B2447;
   border-color: rgba(231, 200, 115, 0.3);
-  box-shadow: 0 8px 25px rgba(231, 200, 115, 0.4);
+  box-shadow: 0 6px 20px rgba(231, 200, 115, 0.3);
 }
 
 .primaryCTA:hover {
   background: linear-gradient(135deg, #F4D03F, #F39C12, #E67E22);
-  box-shadow: 0 12px 35px rgba(231, 200, 115, 0.5);
+  box-shadow: 0 8px 25px rgba(231, 200, 115, 0.4);
   transform: translateY(-2px);
 }
 
@@ -136,14 +147,14 @@
     rgba(47, 244, 255, 0.05) 100%);
   color: #2AF4FF;
   border-color: rgba(47, 244, 255, 0.3);
-  box-shadow: 0 8px 25px rgba(47, 244, 255, 0.2);
+  box-shadow: 0 6px 20px rgba(47, 244, 255, 0.2);
 }
 
 .secondaryCTA:hover {
   background: linear-gradient(135deg,
     rgba(47, 244, 255, 0.2) 0%,
     rgba(47, 244, 255, 0.1) 100%);
-  box-shadow: 0 12px 35px rgba(47, 244, 255, 0.3);
+  box-shadow: 0 8px 25px rgba(47, 244, 255, 0.3);
   border-color: rgba(47, 244, 255, 0.5);
   transform: translateY(-2px);
 }
@@ -165,59 +176,64 @@
   left: 100%;
 }
 
-/* Content Grid */
+/* Content Grid - Mobile First */
 .contentGrid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 3rem;
+  gap: clamp(1.5rem, 4vw, 2.5rem);
+  margin-bottom: clamp(1.5rem, 4vw, 2rem);
 }
 
 .section {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: clamp(0.75rem, 2vw, 1.25rem);
 }
 
 .sectionTitle {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  font-size: 1.2rem;
+  gap: clamp(0.5rem, 2vw, 0.75rem);
+  font-size: clamp(0.95rem, 3.5vw, 1.1rem);
   font-weight: 700;
   color: #F4F7FA;
-  margin-bottom: 0.5rem;
-  padding-bottom: 0.75rem;
-  border-bottom: 2px solid rgba(231, 200, 115, 0.2);
+  margin: 0;
+  padding-bottom: clamp(0.5rem, 2vw, 0.75rem);
+  border-bottom: 1px solid rgba(231, 200, 115, 0.2);
 }
 
 /* Links Lists */
 .linksList,
-.legalList {
+.socialList,
+.contactList {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: clamp(0.5rem, 2vw, 0.75rem);
 }
 
 .footerLink,
-.legalLink {
+.socialItem,
+.contactItem {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.75rem 1rem;
+  gap: clamp(0.5rem, 2vw, 0.75rem);
+  padding: clamp(0.6rem, 2.5vw, 0.875rem) clamp(0.75rem, 3vw, 1rem);
   background: linear-gradient(135deg,
     rgba(244, 247, 250, 0.04) 0%,
     rgba(244, 247, 250, 0.02) 100%);
   border: 1px solid rgba(244, 247, 250, 0.08);
-  border-radius: 0.75rem;
+  border-radius: clamp(0.6rem, 2vw, 0.875rem);
   text-decoration: none;
   color: rgba(244, 247, 250, 0.8);
   font-weight: 500;
+  font-size: clamp(0.8rem, 3vw, 0.9rem);
   transition: all 0.3s ease;
   backdrop-filter: blur(10px);
 }
 
 .footerLink:hover,
-.legalLink:hover {
+.socialItem:hover,
+.contactItem:hover {
   background: linear-gradient(135deg,
     rgba(231, 200, 115, 0.1) 0%,
     rgba(231, 200, 115, 0.05) 100%);
@@ -226,23 +242,23 @@
   box-shadow: 0 4px 16px rgba(231, 200, 115, 0.1);
 }
 
-/* Timeline */
+/* Timeline - Compact for Mobile */
 .timeline {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: clamp(0.5rem, 2vw, 0.75rem);
 }
 
 .timelineItem {
   display: flex;
   align-items: flex-start;
-  gap: 1rem;
-  padding: 1rem;
+  gap: clamp(0.6rem, 2.5vw, 0.875rem);
+  padding: clamp(0.6rem, 2.5vw, 0.875rem);
   background: linear-gradient(135deg,
     rgba(244, 247, 250, 0.04) 0%,
     rgba(244, 247, 250, 0.02) 100%);
   border: 1px solid rgba(244, 247, 250, 0.08);
-  border-radius: 1rem;
+  border-radius: clamp(0.6rem, 2vw, 0.875rem);
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
@@ -253,8 +269,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  width: clamp(24px, 6vw, 28px);
+  height: clamp(24px, 6vw, 28px);
   border-radius: 50%;
   flex-shrink: 0;
   margin-top: 0.1rem;
@@ -263,37 +279,40 @@
 .timelineContent {
   display: flex;
   flex-direction: column;
-  gap: 0.2rem;
+  gap: clamp(0.1rem, 0.5vw, 0.2rem);
   flex: 1;
+  min-width: 0;
 }
 
 .timelineTitle {
-  font-weight: 600;
-  font-size: 0.9rem;
+  font-weight: 700;
+  font-size: clamp(0.75rem, 3vw, 0.85rem);
   color: #F4F7FA;
   line-height: 1.3;
 }
 
 .timelineDate {
-  font-size: 0.8rem;
+  font-size: clamp(0.7rem, 2.5vw, 0.75rem);
   color: rgba(244, 247, 250, 0.7);
   font-weight: 500;
+  line-height: 1.2;
 }
 
 .timelineLocation {
-  font-size: 0.75rem;
+  font-size: clamp(0.65rem, 2.5vw, 0.7rem);
   color: rgba(244, 247, 250, 0.6);
   font-style: italic;
+  line-height: 1.2;
 }
 
 .timelineGlow {
   position: absolute;
   inset: 0;
-  border-radius: 1rem;
+  border-radius: clamp(0.6rem, 2vw, 0.875rem);
   opacity: 0.6;
 }
 
-/* Timeline Colors */
+/* Timeline Colors - Simplified */
 .colorblue .timelineIcon {
   background: linear-gradient(135deg, #3B82F6, #1E40AF);
   color: white;
@@ -301,12 +320,6 @@
 
 .colorblue:hover {
   border-color: rgba(59, 130, 246, 0.3);
-}
-
-.colorblue .timelineGlow {
-  background: linear-gradient(135deg,
-    rgba(59, 130, 246, 0.1) 0%,
-    transparent 100%);
 }
 
 .colorpurple .timelineIcon {
@@ -318,27 +331,6 @@
   border-color: rgba(139, 92, 246, 0.3);
 }
 
-.colorpurple .timelineGlow {
-  background: linear-gradient(135deg,
-    rgba(139, 92, 246, 0.1) 0%,
-    transparent 100%);
-}
-
-.colorcyan .timelineIcon {
-  background: linear-gradient(135deg, #06B6D4, #0891B2);
-  color: white;
-}
-
-.colorcyan:hover {
-  border-color: rgba(6, 182, 212, 0.3);
-}
-
-.colorcyan .timelineGlow {
-  background: linear-gradient(135deg,
-    rgba(6, 182, 212, 0.1) 0%,
-    transparent 100%);
-}
-
 .colorgreen .timelineIcon {
   background: linear-gradient(135deg, #10B981, #059669);
   color: white;
@@ -346,27 +338,6 @@
 
 .colorgreen:hover {
   border-color: rgba(16, 185, 129, 0.3);
-}
-
-.colorgreen .timelineGlow {
-  background: linear-gradient(135deg,
-    rgba(16, 185, 129, 0.1) 0%,
-    transparent 100%);
-}
-
-.colororange .timelineIcon {
-  background: linear-gradient(135deg, #F59E0B, #D97706);
-  color: white;
-}
-
-.colororange:hover {
-  border-color: rgba(245, 158, 11, 0.3);
-}
-
-.colororange .timelineGlow {
-  background: linear-gradient(135deg,
-    rgba(245, 158, 11, 0.1) 0%,
-    transparent 100%);
 }
 
 .colorpink .timelineIcon {
@@ -378,14 +349,8 @@
   border-color: rgba(236, 72, 153, 0.3);
 }
 
-.colorpink .timelineGlow {
-  background: linear-gradient(135deg,
-    rgba(236, 72, 153, 0.1) 0%,
-    transparent 100%);
-}
-
 .colorgold .timelineIcon {
-  background: linear-gradient(135deg, #F59E0B, #EAB308, #CA8A04);
+  background: linear-gradient(135deg, #F59E0B, #EAB308);
   color: #0B2447;
 }
 
@@ -393,77 +358,48 @@
   border-color: rgba(245, 158, 11, 0.4);
 }
 
-.colorgold .timelineGlow {
-  background: linear-gradient(135deg,
-    rgba(245, 158, 11, 0.15) 0%,
-    transparent 100%);
-}
-
-/* Contact List */
-.contactList {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-.contactItem {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 1rem;
-  background: linear-gradient(135deg,
-    rgba(244, 247, 250, 0.04) 0%,
-    rgba(244, 247, 250, 0.02) 100%);
-  border: 1px solid rgba(244, 247, 250, 0.08);
-  border-radius: 1rem;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(10px);
-}
-
-.contactItem:hover {
-  background: linear-gradient(135deg,
-    rgba(231, 200, 115, 0.1) 0%,
-    rgba(231, 200, 115, 0.05) 100%);
-  border-color: rgba(231, 200, 115, 0.2);
-  box-shadow: 0 4px 16px rgba(231, 200, 115, 0.1);
-  transform: translateX(4px);
-}
-
+/* Social & Contact Content */
+.socialIcon,
 .contactIcon {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: clamp(28px, 7vw, 32px);
+  height: clamp(28px, 7vw, 32px);
   background: linear-gradient(135deg, #E7C873, #F4D03F);
   border-radius: 50%;
   color: #0B2447;
   flex-shrink: 0;
 }
 
+.socialContent,
 .contactContent {
   display: flex;
   flex-direction: column;
-  gap: 0.2rem;
+  gap: clamp(0.1rem, 0.5vw, 0.2rem);
   flex: 1;
+  min-width: 0;
 }
 
+.socialLabel,
 .contactLabel {
-  font-size: 0.8rem;
+  font-size: clamp(0.65rem, 2.5vw, 0.75rem);
   color: rgba(244, 247, 250, 0.6);
   font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.02em;
 }
 
+.socialValue,
 .contactValue {
-  font-size: 0.9rem;
+  font-size: clamp(0.75rem, 3vw, 0.85rem);
   color: rgba(244, 247, 250, 0.9);
   font-weight: 600;
   line-height: 1.3;
+  word-break: break-word;
 }
 
+.socialItem:hover .socialValue,
 .contactItem:hover .contactValue {
   color: #F4F7FA;
 }
@@ -471,10 +407,52 @@
 .externalIcon {
   color: rgba(244, 247, 250, 0.5);
   transition: all 0.3s ease;
+  flex-shrink: 0;
 }
 
+.socialItem:hover .externalIcon,
 .contactItem:hover .externalIcon {
   color: rgba(231, 200, 115, 0.8);
+}
+
+/* Legal Section - Mobile Compact */
+.legalSection {
+  margin-top: clamp(1rem, 3vw, 1.5rem);
+  padding-top: clamp(1rem, 3vw, 1.5rem);
+  border-top: 1px solid rgba(244, 247, 250, 0.1);
+}
+
+.legalList {
+  display: flex;
+  gap: clamp(0.5rem, 2vw, 0.75rem);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.legalLink {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.4rem, 1.5vw, 0.5rem);
+  padding: clamp(0.5rem, 2vw, 0.75rem) clamp(0.75rem, 3vw, 1rem);
+  background: linear-gradient(135deg,
+    rgba(244, 247, 250, 0.04) 0%,
+    rgba(244, 247, 250, 0.02) 100%);
+  border: 1px solid rgba(244, 247, 250, 0.08);
+  border-radius: clamp(0.5rem, 2vw, 0.75rem);
+  text-decoration: none;
+  color: rgba(244, 247, 250, 0.8);
+  font-weight: 500;
+  font-size: clamp(0.7rem, 2.5vw, 0.8rem);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.legalLink:hover {
+  background: linear-gradient(135deg,
+    rgba(231, 200, 115, 0.1) 0%,
+    rgba(231, 200, 115, 0.05) 100%);
+  border-color: rgba(231, 200, 115, 0.2);
+  color: #F4F7FA;
 }
 
 /* Bottom Bar */
@@ -483,7 +461,7 @@
   background: linear-gradient(135deg,
     rgba(8, 26, 43, 0.9) 0%,
     rgba(15, 23, 42, 0.85) 100%);
-  padding: 2rem 0;
+  padding: clamp(1.25rem, 4vw, 2rem) 0;
   backdrop-filter: blur(10px);
 }
 
@@ -491,26 +469,34 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: clamp(0.75rem, 3vw, 1rem);
   flex-wrap: wrap;
-  gap: 1rem;
 }
 
 .copyright {
   flex: 1;
+  min-width: 0;
 }
 
 .copyright p {
-  font-size: 0.9rem;
+  font-size: clamp(0.75rem, 3vw, 0.85rem);
   color: rgba(244, 247, 250, 0.7);
   font-weight: 500;
-  margin: 0;
+  margin: 0 0 clamp(0.2rem, 1vw, 0.25rem) 0;
+  line-height: 1.3;
+}
+
+.copyright span {
+  font-size: clamp(0.65rem, 2.5vw, 0.75rem);
+  color: rgba(244, 247, 250, 0.6);
+  font-weight: 400;
 }
 
 .backToTop {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1.5rem;
+  gap: clamp(0.4rem, 1.5vw, 0.5rem);
+  padding: clamp(0.6rem, 2.5vw, 0.75rem) clamp(1rem, 3vw, 1.25rem);
   background: linear-gradient(135deg,
     rgba(231, 200, 115, 0.1) 0%,
     rgba(231, 200, 115, 0.05) 100%);
@@ -518,10 +504,11 @@
   border-radius: 9999px;
   color: rgba(231, 200, 115, 0.9);
   font-weight: 600;
-  font-size: 0.85rem;
+  font-size: clamp(0.7rem, 3vw, 0.8rem);
   cursor: pointer;
   transition: all 0.3s ease;
   backdrop-filter: blur(10px);
+  white-space: nowrap;
 }
 
 .backToTop:hover {
@@ -530,7 +517,7 @@
   box-shadow: 0 4px 16px rgba(231, 200, 115, 0.3);
 }
 
-/* Decorative Elements */
+/* Decorative Elements - Simplified */
 .decorativeElements {
   position: absolute;
   top: 0;
@@ -545,13 +532,13 @@
   position: absolute;
   top: 10%;
   right: 15%;
-  width: 300px;
-  height: 300px;
+  width: clamp(150px, 30vw, 250px);
+  height: clamp(150px, 30vw, 250px);
   background: radial-gradient(circle,
-    rgba(231, 200, 115, 0.1) 0%,
+    rgba(231, 200, 115, 0.08) 0%,
     transparent 70%);
   border-radius: 50%;
-  filter: blur(60px);
+  filter: blur(40px);
   animation: float 8s ease-in-out infinite;
 }
 
@@ -559,28 +546,14 @@
   position: absolute;
   bottom: 20%;
   left: 10%;
-  width: 250px;
-  height: 250px;
+  width: clamp(120px, 25vw, 200px);
+  height: clamp(120px, 25vw, 200px);
   background: radial-gradient(circle,
-    rgba(47, 244, 255, 0.08) 0%,
+    rgba(47, 244, 255, 0.06) 0%,
     transparent 70%);
   border-radius: 50%;
-  filter: blur(50px);
+  filter: blur(35px);
   animation: float 10s ease-in-out infinite reverse;
-}
-
-.gradientOrb3 {
-  position: absolute;
-  top: 60%;
-  left: 60%;
-  width: 200px;
-  height: 200px;
-  background: radial-gradient(circle,
-    rgba(139, 92, 246, 0.06) 0%,
-    transparent 70%);
-  border-radius: 50%;
-  filter: blur(40px);
-  animation: float 6s ease-in-out infinite;
 }
 
 /* Animations */
@@ -589,18 +562,75 @@
     transform: translateY(0px) translateX(0px);
   }
   33% {
-    transform: translateY(-20px) translateX(10px);
+    transform: translateY(-15px) translateX(8px);
   }
   66% {
-    transform: translateY(10px) translateX(-15px);
+    transform: translateY(8px) translateX(-12px);
   }
 }
 
 /* Responsive Design */
-@media (min-width: 768px) {
+
+/* Small Mobile (≤375px) */
+@media (max-width: 375px) {
+  .container {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
+  .logoWrapper {
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .ctaGroup {
+    gap: 0.5rem;
+  }
+
+  .cta {
+    padding: 0.7rem 0.9rem;
+  }
+
+  .contentGrid {
+    gap: 1.25rem;
+  }
+
+  .legalList {
+    gap: 0.4rem;
+  }
+
+  .bottomContent {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+}
+
+/* Tablet Portrait (481px - 768px) */
+@media (min-width: 481px) and (max-width: 768px) {
   .contentGrid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 3rem;
+    gap: 2rem;
+  }
+
+  .brandSection {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+  }
+
+  .ctaGroup {
+    flex-direction: column;
+    width: auto;
+  }
+}
+
+/* Desktop (≥769px) */
+@media (min-width: 769px) {
+  .contentGrid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2.5rem;
   }
 
   .brandSection {
@@ -612,7 +642,19 @@
 
   .ctaGroup {
     flex-direction: column;
-    align-items: flex-start;
+    width: auto;
+  }
+
+  .container {
+    padding: 4rem 2rem 2rem;
+  }
+
+  .legalSection {
+    grid-column: 1 / -1;
+  }
+
+  .legalList {
+    justify-content: flex-start;
   }
 
   .bottomContent {
@@ -620,65 +662,11 @@
   }
 }
 
-@media (min-width: 1024px) {
-  .contentGrid {
-    grid-template-columns: repeat(4, 1fr);
-  }
-
-  .container {
-    padding: 5rem 2rem 2rem;
-  }
-
-  .brandTitle {
-    font-size: 2.2rem;
-  }
-
-  .brandSubtitle {
-    font-size: 1.2rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .container {
-    padding: 3rem 1rem 1.5rem;
-  }
-
-  .logoWrapper {
-    padding: 1rem 1.5rem;
-    gap: 1rem;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .brandTitle {
-    font-size: 1.4rem;
-  }
-
-  .brandSubtitle {
-    font-size: 0.95rem;
-  }
-
-  .ctaGroup {
-    width: 100%;
-  }
-
-  .cta {
-    flex: 1;
-    justify-content: center;
-    min-width: 0;
-  }
-
-  .bottomContent {
-    flex-direction: column;
-    text-align: center;
-    gap: 1.5rem;
-  }
-}
-
 /* Performance & Accessibility */
 .footer *,
 .cta,
 .footerLink,
+.socialItem,
 .contactItem,
 .timelineItem {
   will-change: transform;
@@ -687,6 +675,7 @@
 @media (prefers-reduced-motion: reduce) {
   .cta,
   .footerLink,
+  .socialItem,
   .contactItem,
   .timelineItem,
   .backToTop {
@@ -694,8 +683,7 @@
   }
   
   .gradientOrb1,
-  .gradientOrb2,
-  .gradientOrb3 {
+  .gradientOrb2 {
     animation: none;
   }
 }
@@ -703,65 +691,50 @@
 /* Focus States */
 .cta:focus-visible,
 .footerLink:focus-visible,
+.socialItem:focus-visible,
 .contactItem:focus-visible,
+.legalLink:focus-visible,
 .backToTop:focus-visible {
-  outline: 2px solid #2AF4FF;
+  outline: 2px solid #E7C873;
   outline-offset: 2px;
 }
 
-/* Galaxy Fold & siêu hẹp: fix viền, nút bị tràn và xuống dòng */
-@media (max-width: 380px) {
-  /* 1) Container nới đều 2 bên, đảm bảo tính theo border-box */
+/* Ultra-narrow screens (≤340px) */
+@media (max-width: 340px) {
   .container {
-    padding-left: 0.75rem;
-    padding-right: 0.75rem;
-    box-sizing: border-box;
-    width: 100%;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
   }
 
-  /* 2) Logo block không vượt khung */
-  .logoWrapper {
-    padding: 0.75rem 1rem;
-    gap: 0.75rem;
-    width: 100%;
-    max-width: 100%;
-    box-sizing: border-box;
-    overflow: hidden;
-  }
-  .logoImage { max-width: 100%; height: auto; }
-
-  /* 3) CTA luôn nằm 1 hàng, không tràn khung */
-  .ctaGroup {
-    width: 100%;
-    gap: 0.6rem;
-    flex-wrap: nowrap;         /* giữ 1 hàng */
-  }
   .cta {
-    flex: 1 1 0;               /* chia đều 2 nút */
-    min-width: 0;              /* cho phép co lại */
-    padding: 0.75rem 1rem;     /* bớt padding ngang để khỏi tràn */
-    border-width: 1px;         /* viền mảnh hơn để vừa khung */
+    padding-left: 0.6rem;
+    padding-right: 0.6rem;
   }
-  .cta span { white-space: nowrap; }  /* “Check-In” không bị xuống dòng */
 
-  /* 4) Toàn bộ item trong các list phải fit 100% khung, không vượt viền */
-  .linksList > *,
-  .legalList > *,
-  .contactList > *,
-  .timelineItem {
+  .logoWrapper {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .logoCross {
+    order: 3;
     width: 100%;
-    box-sizing: border-box;
-  }
-
-  /* 5) Bóng đổ lớn thường bị cắt — cho phép dôi theo trục X nhưng vẫn chặn scroll ngang */
-  .footer {
-    overflow-x: hidden;  /* tránh scroll ngang */
-    overflow-y: visible; /* vẫn hiện bóng đổ */
+    text-align: center;
+    margin: 0.25rem 0;
   }
 }
 
-/* Nếu máy còn hẹp hơn (≤340px) mà vẫn thấy sít, giảm thêm chút */
-@media (max-width: 340px) {
-  .container { padding-left: 0.5rem; padding-right: 0.5rem; }
-  .cta      { padding-left: 0.75rem; padding-right: 0.75rem; }
+/* Prevent horizontal overflow */
+.footer {
+  overflow-x: hidden;
+  overflow-y: visible;
+}
+
+.footer *,
+.container,
+.logoWrapper,
+.ctaGroup,
+.cta {
+  max-width: 100%;
+  box-sizing: border-box;
 }

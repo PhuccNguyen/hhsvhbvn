@@ -136,17 +136,24 @@
 
 /* Header Section */
 .headerSection {
-  margin-bottom: 16px;
+  margin-bottom: 0px;
   text-align: center;
   text-align: center;   /* căn giữa ngang */
   padding-bottom: 3rem;
 
 }
 
+.headerSectionmobile {
+  margin-bottom: 0px;
+  text-align: center;
+  text-align: center;   /* căn giữa ngang */
+  padding-bottom: 1rem;
+
+}
+
 .headline {
   font-size: 1.5rem;
-    text-align: center;
-
+  text-align: center;
   font-weight: 600;
   line-height: 1.25;
   color: #F6FBFF;
@@ -164,6 +171,8 @@
   line-height: 1.4;
   letter-spacing: 0.02em;
 }
+
+
 
 /* Highlights */
 .highlights {
@@ -469,6 +478,7 @@
     position: absolute;        /* ok */
     inset: 0;                  /* phủ toàn bộ .desktopLayout */
     z-index: 0;                /* nằm dưới nội dung */
+    margin-top: 1rem;
   }
     .desktopContainer {
     position: relative;        /* ✅ nổi lên trên nền */

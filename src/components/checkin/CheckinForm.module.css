@@ -25,22 +25,84 @@
   margin-bottom: 1rem;
 }
 
-.codeLabel {
-  font-weight: 500;
-  color: #94a3b8;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+/* Hàng label luôn nằm 1 dòng, không “đổ cột” */
+.codeLabel{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  font-weight:600;
+  color:#cbd5e1;
+  line-height:1;
+  white-space:nowrap;           /* giữ label + icon trên 1 hàng */
+}
+.labelText{ display:inline }
+
+/* Bọc icon */
+.infoWrap{
+  position:relative;
+  display:inline-flex;
+  align-items:center;
 }
 
-.infoIcon {
-  color: #64748b;
-  cursor: help;
-  transition: color 0.2s ease;
+/* Nút icon */
+.infoBtn{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:22px;height:22px;margin-left:4px;border-radius:9999px;
+  background:transparent;border:1px solid rgba(148,163,184,.25);
+  color:#a3b2c7;cursor:pointer;transition:all .2s ease;
+}
+.infoBtn:hover{
+  color:#e2e8f0;border-color:rgba(148,163,184,.45);
+  box-shadow:0 0 0 3px rgba(45,212,191,.12);
 }
 
-.infoIcon:hover {
-  color: #94a3b8;
+/* Tooltip: bố cục rõ ràng, không bị “cột” */
+.tooltipBubble{
+  position:absolute;top:calc(100% + 10px);left:50%;
+  transform:translateX(-50%);
+  z-index:20;
+  min-width:240px;              /* chống quá hẹp */
+  max-width:320px;
+  padding:12px 14px;border-radius:12px;
+  color:#e6f6ff;background:rgba(9,16,28,.92);
+  border:1px solid rgba(148,163,184,.18);
+  box-shadow:0 12px 30px rgba(2,8,23,.45), inset 0 1px 0 rgba(255,255,255,.04);
+  text-wrap:pretty;             /* cân dòng đẹp hơn */
+}
+.tooltipBubble > * + *{ margin-top:6px }   /* spacing dọc giữa các dòng */
+
+/* Tiêu đề / mô tả / hint */
+.tooltipTitle{
+  font-weight:700;
+  font-size:13px;
+  color:#c7f9ff;
+  letter-spacing:.2px;
+}
+.tooltipDesc{
+  font-size:12.5px;
+  line-height:1.5;
+  color:#d8ebff;
+  margin:0;
+}
+.tooltipHint{
+  font-size:12px;
+  color:#b7d7ff;
+  opacity:.9;
+}
+
+/* Mũi tên */
+.tooltipArrow{
+  position:absolute;top:-6px;left:50%;transform:translateX(-50%) rotate(45deg);
+  width:10px;height:10px;background:rgba(9,16,28,.92);
+  border-left:1px solid rgba(148,163,184,.18);
+  border-top:1px solid rgba(148,163,184,.18);
+  content:"";
+}
+
+/* Responsive: màn rất hẹp vẫn dễ đọc */
+@media (max-width:380px){
+  .tooltipBubble{ min-width:220px; max-width:260px; font-size:12px }
+  .tooltipTitle{ font-size:12.5px }
 }
 
 .copyButton {
@@ -277,6 +339,8 @@
 .fieldInput:focus,
 .fieldSelect:focus {
   outline: none;
+  color: #1e293b;
+
   border-color: #E7C873;
   background: rgba(255, 255, 255, 1);
   box-shadow: 
