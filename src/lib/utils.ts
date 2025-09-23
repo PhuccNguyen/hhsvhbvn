@@ -226,8 +226,8 @@ export function validateFullName(name: string): boolean {
   const words = normalizedName.split(/\s+/);
   if (words.length < 2) return false;
   
-  // Each word should be at least 2 characters
-  if (words.some(word => word.length < 2)) return false;
+  // Each word should be at least 1 character
+  if (words.some(word => word.length < 1)) return false;
   
   // Check for valid characters
   return vietnameseNameRegex.test(normalizedName);
