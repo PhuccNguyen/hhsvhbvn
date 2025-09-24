@@ -266,7 +266,7 @@ const HeroSection = () => {
                 <div className={styles.creditItem}>
                   <span className={styles.creditLabel}>Công nghệ:</span>
                   <Image
-                    src="/images/logo/TingNect-Logo-icon.png"
+                    src="/images/logo/tingnect-logo-icon.png"
                     alt="TingNect logo"
                     width={20}
                     height={20}
@@ -385,7 +385,7 @@ const HeroSection = () => {
               <div className={styles.creditItem}>
                 <span className={styles.creditLabel}>Công nghệ:</span>
                 <Image
-                  src="/images/logo/TingNect-Logo-icon.png"
+                  src="/images/logo/tingnect-logo-icon.png"
                   alt="TingNect logo"
                   width={24}
                   height={24}

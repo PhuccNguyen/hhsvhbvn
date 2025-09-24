@@ -172,7 +172,7 @@ const Footer = () => {
               <div className={styles.logoCross}>×</div>
               <div className={styles.tingnectLogo}>
                 <Image
-                  src="/images/logo/TingNect Logo.png"
+                  src="/images/logo/tingnect-logo.png"
                   alt="TingNect"
                   width={100}
                   height={26}

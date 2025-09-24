@@ -50,10 +50,13 @@ export async function POST(request: NextRequest) {
   const startTime = Date.now()
   const clientIP = getClientIP(request)
   
+  console.log(`[CHECKIN_API] New request from ${clientIP} at ${new Date().toISOString()}`);
+  
   try {
     // Rate limiting
     const rateCheck = rateLimiter(clientIP)
     if (!rateCheck.allowed) {
+      console.log(`[CHECKIN_API] Rate limit exceeded for ${clientIP}`);
       logCheckinAttempt({
         email: 'rate-limited',
         round: 'unknown',
@@ -73,12 +76,18 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json()
-    console.log(`[CHECKIN] Request from ${clientIP}:`, { round: body.round, email: body.email?.substring(0, 3) + '***' })
+    console.log(`[CHECKIN_API] Request data:`, { 
+      round: body.round, 
+      email: body.email?.substring(0, 3) + '***',
+      phone: body.phone?.substring(0, 3) + '***',
+      fullName: body.fullName?.substring(0, 3) + '***'
+    })
     
     // Validate input
     const validationResult = checkinSchema.safeParse(body)
     if (!validationResult.success) {
       const firstError = validationResult.error.issues[0]
+      console.log(`[CHECKIN_API] Validation failed:`, firstError);
       
       logCheckinAttempt({
         email: body.email || 'unknown',
@@ -103,6 +112,7 @@ export async function POST(request: NextRequest) {
     // Check event status
     const eventStatus = getEventStatusRealtime(data.round)
     if (!eventStatus.canRegister) {
+      console.log(`[CHECKIN_API] Event ${data.round} not open for registration:`, eventStatus);
       logCheckinAttempt({
         email: data.email,
         round: data.round,
@@ -124,8 +134,11 @@ export async function POST(request: NextRequest) {
     const normalizedPhone = formatPhoneNumber(data.phone)
     const normalizedEmail = data.email.toLowerCase().trim()
     
+    console.log(`[CHECKIN_API] Normalized data - email: ${normalizedEmail}, phone: ${normalizedPhone}`);
+
     // Enhanced duplicate check with detailed feedback
     try {
+      console.log(`[CHECKIN_API] Checking for duplicates...`);
       const duplicateResult = await googleSheetsService.checkDuplicate(
         normalizedEmail, 
         normalizedPhone, 
@@ -134,6 +147,7 @@ export async function POST(request: NextRequest) {
       )
 
       if (duplicateResult.isDuplicate) {
+        console.log(`[CHECKIN_API] Duplicate found:`, duplicateResult);
         logCheckinAttempt({
           email: normalizedEmail,
           round: data.round,
@@ -154,13 +168,15 @@ export async function POST(request: NextRequest) {
           duplicateFields: duplicateResult.details,
         }, { status: 409 })
       }
+      console.log(`[CHECKIN_API] No duplicates found`);
     } catch (duplicateError) {
-      console.warn(`[CHECKIN] Duplicate check failed for ${data.round}, continuing:`, duplicateError)
+      console.warn(`[CHECKIN_API] Duplicate check failed for ${data.round}, continuing:`, duplicateError)
       // Continue with submission if duplicate check fails
     }
 
     // Generate confirmation code for both sheet and client
     const confirmationCode = generateConfirmationCode(data.round)
+    console.log(`[CHECKIN_API] Generated confirmation code: ${confirmationCode}`);
 
     // Create submission data with confirmation code
     const submission: CheckinSubmission = {
@@ -172,15 +188,16 @@ export async function POST(request: NextRequest) {
       region: data.region,
       contestantId: data.contestantId?.trim(),
       timestamp: new Date().toISOString(),
-      confirmationCode, // Add confirmation code to sheet
+      confirmationCode,
     }
 
-    console.log(`[CHECKIN] Saving to Google Sheets: ${data.round} with code: ${confirmationCode}`)
+    console.log(`[CHECKIN_API] Submitting to Google Sheets...`);
 
     // Save to Google Sheets with retry mechanism
     const success = await googleSheetsService.appendToSheet(submission)
 
     if (!success) {
+      console.error(`[CHECKIN_API] Failed to save to Google Sheets`);
       logCheckinAttempt({
         email: normalizedEmail,
         round: data.round,
@@ -197,11 +214,11 @@ export async function POST(request: NextRequest) {
       }, { status: 500 })
     }
 
-    // Save to localStorage for multi-device protection
+    // Success response
     const responseData: CheckinResponse = {
       success: true,
       message: getSuccessMessage(data.round, data.region),
-      confirmationCode: confirmationCode, // Send original code to client
+      confirmationCode: confirmationCode,
     }
 
     logCheckinAttempt({
@@ -211,26 +228,35 @@ export async function POST(request: NextRequest) {
       clientIP,
       action: 'checkin_success',
       processingTime: Date.now() - startTime,
-      details: { confirmationCode: confirmationCode } // Log original code
+      details: { confirmationCode: confirmationCode }
     })
 
     const processingTime = Date.now() - startTime
-    console.log(`[CHECKIN] Success for ${data.round}: ${processingTime}ms`)
+    console.log(`[CHECKIN_API] ✅ Success for ${data.round}: ${processingTime}ms`);
 
     return NextResponse.json(responseData)
 
   } catch (error) {
     const processingTime = Date.now() - startTime
-    console.error(`[CHECKIN] Error after ${processingTime}ms:`, error)
+    console.error(`[CHECKIN_API] ❌ Error after ${processingTime}ms:`, error)
     
-    // Detailed error handling
+    // Enhanced error handling with specific error types
     let errorMessage = 'Có lỗi xảy ra. Vui lòng thử lại sau.'
     let statusCode = 500
     
     if (error instanceof Error) {
+      console.log(`[CHECKIN_API] Error type: ${error.constructor.name}`);
+      console.log(`[CHECKIN_API] Error message: ${error.message}`);
+      
       if (error.message.includes('Rate limit exceeded')) {
         errorMessage = error.message
         statusCode = 429
+      } else if (error.message.includes('Private key decoding failed')) {
+        errorMessage = 'Lỗi cấu hình hệ thống. Đã thông báo cho BTC.'
+        console.error('[CHECKIN_API] CRITICAL: Private key decoding error:', error.message);
+      } else if (error.message.includes('authentication failed')) {
+        errorMessage = 'Lỗi xác thực hệ thống. Đã thông báo cho BTC.'
+        console.error('[CHECKIN_API] CRITICAL: Authentication error:', error.message);
       } else if (error.message.includes('API has not been used')) {
         errorMessage = 'Hệ thống đang được cập nhật. Vui lòng thử lại sau 5 phút.'
       } else if (error.message.includes('permission')) {
@@ -239,6 +265,9 @@ export async function POST(request: NextRequest) {
         errorMessage = 'Không tìm thấy dữ liệu. Vui lòng liên hệ BTC.'
       } else if (error.message.includes('timeout')) {
         errorMessage = 'Hệ thống đang bận. Vui lòng thử lại sau ít phút.'
+      } else if (error.message.includes('DECODER routines')) {
+        errorMessage = 'Lỗi mã hóa hệ thống. Đã thông báo cho BTC.'
+        console.error('[CHECKIN_API] CRITICAL: OpenSSL decoder error - likely private key format issue');
       }
     }
     
@@ -284,6 +313,8 @@ function getSuccessMessage(round: string, region?: string): string {
 export async function GET(request: NextRequest) {
   try {
     const clientIP = getClientIP(request)
+    console.log(`[CHECKIN_API] Health check from ${clientIP}`);
+    
     const connectionTest = await googleSheetsService.testConnection()
     
     // Get basic stats for open events
@@ -306,6 +337,13 @@ export async function GET(request: NextRequest) {
       clientIP,
       googleSheets: connectionTest,
       eventStats: stats,
+      environment: {
+        hasPrivateKeyB64: !!process.env.GOOGLE_PRIVATE_KEY_B64,
+        hasPrivateKey: !!process.env.GOOGLE_PRIVATE_KEY,
+        hasClientEmail: !!process.env.GOOGLE_CLIENT_EMAIL,
+        hasSheetId: !!process.env.GOOGLE_SHEET_ID,
+        hasProjectId: !!process.env.GOOGLE_PROJECT_ID,
+      },
       server: {
         uptime: process.uptime(),
         memory: process.memoryUsage(),
@@ -313,6 +351,7 @@ export async function GET(request: NextRequest) {
       }
     })
   } catch (error) {
+    console.error('[CHECKIN_API] Health check failed:', error);
     return NextResponse.json({
       status: 'ERROR',
       timestamp: new Date().toISOString(),
@@ -332,5 +371,3 @@ export async function OPTIONS() {
     },
   })
 }
-
-

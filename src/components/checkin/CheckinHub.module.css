@@ -74,7 +74,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background-image: url("/images/background/bg6.png");
+  background-image: url("/images/background/bg7.png");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: 58% 50%;        /* desktop: ưu tiên bông sen bên phải */
@@ -136,7 +136,7 @@
 @media (max-width: 767px) {
   /* Mobile: Hiển thị ảnh banner_quymocuocthi.jpg */
   .pageBg::before {
-    background-image: url("/images/banner/banner_quymocuocthi.jpg");
+    background-image: url("/images/banner/banner-quy-mo-cuoc-thi.jpg");
     background-position: 28% 52%; /* Điều chỉnh vị trí cho mobile */
   }
 

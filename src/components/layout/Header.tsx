@@ -82,7 +82,7 @@ const Header = () => {
               <div className={styles.logoWrapper}>
                 <div className={styles.tingnectLogo}>
                   <Image
-                    src="/images/logo/TingNect Logo.png"
+                    src="/images/logo/tingnect-logo.png"
                     alt="TingNect"
                     width={137}
                     height={38}
@@ -278,7 +278,7 @@ const Header = () => {
                   <div className={styles.mobileLogoWrapper}>
                     <div className={styles.tingnectLogo}>
                       <Image
-                        src="/images/logo/TingNect Logo.png"
+                        src="/images/logo/tingnect-logo.png"
                         alt="TingNect"
                         width={80}
                         height={22}

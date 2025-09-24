@@ -209,7 +209,7 @@ const Purpose = () => {
             <div className={styles.imageContainer}>
               <div className={styles.imageFrame}>
                 <Image
-                  src="/images/nguoinoitieng/hoahauubg.jpg"
+                  src="/images/nguoinoitieng/hoa-hau-ubg.jpg"
                   alt="Hoa hậu đại diện tinh thần hòa bình và trí tuệ"
                   fill
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 40vw, 500px"

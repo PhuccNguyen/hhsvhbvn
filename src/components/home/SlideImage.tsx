@@ -18,50 +18,50 @@ const celebrities: Celebrity[] = [
     id: 'nguyen-van-chung',
     name: 'Nguyễn Văn Chung',
     title: 'Nhạc sĩ, "Cha đẻ ca khúc Viết tiếp câu chuyện Hòa Bình"',
-    image: '/images/nguoinoitieng/ChadecuacakhucviettiepcauchuyenHoaBinhNhacSiNguyenVanChung.jpg',
+    image: '/images/nguoinoitieng/nhac-si-nguyen-van-chung.jpg',
     isSpotlight: true,
   },
   {
     id: 'anh-quan',
     name: 'Anh Quân Idol',
     title: 'Ca sĩ',
-    image: '/images/nguoinoitieng/CasiAnhQuanIdol.jpg',
+    image: '/images/nguoinoitieng/ca-si-anh-quan-idol.jpg',
   },
   {
     id: 'duyen-quynh',
     name: 'Duyên Quỳnh',
     title: 'Ca sĩ',
-    image: '/images/nguoinoitieng/casinguyenduyenquynh.jpg',
+    image: '/images/nguoinoitieng/ca-si-nguyen-duyen-quynh.jpg',
   },
   {
     id: 'ngo-thai-ngan',
     name: 'Ngô Thái Ngân',
     title: 'Grand Võin Miss Grand Việt Nam',
-    image: '/images/nguoinoitieng/Grand Voin Miss Grand Việt Nam Ngô Thái Ngân.jpg',
+    image: '/images/nguoinoitieng/miss-grand-vietnam-ngo-thai-ngan.jpg',
   },
   {
     id: 'dinh-y-quyen',
     name: 'Đinh Y Quyên',
     title: 'Á 3 Miss Grand Việt Nam',
-    image: '/images/nguoinoitieng/a3MissgrandVietNamdinhYQuyen.jpg',
+    image: '/images/nguoinoitieng/miss-grand-vietnam-dinh-y-quyen.jpg',
   },
   {
     id: 'pham-nhu-thuy',
     name: 'Phạm Như Thùy',
     title: 'Top 10 Miss Grand Việt Nam',
-    image: '/images/nguoinoitieng/Top10MissGrandViệtNamPhamNhưThùy.jpg',
+    image: '/images/nguoinoitieng/top10-miss-grand-vietnam-pham-nhu-thuy.jpg',
   },
   {
     id: 'chu-tan-van',
     name: 'Chú Tấn Văn',
     title: 'MC',
-    image: '/images/nguoinoitieng/MCchuTanVan.jpg',
+    image: '/images/nguoinoitieng/mc-chu-tan-van.jpg',
   },
   {
     id: 'nam-vuong',
     name: 'Nam Vương',
     title: 'Á vương siêu mẫu',
-    image: '/images/nguoinoitieng/namvuong.jpg',
+    image: '/images/nguoinoitieng/nam-vuong.jpg',
   },
 ]
 
@@ -138,7 +138,7 @@ export default function SlideImage() {
       {/* Background with overlay */}
       <div className={styles.backgroundWrapper}>
         <Image
-          src="/images/background/CUoCTHiHOAHaUSINHVIeNHOaBiNHVIetNAM2025.png"
+          src="/images/background/cuoc-thi-hhsv-hoa-binh-viet-nam-2025.png"
           alt="Hoa Hậu Sinh Viên Hòa Bình Việt Nam 2025 Background"
           fill
           className={styles.backgroundImage}

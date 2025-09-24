@@ -60,11 +60,11 @@ export default function NewsPage() {
   ]
 
   const people = [
-    { name: "Phạm Xuân Hải", title: "Trưởng BTC", image: "/images/nguoinoitieng/hoahauubg.jpg" },
-    { name: "Nguyễn Văn Chung", title: "Nhạc sĩ", image: "/images/nguoinoitieng/ChadecuacakhucviettiepcauchuyenHoaBinhNhacSiNguyenVanChung.jpg" },
-    { name: "Chú Tấn Văn", title: "MC", image: "/images/nguoinoitieng/MCchuTanVan.jpg" },
-    { name: "Anh Quân Idol", title: "Ca sĩ", image: "/images/nguoinoitieng/CasiAnhQuanIdol.jpg" },
-    { name: "Duyên Quỳnh", title: "Ca sĩ", image: "/images/nguoinoitieng/casinguyenduyenquynh.jpg" }
+    { name: "Phạm Xuân Hải", title: "Trưởng BTC", image: "/images/nguoinoitieng/hoa-hau-ubg.jpg" },
+    { name: "Nguyễn Văn Chung", title: "Nhạc sĩ", image: "/images/nguoinoitieng/nhac-si-nguyen-van-chung.jpg" },
+    { name: "Chú Tấn Văn", title: "MC", image: "/images/nguoinoitieng/mc-chu-tan-van.jpg" },
+    { name: "Anh Quân Idol", title: "Ca sĩ", image: "/images/nguoinoitieng/ca-si-anh-quan-idol.jpg" },
+    { name: "Duyên Quỳnh", title: "Ca sĩ", image: "/images/nguoinoitieng/ca-si-nguyen-duyen-quynh.jpg" }
   ]
 
   const sponsorTiers = [
