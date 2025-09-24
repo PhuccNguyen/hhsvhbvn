@@ -1,14 +1,42 @@
 services:
-  hhsvhbvn-website:
-    container_name: hhsvhbvn-website
+  hhsvhbvn-app:
+    container_name: hhsvhbvn-app
     build:
       context: ..
       dockerfile: docker/Dockerfile
+      target: runner  # Use the runner stage
     ports:
-      - "3301:3000"   # local dùng 3301 để tránh va chạm
+      - "3301:3000"
     env_file:
       - ../.env.local
     environment:
       - NODE_ENV=production
       - NEXT_PUBLIC_SITE_URL=http://localhost:3301
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/api/checkin"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - hhsvhbvn-network
+
+  nginx:
+    image: nginx:alpine
+    container_name: hhsvhbvn-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      hhsvhbvn-app:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - hhsvhbvn-network
+
+networks:
+  hhsvhbvn-network:
+    driver: bridge

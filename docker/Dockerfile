@@ -1,42 +1,60 @@
 # ---------- Base ----------
-FROM node:18-alpine AS base
+FROM node:20-alpine AS base
 ENV NEXT_TELEMETRY_DISABLED=1
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
 WORKDIR /app
 
-# ---------- Deps (cài FULL deps để build: có devDeps như tailwind/postcss) ----------
-FROM base AS deps
+# Install pnpm for better performance
+RUN corepack enable
 RUN apk add --no-cache libc6-compat
-COPY package.json package-lock.json* ./
-RUN npm ci
 
-# ---------- Builder (build Next) ----------
+# ---------- Dependencies ----------
+FROM base AS deps
+COPY package.json package-lock.json* pnpm-lock.yaml* ./
+# Use cache mount for better build performance
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
+    if [ -f pnpm-lock.yaml ]; then pnpm install --frozen-lockfile; \
+    else npm ci; fi
+
+# ---------- Builder ----------
 FROM base AS builder
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-ENV NODE_ENV=production
-RUN npm run build
 
-# ---------- Runner (runtime, dùng next start, KHÔNG cần standalone) ----------
-FROM node:18-alpine AS runner
+# Skip type checking and ESLint during build for faster builds
+ENV NEXT_TELEMETRY_DISABLED=1
+ENV NODE_ENV=production
+ENV SKIP_ENV_VALIDATION=1
+
+# Build the application
+RUN --mount=type=cache,id=nextjs,target=/app/.next/cache \
+    npm run build
+
+# ---------- Runner ----------
+FROM base AS runner
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
-WORKDIR /app
 
-# user không root (tuỳ chọn)
-RUN addgroup --system --gid 1001 nodejs && adduser --system --uid 1001 nextjs
+# Create nextjs user for security
+RUN addgroup --system --gid 1001 nodejs && \
+    adduser --system --uid 1001 nextjs
 
-# chỉ cài prod deps để chạy
-COPY package*.json ./
-RUN npm ci --omit=dev
+# Install only production dependencies
+COPY package.json package-lock.json* pnpm-lock.yaml* ./
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
+    if [ -f pnpm-lock.yaml ]; then pnpm install --prod --frozen-lockfile; \
+    else npm ci --omit=dev && npm cache clean --force; fi
 
-# copy public + toàn bộ build .next từ stage builder
-COPY --from=builder /app/public ./public
-COPY --from=builder /app/.next ./.next
+# Copy built application
+COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
+COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 
 USER nextjs
+
 EXPOSE 3000
 ENV PORT=3000
 ENV HOSTNAME=0.0.0.0
 
-# package.json cần có: "start": "next start"
-CMD ["npm","run","start"]
+# Use next start command
+CMD ["npm", "start"]
