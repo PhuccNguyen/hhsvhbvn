@@ -490,22 +490,6 @@ const CheckinForm = ({ event, onSuccess }: CheckinFormProps) => {
           <strong>{formData.phone}</strong> trong vòng 24 giờ tới.
         </motion.p>
 
-        {/* Important note */}
-        <motion.div 
-          className={styles.importantNote}
-          initial={{ opacity: 0, scale: 0.98 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.6 }}
-        >
-          <AlertCircle size={16} />
-          <div className={styles.noteContent}>
-            <span className={styles.noteTitle}>Lưu ý quan trọng</span>
-            <p className={styles.noteText}>
-              Để đăng ký lại hoặc chỉnh sửa thông tin, vui lòng nhấn nút &ldquo;Đăng ký lại&rdquo; hoặc tải lại trang.
-            </p>
-          </div>
-        </motion.div>
-
         {/* Information summary */}
         <motion.div 
           className={styles.summaryCard}
@@ -608,44 +592,43 @@ const CheckinForm = ({ event, onSuccess }: CheckinFormProps) => {
           </motion.div>
         )}
 
-        {/* Action buttons */}
-        <motion.div 
-          className={styles.successActions}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8 }}
-        >
-          <motion.button
-            className={styles.primaryButton}
-            onClick={() => window.location.href = '/'}
-            whileHover={{ scale: 1.02, y: -1 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            <Home size={18} />
-            Về trang tổng quan
-          </motion.button>
-          
-          <motion.button
-            className={styles.secondaryButton}
-            onClick={() => window.open('/checkin', '_blank')}
-            whileHover={{ scale: 1.02, y: -1 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            <ExternalLink size={18} />
-            Xem sự kiện khác
-          </motion.button>
-          
-          <motion.button
-            className={styles.secondaryButton}
-            onClick={handleRetry}
-            whileHover={{ scale: 1.02, y: -1 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            <RefreshCw size={16} />
-            Đăng ký lại
-          </motion.button>
-        </motion.div>
-
+       <motion.div 
+    className={styles.successActions}
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ delay: 0.8 }}
+  >
+    <motion.button
+      className={styles.primaryButton}
+      onClick={() => window.location.href = '/'}
+      whileHover={{ scale: 1.02, y: -1 }}
+      whileTap={{ scale: 0.98 }}
+    >
+      <Home size={16} />
+      Về trang tổng quan
+    </motion.button>
+    
+    <motion.button
+      className={styles.secondaryButton}
+      onClick={() => window.open('/checkin', '_blank')}
+      whileHover={{ scale: 1.02, y: -1 }}
+      whileTap={{ scale: 0.98 }}
+    >
+      <ExternalLink size={16} />
+      Xem sự kiện khác
+    </motion.button>
+    
+    <motion.button
+      className={styles.secondaryButton}
+      onClick={handleRetry}
+      whileHover={{ scale: 1.02, y: -1 }}
+      whileTap={{ scale: 0.98 }}
+    >
+      <RefreshCw size={14} />
+      Đăng ký lại
+    </motion.button>
+    
+  </motion.div>
         <motion.div 
           className={styles.successFooter}
           initial={{ opacity: 0 }}

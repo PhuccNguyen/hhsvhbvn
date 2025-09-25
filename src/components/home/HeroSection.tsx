@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { motion, useScroll, useTransform } from 'framer-motion'
-import { 
+import {
   Users,
   Globe,
   MapPin,
@@ -24,7 +24,7 @@ import styles from './HeroSection.module.css'
 const HeroSection = () => {
   const [mounted, setMounted] = useState(false)
   const { scrollY } = useScroll()
-  
+
   const yMobile = useTransform(scrollY, [0, 300], [0, 12])
   const yDesktop = useTransform(scrollY, [0, 300], [0, 15])
 
@@ -42,7 +42,7 @@ const HeroSection = () => {
     { icon: TrendingUp, text: 'Cơ hội nghề nghiệp' }
   ]
 
-    const timelineItems = [
+  const timelineItems = [
     {
       icon: Play,
       label: 'Tuyển sinh',
@@ -95,7 +95,7 @@ const HeroSection = () => {
     }
   ]
 
-  
+
   return (
     <section className={styles.hero} id="hero">
       {/* Mobile Layout */}
@@ -111,7 +111,7 @@ const HeroSection = () => {
             className={styles.mobileBannerImage}
             sizes="100vw"
           />
-        </div> 
+        </div>
 
         {/* Section 2: Content with Blurred Background */}
         <div className={styles.mobileContentSection}>
@@ -136,23 +136,23 @@ const HeroSection = () => {
             {/* Frosted Content Card */}
             <div className={styles.frostedCard}>
               {/* Headline & Slogan */}
-<motion.div 
-  className={styles.headerSectionmobile}
-  initial={{ opacity: 0, y: 20 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.6, delay: 0.4 }}
->
-  <h1 className={styles.headline}>
-    Hoa Hậu Sinh Viên<br/>Hòa Bình Việt Nam 2025
-  </h1>
-  <p className={styles.slogan}>
-    ✦ Xinh đẹp • Trí tuệ • Bản lĩnh • Nhân ái ✦
-  </p>
-</motion.div>
+              <motion.div
+                className={styles.headerSectionmobile}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+              >
+                <h1 className={styles.headline}>
+                  Hoa Hậu Sinh Viên<br />Hòa Bình Việt Nam 2025
+                </h1>
+                <p className={styles.slogan}>
+                  ✦ Xinh đẹp • Trí tuệ • Bản lĩnh • Nhân ái ✦
+                </p>
+              </motion.div>
 
 
               {/* Highlights */}
-              <motion.div 
+              <motion.div
                 className={styles.highlights}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -174,7 +174,7 @@ const HeroSection = () => {
               </motion.div>
 
               {/* CTA Section */}
-              <motion.div 
+              <motion.div
                 className={styles.ctaSection}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -196,57 +196,57 @@ const HeroSection = () => {
                   Dành cho nữ sinh viên Việt Nam 18–24 tuổi
                 </p>
               </motion.div>
-{/* Mini Timeline */}
-  <motion.div 
-    className={styles.miniTimeline}
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.6, delay: 0.7 }}
-  >
-    {timelineItems.map((item, index) => {
-      const Icon = item.icon
-      const content = (
-        <motion.div 
-          className={`${styles.timelineItem} ${item.isActive ? styles.active : ''}`}
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5, delay: 0.8 + index * 0.1 }}
-          whileHover={{ scale: 1.02, y: -2 }}
-          whileTap={{ scale: 0.98 }}
-        >
-          <div className={styles.timelineIcon}>
-            <Icon size={16} />
-          </div>
-          <div className={styles.timelineContent}>
-            <span className={styles.timelineLabel}>{item.label}</span>
-            <span className={styles.timelineStatus}>{item.status}</span>
-            {item.details && (
-              <span className={styles.timelineDetails}>{item.details}</span>
-            )}
-          </div>
-          {item.link && (
-            <div className={styles.timelineButton}>
+              {/* Mini Timeline */}
               <motion.div
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
+                className={styles.miniTimeline}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.7 }}
               >
-                <ArrowRight size={14} />
+                {timelineItems.map((item, index) => {
+                  const Icon = item.icon
+                  const content = (
+                    <motion.div
+                      className={`${styles.timelineItem} ${item.isActive ? styles.active : ''}`}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.5, delay: 0.8 + index * 0.1 }}
+                      whileHover={{ scale: 1.02, y: -2 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      <div className={styles.timelineIcon}>
+                        <Icon size={16} />
+                      </div>
+                      <div className={styles.timelineContent}>
+                        <span className={styles.timelineLabel}>{item.label}</span>
+                        <span className={styles.timelineStatus}>{item.status}</span>
+                        {item.details && (
+                          <span className={styles.timelineDetails}>{item.details}</span>
+                        )}
+                      </div>
+                      {item.link && (
+                        <div className={styles.timelineButton}>
+                          <motion.div
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.9 }}
+                          >
+                            <ArrowRight size={14} />
+                          </motion.div>
+                        </div>
+                      )}
+                    </motion.div>
+                  )
+                  return item.link ? (
+                    <Link key={index} href={item.link} className={styles.timelineLink}>
+                      {content}
+                    </Link>
+                  ) : (
+                    <div key={index}>{content}</div>
+                  )
+                })}
               </motion.div>
-            </div>
-          )}
-        </motion.div>
-      )
-      return item.link ? (
-        <Link key={index} href={item.link} className={styles.timelineLink}>
-          {content}
-        </Link>
-      ) : (
-        <div key={index}>{content}</div>
-      )
-    })}
-  </motion.div>
               {/* Credits */}
-              <motion.div 
+              <motion.div
                 className={styles.credits}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -257,8 +257,8 @@ const HeroSection = () => {
                   <Image
                     src="/images/logo/Logo_tpa.svg"
                     alt="TPA Entertainment logo"
-                    width={20}
-                    height={20}
+                    width={30}
+                    height={30}
                     className={styles.creditLogoTPA}
                   />
                   <span className={styles.creditName}>TPA Entertainment</span>
@@ -266,7 +266,7 @@ const HeroSection = () => {
                 <div className={styles.creditItem}>
                   <span className={styles.creditLabel}>Công nghệ:</span>
                   <Image
-                    src="/images/logo/tingnect-logo-icon.png"
+                    src="/images/logo/Tingnect-logo-icon.png"
                     alt="TingNect logo"
                     width={20}
                     height={20}
@@ -303,7 +303,7 @@ const HeroSection = () => {
             transition={{ duration: 0.8, delay: 0.3 }}
           >
             {/* Headline & Slogan */}
-            <motion.div 
+            <motion.div
               className={styles.headerSection}
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -318,7 +318,7 @@ const HeroSection = () => {
             </motion.div>
 
             {/* Highlights */}
-            <motion.div 
+            <motion.div
               className={styles.highlights}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -340,7 +340,7 @@ const HeroSection = () => {
             </motion.div>
 
             {/* CTA Section */}
-            <motion.div 
+            <motion.div
               className={styles.ctaSection}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -365,7 +365,7 @@ const HeroSection = () => {
 
 
             {/* Credits */}
-            <motion.div 
+            <motion.div
               className={styles.credits}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -376,8 +376,8 @@ const HeroSection = () => {
                 <Image
                   src="/images/logo/Logo_tpa.svg"
                   alt="TPA Entertainment logo"
-                  width={26}
-                  height={26}
+                  width={34}
+                  height={34}
                   className={styles.creditLogoTPA}
                 />
                 <span className={styles.creditName}>TPA Entertainment</span>
@@ -385,10 +385,10 @@ const HeroSection = () => {
               <div className={styles.creditItem}>
                 <span className={styles.creditLabel}>Công nghệ:</span>
                 <Image
-                  src="/images/logo/tingnect-logo-icon.png"
+                  src="/images/logo/Tingnect-logo-icon.png"
                   alt="TingNect logo"
-                  width={24}
-                  height={24}
+                  width={28}
+                  height={28}
                   className={styles.creditLogoTingNect}
                 />
                 <span className={styles.creditName}>TingNect</span>

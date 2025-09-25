@@ -701,7 +701,7 @@
 }
 
 .successMessage strong {
-  color: white;
+ color: #22FFC6;    
   font-weight: 700;
 }
 
@@ -827,52 +827,72 @@
 .successActions {
   display: flex;
   flex-direction: column;
-  gap: clamp(12px, 3vw, 16px);
-  margin-bottom: clamp(20px, 5vw, 24px);
+  gap: clamp(8px, 2vw, 12px);
+  margin-bottom: clamp(16px, 4vw, 20px);
+  padding: 0 clamp(12px, 3vw, 16px);
+  align-items: center; /* Center buttons on mobile */
 }
 
+/* Mobile-first button styles */
 .primaryButton,
 .secondaryButton {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  min-height: 48px;
-  padding: 0 clamp(16px, 4vw, 20px);
-  border-radius: 12px;
-  font-size: clamp(14px, 3.5vw, 15px);
+  gap: 6px;
+  min-height: clamp(36px, 9vw, 40px); /* Smaller height for mobile */
+  padding: 0 clamp(12px, 3vw, 16px);
+  border-radius: 10px;
+  font-size: clamp(12px, 3vw, 13px);
   font-weight: 700;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   text-decoration: none;
-  border: 2px solid;
-  
-  /* iOS optimizations */
+  border: 1px solid;
+  width: 100%; /* Full width on mobile */
+  max-width: 280px; /* Prevent buttons from being too wide */
   -webkit-appearance: none;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
 }
 
+/* Desktop adjustments */
+@media (min-width: 768px) {
+  .successActions {
+    flex-direction: row; /* Horizontal layout on desktop */
+    justify-content: center;
+    gap: clamp(12px, 2vw, 16px);
+  }
+  .primaryButton,
+  .secondaryButton {
+    width: auto; /* Buttons size to content on desktop */
+    min-width: 140px; /* Ensure buttons aren't too small */
+    min-height: clamp(40px, 3vw, 44px);
+    padding: 0 clamp(16px, 2vw, 20px);
+    font-size: clamp(13px, 1.5vw, 14px);
+  }
+}
+
 .primaryButton {
-  background: linear-gradient(135deg, #E7C873 0%, #F4D03F 100%);
-  border-color: rgba(231, 200, 115, 0.2);
-  color: #0B2447;
-  box-shadow: 0 4px 16px rgba(231, 200, 115, 0.2);
+  background: linear-gradient(135deg, #F4D03F 0%, #E7C873 100%);
+  border-color: rgba(231, 200, 115, 0.3);
+  color: #1F2937; /* Darker text for better contrast */
+  box-shadow: 0 3px 12px rgba(231, 200, 115, 0.25);
 }
 
 .secondaryButton {
   background: transparent;
-  border-color: rgba(42, 244, 255, 0.2);
-  color: #0369a1;
+  border-color: rgba(16, 185, 129, 0.3);
+  color: #10B981;
 }
 
 .primaryButton:hover {
-  box-shadow: 0 6px 20px rgba(231, 200, 115, 0.3);
+  box-shadow: 0 4px 16px rgba(231, 200, 115, 0.35);
   transform: translateY(-1px);
 }
 
 .secondaryButton:hover {
-  background: rgba(42, 244, 255, 0.05);
+  background: rgba(16, 185, 129, 0.1);
   transform: translateY(-1px);
 }
 

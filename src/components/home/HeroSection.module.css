@@ -151,8 +151,12 @@
 
 }
 
+/* Tìm đến class .headline */
 .headline {
-  font-size: 1.5rem;
+  /* Thay thế dòng font-size cũ bằng dòng này */
+  font-size: clamp(1.25rem, 5.5vw, 1.7rem);
+
+  /* Giữ nguyên các thuộc tính còn lại */
   text-align: center;
   font-weight: 600;
   line-height: 1.25;
@@ -420,9 +424,6 @@
     padding: 24px;
   }
 
-  .headline {
-    font-size: 1.7rem;
-  }
 
   .slogan {
     font-size: 1rem;

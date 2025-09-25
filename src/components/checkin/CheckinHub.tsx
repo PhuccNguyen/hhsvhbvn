@@ -127,43 +127,43 @@ const CheckinHub = () => {
           </motion.section>
         </div >
 
-        {/* Timeline Section - Compact */}
-        <motion.section
-          className={styles.timelineSection}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-        >
-          <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionTitle}>Lộ trình Check In Sự Kiện</h2>
-            <p className={styles.sectionSubtitle}>Theo dõi các mốc thời gian quan trọng</p>
-          </div>
+      {/* Timeline Section - Compact */}
+<motion.section
+  className={styles.timelineSection}
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.5, delay: 0.2 }}
+>
+  <div className={styles.sectionHeader}>
+    <h2 className={styles.sectionTitle}>Lộ trình Check In Sự Kiện</h2>
+    <p className={styles.sectionSubtitle}>Theo dõi các mốc thời gian quan trọng</p>
+  </div>
 
-          <div className={styles.timelineGrid}>
-            {timelineEvents.map((event, index) => {
-              const Icon = event.icon
-              return (
-                <motion.div
-                  key={index}
-                  className={`${styles.timelineCard} ${styles[event.status]}`}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5, delay: 0.1 * index }}
-                  whileHover={{ y: -2, scale: 1.02 }}
-                >
-                  <div className={styles.timelineCardIcon}>
-                    <Icon size={14} />
-                  </div>
-                  <div className={styles.timelineCardContent}>
-                    <span className={styles.timelineCardName}>{event.name}</span>
-                    <span className={styles.timelineCardDate}>{event.date}</span>
-                  </div>
-                  <div className={`${styles.timelineStatus} ${styles[event.status]}`} />
-                </motion.div>
-              )
-            })}
+  <div className={styles.timelineRow}>
+    {timelineEvents.map((event, index) => {
+      const Icon = event.icon
+      return (
+        <motion.div
+          key={index}
+          className={`${styles.timelineCard} ${styles[event.status]}`}
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 * index }}
+          whileHover={{ y: -2, scale: 1.02 }}
+        >
+          <div className={styles.timelineCardIcon}>
+            <Icon size={14} />
           </div>
-        </motion.section>
+          <div className={styles.timelineCardContent}>
+            <span className={styles.timelineCardName}>{event.name}</span>
+            <span className={styles.timelineCardDate}>{event.date}</span>
+          </div>
+          <div className={`${styles.timelineStatus} ${styles[event.status]}`} />
+        </motion.div>
+      )
+    })}
+  </div>
+</motion.section>
 
         {/* Events Grid */}
         <motion.section
