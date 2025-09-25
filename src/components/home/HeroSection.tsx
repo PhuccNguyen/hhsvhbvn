@@ -52,17 +52,17 @@ const HeroSection = () => {
     {
       icon: Mic,
       label: 'Họp báo',
-      status: 'Sắp diễn ra',
+      status: 'đang diễn ra',
       details: '27/09/2025 - Đà Nẵng',
-      isActive: false,
+      isActive: true,
       link: 'https://hhsvhbvn.tingnect.com/checkin/hop-bao'
     },
     {
       icon: Calendar,
       label: 'Sơ khảo',
-      status: 'T11/2025',
+      status: 'T11/2025 - Đang mở',
       details: 'HN 09/11 • ĐN 16/11 • HCM 23/11',
-      isActive: false,
+      isActive: true,
       link: 'https://hhsvhbvn.tingnect.com/checkin/so-khao'
     },
     {
