@@ -9,7 +9,7 @@ export const events: EventInfo[] = [
     status: 'open',
     date: '27/09/2025',
     endDate: '27/09/2025',
-    registrationDeadline: '26/09/2025 23:59',
+    registrationDeadline: '30/09/2025 23:59',
     description: 'Xác nhận tham dự để BTC sắp xếp đón tiếp.',
     bgImage: '/images/background/bg3.png',
     sheetName: 'HopBao',
