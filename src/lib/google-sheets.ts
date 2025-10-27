@@ -325,7 +325,7 @@ class GoogleSheetsService {
       
       const result = await this.sheets.spreadsheets.values.append({
         spreadsheetId,
-        range: `${sheetName}!A:J`,
+        range: `${sheetName}!A:K`,
         valueInputOption: 'USER_ENTERED',
         insertDataOption: 'INSERT_ROWS',
         requestBody: {
@@ -362,7 +362,7 @@ class GoogleSheetsService {
       
       const result = await this.sheets.spreadsheets.values.get({
         spreadsheetId,
-        range: `${sheetName}!A:I`,
+        range: `${sheetName}!A:K`,
       });
 
       const rows = result.data.values || [];
@@ -382,7 +382,7 @@ class GoogleSheetsService {
       for (const row of dataRows) {
         const rowEmail = row[3]?.toLowerCase().trim(); // Email in column D
         const rowPhone = row[2]?.trim(); // Phone in column C  
-        const rowContestantId = row[5]?.trim(); // Contestant ID in column F
+        const rowContestantId = row[6]?.trim(); // Contestant ID in column G (shifted due to userType)
 
         // Check email duplicate
         if (rowEmail && rowEmail === email.toLowerCase().trim()) {
@@ -466,7 +466,7 @@ class GoogleSheetsService {
       
       const result = await this.sheets.spreadsheets.values.get({
         spreadsheetId,
-        range: `${sheetName}!A1:J1`,
+        range: `${sheetName}!A1:K1`,
       });
 
       if (!result.data.values || result.data.values.length === 0) {
@@ -475,6 +475,7 @@ class GoogleSheetsService {
           'Họ và tên', 
           'Số điện thoại',
           'Email',
+          'Phân loại',
           'Khu vực',
           'Mã thí sinh',
           'Xác nhận',
@@ -486,7 +487,7 @@ class GoogleSheetsService {
         console.log(`[GOOGLE_SHEETS] Creating header for sheet: ${sheetName}`);
         await this.sheets.spreadsheets.values.update({
           spreadsheetId,
-          range: `${sheetName}!A1:J1`,
+          range: `${sheetName}!A1:K1`,
           valueInputOption: 'USER_ENTERED',
           requestBody: {
             values: [headers],
@@ -513,6 +514,11 @@ class GoogleSheetsService {
   }
 
   private prepareRowData(data: CheckinSubmission, ipAddress?: string): string[] {
+    // Convert userType to Vietnamese display text
+    const userTypeDisplay = data.userType === 'thi-sinh' ? 'Thí sinh' :
+                           data.userType === 'bgk' ? 'Ban giám khảo' :
+                           data.userType === 'khan-gia' ? 'Khán giả' : 'Khách mời'
+    
     return [
       new Date(data.timestamp).toLocaleString('vi-VN', {
         timeZone: 'Asia/Ho_Chi_Minh',
@@ -526,6 +532,7 @@ class GoogleSheetsService {
       data.fullName,
       data.phone,
       data.email,
+      userTypeDisplay,
       data.region || '',
       data.contestantId || '',
       data.confirmed ? 'Có' : 'Không',

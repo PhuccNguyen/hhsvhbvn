@@ -4,6 +4,7 @@ export interface CheckinSubmission {
   email: string
   confirmed: boolean
   round: 'hop-bao' | 'so-khao' | 'ban-ket' | 'chung-ket'
+  userType: 'thi-sinh' | 'bgk' | 'khan-gia' | 'khach-moi' // Phân loại user bắt buộc
   region?: 'HN' | 'DN' | 'HCM'
   contestantId?: string
   timestamp: string

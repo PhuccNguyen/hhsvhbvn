@@ -32,86 +32,13 @@ export function parseVietnameseDate(dateStr: string): Date {
   return new Date()
 }
 
-// Get event status based on current date
-export function getEventStatus(event: EventInfo, currentDate: Date = new Date()): EventStatus {
-  const eventStartDate = parseVietnameseDate(event.date)
-  const registrationDeadline = event.registrationDeadline 
-    ? parseVietnameseDate(event.registrationDeadline)
-    : new Date(eventStartDate.getTime()) // Clone date
-
-  // Set end of day for event start date if no specific time
-  if (!event.date.includes(':')) {
-    eventStartDate.setHours(23, 59, 59, 999)
-  }
-
-  // Registration hasn't started yet (if event is more than 30 days away)
-  const thirtyDaysBeforeEvent = new Date(eventStartDate.getTime())
-  thirtyDaysBeforeEvent.setDate(thirtyDaysBeforeEvent.getDate() - 30)
-  if (currentDate < thirtyDaysBeforeEvent) {
-    return {
-      status: 'upcoming',
-      canRegister: false,
-      message: 'Chưa mở đăng ký'
-    }
-  }
-
-  // Event has passed
-  if (currentDate > eventStartDate) {
-    return {
-      status: 'closed',
-      canRegister: false,
-      message: 'Sự kiện đã kết thúc'
-    }
-  }
-
-  // Registration deadline has passed
-  if (currentDate > registrationDeadline) {
-    return {
-      status: 'closed',
-      canRegister: false,
-      message: 'Đã hết thời hạn đăng ký'
-    }
-  }
-
-  // Check if event is at capacity
-  if (event.maxCapacity && event.currentCount && event.currentCount >= event.maxCapacity) {
-    return {
-      status: 'closed',
-      canRegister: false,
-      message: 'Sự kiện đã đủ số lượng'
-    }
-  }
-
-  // Calculate time remaining until registration deadline
-  const timeLeft = registrationDeadline.getTime() - currentDate.getTime()
-  const daysLeft = Math.floor(timeLeft / (1000 * 60 * 60 * 24))
-  const hoursLeft = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
-
-  // Registration is open
-  if (currentDate <= registrationDeadline) {
-    // Less than 24 hours remaining
-    if (daysLeft === 0) {
-      return {
-        status: 'ending-soon',
-        hoursLeft,
-        canRegister: true,
-        message: `Còn ${hoursLeft} giờ để đăng ký`
-      }
-    }
-
-    // Normal registration period
-    return {
-      status: 'open',
-      daysLeft,
-      canRegister: true,
-      message: `Còn ${daysLeft} ngày để đăng ký`
-    }
-  }
-
-  // Default case: registration hasn't started yet
+// Get event status based on current date - Updated to always allow registration
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function getEventStatus(_event: EventInfo, _currentDate?: Date): EventStatus {
+  // Always return open status - registration is unlimited and never expires
   return {
-    status: 'upcoming',
-    canRegister: false,
-    message: 'Chưa mở đăng ký'
+    status: 'open',
+    canRegister: true,
+    message: 'Đăng ký mở không giới hạn thời gian'
   }
 }

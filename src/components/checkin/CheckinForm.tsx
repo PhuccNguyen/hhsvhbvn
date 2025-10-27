@@ -4,7 +4,6 @@ import { useRef, useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { 
   AlertCircle,
-  ArrowLeft,
   Check,
   CheckCircle,
   Clock,
@@ -45,6 +44,7 @@ interface FormData {
   phone: string
   email: string
   confirmed: boolean
+  userType: string
   region?: string
   contestantId?: string
 }
@@ -67,6 +67,7 @@ const CheckinForm = ({ event, onSuccess }: CheckinFormProps) => {
     phone: '',
     email: '',
     confirmed: false,
+    userType: '',
     region: event.hasRegion ? '' : undefined,
     contestantId: event.hasContestantId ? '' : undefined
   })
@@ -151,6 +152,10 @@ const CheckinForm = ({ event, onSuccess }: CheckinFormProps) => {
           if (!value.trim()) return 'Email là bắt buộc'
           if (!validateEmail(value)) return 'Địa chỉ email không hợp lệ'
         }
+        break
+      
+      case 'userType':
+        if (typeof value !== 'string' || !value) return 'Vui lòng chọn phân loại người tham dự'
         break
       
       case 'region':
@@ -352,6 +357,7 @@ const CheckinForm = ({ event, onSuccess }: CheckinFormProps) => {
       phone: '',
       email: '',
       confirmed: false,
+      userType: '',
       region: event.hasRegion ? '' : undefined,
       contestantId: event.hasContestantId ? '' : undefined
     })
@@ -509,6 +515,14 @@ const CheckinForm = ({ event, onSuccess }: CheckinFormProps) => {
             <div className={styles.summaryItem}>
               <span className={styles.summaryLabel}>Họ tên:</span>
               <span className={styles.summaryValue}>{formData.fullName}</span>
+            </div>
+            <div className={styles.summaryItem}>
+              <span className={styles.summaryLabel}>Phân loại:</span>
+              <span className={styles.summaryValue}>
+                {formData.userType === 'thi-sinh' ? 'Thí sinh' :
+                 formData.userType === 'bgk' ? 'Ban giám khảo' :
+                 formData.userType === 'khan-gia' ? 'Khán giả' : 'Khách mời'}
+              </span>
             </div>
             {formData.region && (
               <div className={styles.summaryItem}>
@@ -839,13 +853,60 @@ const CheckinForm = ({ event, onSuccess }: CheckinFormProps) => {
             </div>
           </motion.div>
 
+          {/* User Type Selection */}
+          <motion.div 
+            className={styles.fieldGroup}
+            initial={{ opacity: 0, x: -15 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.6 }}
+          >
+            <label className={styles.fieldLabel} htmlFor="userType">
+              <User size={16} aria-hidden="true" />
+              <span>Phân loại người tham dự <span className={styles.required} aria-label="bắt buộc">*</span></span>
+            </label>
+            <div className={styles.inputWrapper}>
+              <select
+                id="userType"
+                className={`${styles.fieldSelect} ${hasFieldError('userType') ? styles.error : ''}`}
+                value={formData.userType}
+                onChange={(e) => handleInputChange('userType', e.target.value)}
+                disabled={state.isSubmitting}
+                data-field="userType"
+                aria-describedby={hasFieldError('userType') ? 'userType-error' : undefined}
+                aria-invalid={hasFieldError('userType')}
+              >
+                <option value="">-- Chọn phân loại --</option>
+                <option value="thi-sinh">Thí sinh</option>
+                <option value="bgk">BGK</option>
+                <option value="khan-gia">Khán giả</option>
+                <option value="khach-moi">Khách mời</option>
+              </select>
+              <AnimatePresence>
+                {hasFieldError('userType') && (
+                  <motion.div
+                    id="userType-error"
+                    className={styles.fieldError}
+                    initial={{ opacity: 0, height: 0, y: -5 }}
+                    animate={{ opacity: 1, height: 'auto', y: 0 }}
+                    exit={{ opacity: 0, height: 0, y: -5 }}
+                    transition={{ duration: 0.2 }}
+                    role="alert"
+                  >
+                    <AlertCircle size={14} />
+                    <span>{getFieldError('userType')}</span>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          </motion.div>
+
           {/* Region (for preliminary round) */}
           {event.hasRegion && (
             <motion.div 
               className={styles.fieldGroup}
               initial={{ opacity: 0, x: -15 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.6 }}
+              transition={{ delay: 0.7 }}
             >
               <label className={styles.fieldLabel} htmlFor="region">
                 <MapPin size={16} aria-hidden="true" />
@@ -893,7 +954,7 @@ const CheckinForm = ({ event, onSuccess }: CheckinFormProps) => {
               className={styles.fieldGroup}
               initial={{ opacity: 0, x: -15 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.7 }}
+              transition={{ delay: 0.8 }}
             >
               <label className={styles.fieldLabel} htmlFor="contestantId">
                 <Crown size={16} aria-hidden="true" />
@@ -937,7 +998,7 @@ const CheckinForm = ({ event, onSuccess }: CheckinFormProps) => {
             className={styles.checkboxGroup}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8 }}
+            transition={{ delay: 0.9 }}
           >
             <div className={`${styles.checkboxWrapper} ${hasFieldError('confirmed') ? styles.error : ''}`}>
               <label className={styles.checkboxLabel} htmlFor="confirmed">
@@ -982,7 +1043,7 @@ const CheckinForm = ({ event, onSuccess }: CheckinFormProps) => {
           className={styles.submitSection}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.9 }}
+          transition={{ delay: 1.0 }}
         >
           <button
             ref={submitButtonRef}
@@ -1030,7 +1091,7 @@ const CheckinForm = ({ event, onSuccess }: CheckinFormProps) => {
           className={styles.formFooter}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1.0 }}
+          transition={{ delay: 1.1 }}
         >
           <div className={styles.footerItem}>
             <Shield size={12} />

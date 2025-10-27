@@ -9,55 +9,55 @@ export const events: EventInfo[] = [
     status: 'open',
     date: '27/09/2025',
     endDate: '27/09/2025',
-    registrationDeadline: '30/09/2025 23:59',
-    description: 'Xác nhận tham dự để BTC sắp xếp đón tiếp.',
+    registrationDeadline: '31/12/2099 23:59', // Đặt deadline xa trong tương lai để luôn mở
+    description: 'Xác nhận tham dự để BTC sắp xếp đón tiếp. Đăng ký mở không giới hạn thời gian.',
     bgImage: '/images/background/bg3.png',
     sheetName: 'HopBao',
-    maxCapacity: 200,
+    maxCapacity: 999999, // Tăng capacity lên rất cao để không giới hạn
     currentCount: 0
   },
   {
     id: 'so-khao',
     name: 'Sơ khảo',
     slug: 'so-khao',
-    status: 'upcoming',
+    status: 'open', // Chuyển từ 'upcoming' thành 'open'
     date: '05/10/2025',
     endDate: '25/11/2025',
-    registrationDeadline: '20/11/2025 23:59',
-    description: 'Chọn khu vực sơ khảo & xác nhận tham dự.',
+    registrationDeadline: '31/12/2099 23:59', // Đặt deadline xa trong tương lai để luôn mở
+    description: 'Chọn khu vực sơ khảo & xác nhận tham dự. Đăng ký mở không giới hạn thời gian.',
     bgImage: '/images/background/bg4.png',
     sheetName: 'SoKhao',
     hasRegion: true,
-    maxCapacity: 1000,
+    maxCapacity: 999999, // Tăng capacity lên rất cao để không giới hạn
     currentCount: 0
   },
   {
     id: 'ban-ket',
     name: 'Bán kết',
     slug: 'ban-ket',
-    status: 'upcoming',
+    status: 'open', // Chuyển từ 'upcoming' thành 'open'
     date: '15/12/2025',
     endDate: '15/12/2025',
-    registrationDeadline: '10/12/2025 23:59',
-    description: 'Chỉ dành cho thí sinh đủ điều kiện.',
+    registrationDeadline: '31/12/2099 23:59', // Đặt deadline xa trong tương lai để luôn mở
+    description: 'Chỉ dành cho thí sinh đủ điều kiện. Đăng ký mở không giới hạn thời gian.',
     bgImage: '/images/background/bg2.png',
     sheetName: 'BanKet',
     hasContestantId: true,
-    maxCapacity: 50,
+    maxCapacity: 999999, // Tăng capacity lên rất cao để không giới hạn
     currentCount: 0
   },
   {
     id: 'chung-ket',
     name: 'Chung kết',
     slug: 'chung-ket',
-    status: 'upcoming',
+    status: 'open', // Chuyển từ 'upcoming' thành 'open'
     date: '28/12/2025',
     endDate: '28/12/2025',
-    registrationDeadline: '25/12/2025 23:59',
-    description: 'Số lượng có hạn - vui lòng xác nhận sớm.',
+    registrationDeadline: '31/12/2099 23:59', // Đặt deadline xa trong tương lai để luôn mở
+    description: 'Đăng ký mở không giới hạn thời gian và số lượng.',
     bgImage: '/images/background/bg2.png',
     sheetName: 'ChungKet',
-    maxCapacity: 300,
+    maxCapacity: 999999, // Tăng capacity lên rất cao để không giới hạn
     currentCount: 0
   }
 ]

@@ -4,7 +4,6 @@ import { googleSheetsService } from '@/lib/google-sheets';
 import { CheckinSubmission, CheckinResponse } from '@/lib/types';
 import { 
   generateConfirmationCode, 
-  hashConfirmationCode,
   formatPhoneNumber, 
   validateEmail, 
   validatePhoneNumber,
@@ -23,6 +22,9 @@ const checkinSchema = z.object({
   email: z.string().refine(validateEmail, 'Email không hợp lệ'),
   confirmed: z.boolean().refine(val => val === true, 'Bạn phải xác nhận tham dự'),
   round: z.enum(['hop-bao', 'so-khao', 'ban-ket', 'chung-ket']),
+  userType: z.enum(['thi-sinh', 'bgk', 'khan-gia', 'khach-moi'], {
+    message: 'Vui lòng chọn phân loại người tham dự'
+  }),
   region: z.enum(['HN', 'DN', 'HCM']).optional(),
   contestantId: z.string().max(50, 'Mã thí sinh không được quá 50 ký tự').optional(),
 });
@@ -185,6 +187,7 @@ export async function POST(request: NextRequest) {
       email: normalizedEmail,
       confirmed: data.confirmed,
       round: data.round,
+      userType: data.userType,
       region: data.region,
       contestantId: data.contestantId?.trim(),
       timestamp: new Date().toISOString(),
@@ -217,7 +220,7 @@ export async function POST(request: NextRequest) {
     // Success response
     const responseData: CheckinResponse = {
       success: true,
-      message: getSuccessMessage(data.round, data.region),
+      message: getSuccessMessage(data.round, data.region, data.userType),
       confirmationCode: confirmationCode,
     }
 
@@ -293,19 +296,23 @@ export async function POST(request: NextRequest) {
   }
 }
 
-function getSuccessMessage(round: string, region?: string): string {
+function getSuccessMessage(round: string, region?: string, userType?: string): string {
+  const userTypeText = userType === 'thi-sinh' ? 'thí sinh' : 
+                      userType === 'bgk' ? 'ban giám khảo' :
+                      userType === 'khan-gia' ? 'khán giả' : 'khách mời'
+  
   switch (round) {
     case 'hop-bao':
-      return 'Đã ghi nhận check-in Họp báo. BTC sẽ liên hệ với bạn trong 24h tới!'
+      return `Đã ghi nhận check-in Họp báo với tư cách ${userTypeText}. BTC sẽ liên hệ với bạn trong 24h tới!`
     case 'so-khao':
       const regionName = region === 'HN' ? 'Hà Nội' : region === 'DN' ? 'Đà Nẵng' : 'TP.HCM'
-      return `Đã ghi nhận check-in Sơ khảo khu vực ${regionName}. BTC sẽ thông báo lịch thi cụ thể!`
+      return `Đã ghi nhận check-in Sơ khảo khu vực ${regionName} với tư cách ${userTypeText}. BTC sẽ thông báo lịch thi cụ thể!`
     case 'ban-ket':
-      return 'Đã ghi nhận check-in Bán kết. BTC sẽ xác thực thông tin và hướng dẫn chi tiết!'
+      return `Đã ghi nhận check-in Bán kết với tư cách ${userTypeText}. BTC sẽ xác thực thông tin và hướng dẫn chi tiết!`
     case 'chung-ket':
-      return 'Đã ghi nhận check-in Chung kết! Hẹn gặp bạn tại Cung Tiên Sơn – Đà Nẵng!'
+      return `Đã ghi nhận check-in Chung kết với tư cách ${userTypeText}! Hẹn gặp bạn tại Cung Tiên Sơn – Đà Nẵng!`
     default:
-      return 'Check-in thành công! Cảm ơn bạn đã tham gia HHSV Hòa Bình Việt Nam 2025!'
+      return `Check-in thành công với tư cách ${userTypeText}! Cảm ơn bạn đã tham gia HHSV Hòa Bình Việt Nam 2025!`
   }
 }
 
@@ -326,7 +333,7 @@ export async function GET(request: NextRequest) {
       try {
         const eventStats = await googleSheetsService.getSheetStats(round)
         stats[round] = eventStats
-      } catch (e) {
+      } catch {
         stats[round] = { total: 0, recent: 0, error: 'Unable to fetch' }
       }
     }
