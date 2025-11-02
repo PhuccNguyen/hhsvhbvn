@@ -15,6 +15,7 @@ const Timeline = ({ compact = false, showDescription = false }: TimelineProps) =
   const getIcon = (eventId: string) => {
     switch (eventId) {
       case 'hop-bao': return Calendar
+      case 'so-tuyen': return Users
       case 'so-khao': return Users
       case 'ban-ket': return Crown
       case 'chung-ket': return Trophy

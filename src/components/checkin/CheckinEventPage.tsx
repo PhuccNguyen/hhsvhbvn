@@ -36,6 +36,7 @@ const CheckinEventPage = ({ event }: CheckinEventPageProps) => {
   const getEventIcon = () => {
     switch (event.id) {
       case 'hop-bao': return Calendar
+      case 'so-tuyen': return Users
       case 'so-khao': return Users
       case 'ban-ket': return Crown
       case 'chung-ket': return Trophy
@@ -46,6 +47,7 @@ const CheckinEventPage = ({ event }: CheckinEventPageProps) => {
   const getEventColor = () => {
     switch (event.id) {
       case 'hop-bao': return '#8B5CF6'
+      case 'so-tuyen': return '#10B981'
       case 'so-khao': return '#3B82F6'
       case 'ban-ket': return '#F59E0B'
       case 'chung-ket': return '#E7C873'
@@ -58,17 +60,26 @@ const CheckinEventPage = ({ event }: CheckinEventPageProps) => {
       case 'hop-bao':
         return {
           location: 'Nhà hát Trưng Vương, Đà Nẵng',
-          time: '16:00 - 21:00 ICT',
+          time: '17:00 - 21:00 ICT',
           date: '27 Tháng 9, 2025',
           note: 'Vui lòng có mặt sớm 30 phút để làm thủ tục. Trang phục lịch sự.',
           documents: 'CCCD/CMND + Thẻ sinh viên',
           status: 'Đã hoàn thành'
         }
+      case 'so-tuyen':
+        return {
+          location: 'HN • Đà Nẵng • TP.HCM • Cần Thơ',
+          time: '08:00 - 17:00 ICT',
+          date: '27/09 - 25/11/2025',
+          note: 'Vòng sơ tuyển diễn ra sau họp báo, trước sơ khảo. Chọn khu vực phù hợp.',
+          documents: 'Hồ sơ đăng ký + CCCD + Ảnh',
+          status: 'Đang mở đăng ký'
+        }
       case 'so-khao':
         return {
-          location: 'HN • Đà Nẵng • TP.HCM',
+          location: 'HN • Đà Nẵng • TP.HCM • Cần Thơ',
           time: '08:00 - 17:00 ICT',
-          date: '05/10 - 25/11/2025',
+          date: '06/11 - 30/11/2025',
           note: 'Chọn khu vực phù hợp. Chuẩn bị hồ sơ đầy đủ theo quy định BTC.',
           documents: 'Hồ sơ đăng ký + CCCD + Ảnh',
           status: 'Đang mở đăng ký'
@@ -77,7 +88,7 @@ const CheckinEventPage = ({ event }: CheckinEventPageProps) => {
         return {
           location: 'Nhà hát Trưng Vương, Đà Nẵng',
           time: '19:00 - 22:00 ICT',
-          date: '15 Tháng 12, 2025',
+          date: '05/12 - 15/12/2025',
           note: 'Chỉ dành cho thí sinh vượt qua vòng sơ khảo. Dress code: Váy dạ hội.',
           documents: 'CCCD + Thẻ thí sinh + Vé mời',
           status: 'Sắp diễn ra'
@@ -86,7 +97,7 @@ const CheckinEventPage = ({ event }: CheckinEventPageProps) => {
         return {
           location: 'Cung Tiên Sơn, Đà Nẵng',
           time: '19:00 - 23:00 ICT',
-          date: '28 Tháng 12, 2025',
+          date: '16/12 - 28/12/2025',
           note: 'Đêm Chung kết hoành tráng. Số lượng ghế có hạn, đăng ký sớm.',
           documents: 'Vé mời + CCCD (bắt buộc)',
           status: 'Sắp diễn ra'
@@ -115,12 +126,18 @@ const CheckinEventPage = ({ event }: CheckinEventPageProps) => {
       case 'hop-bao':
         return [
           { icon: Users, label: 'Khách mời', value: '300+', color: 'purple' },
-          { icon: Calendar, label: 'Thời lượng', value: '5h', color: 'blue' }
+          { icon: Calendar, label: 'Thời lượng', value: '4h', color: 'blue' }
+        ]
+      case 'so-tuyen':
+        return [
+          { icon: Users, label: 'Thí sinh', value: '1000+', color: 'green' },
+          { icon: MapPin, label: 'Khu vực', value: '4', color: 'blue' },
+          { icon: Star, label: 'Vào SK', value: '500+', color: 'gold' }
         ]
       case 'so-khao':
         return [
           { icon: Users, label: 'Thí sinh', value: '500+', color: 'blue' },
-          { icon: MapPin, label: 'Khu vực', value: '3', color: 'green' },
+          { icon: MapPin, label: 'Khu vực', value: '4', color: 'green' },
           { icon: Star, label: 'Vào BK', value: '50', color: 'gold' }
         ]
       case 'ban-ket':
@@ -231,13 +248,15 @@ const CheckinEventPage = ({ event }: CheckinEventPageProps) => {
                   Check-in {event.name}
                 </h1>
                 <p className={styles.heroSubtitle}>
-                  {event.slug === 'so-khao'
-                    ? 'Chọn khu vực và xác nhận tham dự sơ khảo'
-                    : event.slug === 'ban-ket'
-                      ? 'Xác nhận tham dự bán kết - Thí sinh đã lọt vòng trong'
-                      : event.slug === 'chung-ket'
-                        ? 'Đăng ký tham dự đêm Chung kết hoành tráng'
-                        : 'Xác nhận tham dự và nhận thông tin chi tiết sự kiện'
+                  {event.slug === 'so-tuyen'
+                    ? 'Chọn khu vực và xác nhận tham gia sơ tuyển (sau họp báo, trước sơ khảo)'
+                    : event.slug === 'so-khao'
+                      ? 'Chọn khu vực và xác nhận tham dự sơ khảo'
+                      : event.slug === 'ban-ket'
+                        ? 'Xác nhận tham dự bán kết - Thí sinh đã lọt vòng trong'
+                        : event.slug === 'chung-ket'
+                          ? 'Đăng ký tham dự đêm Chung kết hoành tráng'
+                          : 'Xác nhận tham dự và nhận thông tin chi tiết sự kiện'
                   }
                 </p>
               </div>

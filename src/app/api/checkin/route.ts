@@ -21,11 +21,11 @@ const checkinSchema = z.object({
   phone: z.string().refine(validatePhoneNumber, 'Số điện thoại không hợp lệ'),
   email: z.string().refine(validateEmail, 'Email không hợp lệ'),
   confirmed: z.boolean().refine(val => val === true, 'Bạn phải xác nhận tham dự'),
-  round: z.enum(['hop-bao', 'so-khao', 'ban-ket', 'chung-ket']),
+  round: z.enum(['hop-bao', 'so-tuyen', 'so-khao', 'ban-ket', 'chung-ket']),
   userType: z.enum(['thi-sinh', 'bgk', 'khan-gia', 'khach-moi'], {
     message: 'Vui lòng chọn phân loại người tham dự'
   }),
-  region: z.enum(['HN', 'DN', 'HCM']).optional(),
+  region: z.enum(['HN', 'DN', 'HCM', 'CT']).optional(),
   contestantId: z.string().max(50, 'Mã thí sinh không được quá 50 ký tự').optional(),
 });
 
@@ -304,8 +304,11 @@ function getSuccessMessage(round: string, region?: string, userType?: string): s
   switch (round) {
     case 'hop-bao':
       return `Đã ghi nhận check-in Họp báo với tư cách ${userTypeText}. BTC sẽ liên hệ với bạn trong 24h tới!`
+    case 'so-tuyen':
+      const regionNameST = region === 'HN' ? 'Hà Nội' : region === 'DN' ? 'Đà Nẵng' : region === 'CT' ? 'Cần Thơ' : 'TP.HCM'
+      return `Đã ghi nhận check-in Sơ Tuyển khu vực ${regionNameST} với tư cách ${userTypeText}. BTC sẽ thông báo thông tin tiếp theo!`
     case 'so-khao':
-      const regionName = region === 'HN' ? 'Hà Nội' : region === 'DN' ? 'Đà Nẵng' : 'TP.HCM'
+      const regionName = region === 'HN' ? 'Hà Nội' : region === 'DN' ? 'Đà Nẵng' : region === 'CT' ? 'Cần Thơ' : 'TP.HCM'
       return `Đã ghi nhận check-in Sơ khảo khu vực ${regionName} với tư cách ${userTypeText}. BTC sẽ thông báo lịch thi cụ thể!`
     case 'ban-ket':
       return `Đã ghi nhận check-in Bán kết với tư cách ${userTypeText}. BTC sẽ xác thực thông tin và hướng dẫn chi tiết!`

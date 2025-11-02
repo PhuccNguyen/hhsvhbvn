@@ -21,25 +21,31 @@ const HowItWorks = () => {
     { 
       name: 'Họp báo', 
       path: '/checkin/hop-bao',
-      date: '27/09/2025',
+      date: '27/09/2025 17h-21h',
       color: '#ef4444'
+    },
+    { 
+      name: 'Sơ Tuyển', 
+      path: '/checkin/so-tuyen',
+      date: '27/09-25/11/2025',
+      color: '#10b981'
     },
     { 
       name: 'Sơ khảo', 
       path: '/checkin/so-khao',
-      date: '05/10-25/11',
+      date: '06/11-30/11/2025',
       color: '#f59e0b'
     },
     { 
       name: 'Bán kết', 
       path: '/checkin/ban-ket',
-      date: '15/12/2025',
+      date: '05/12-15/12/2025',
       color: '#3b82f6'
     },
     { 
       name: 'Chung kết', 
       path: '/checkin/chung-ket',
-      date: '28/12/2025',
+      date: '16/12-28/12/2025',
       color: '#8b5cf6'
     }
   ]

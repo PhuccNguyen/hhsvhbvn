@@ -32,6 +32,7 @@ const Footer = () => {
   const quickLinks = [
     { href: '/', label: 'Trang chủ', icon: Globe },
     { href: '/checkin/hop-bao', label: 'Họp báo', icon: Users },
+    { href: '/checkin/so-tuyen', label: 'Sơ Tuyển', icon: Users },
     { href: '/checkin/so-khao', label: 'Sơ khảo', icon: Star },
     { href: '/checkin/ban-ket', label: 'Bán kết', icon: Award },
     { href: '/checkin/chung-ket', label: 'Chung kết', icon: Crown }
@@ -40,34 +41,42 @@ const Footer = () => {
   const timelineEvents = [
     {
       title: 'Họp báo',
-      date: '27/09/2025',
+      date: '27/09/2025 17h-21h',
       location: 'Đà Nẵng',
       icon: Users,
       color: 'purple'
     },
     {
+      title: 'Sơ Tuyển',
+      date: '27/09-25/11/2025',
+      location: 'HN • ĐN • HCM • CT',
+      icon: Users,
+      color: 'green'
+    },
+    {
       title: 'Sơ khảo',
-      date: 'HN 09/11 • ĐN 16/11 • HCM 23/11',
+      date: '06/11-30/11/2025',
+      location: 'HN • ĐN • HCM • CT',
       icon: Star,
       color: 'blue'
     },
     {
       title: 'Bán kết',
-      date: '15/12/2025',
+      date: '05/12-15/12/2025',
       location: 'Nhà hát Trưng Vương, ĐN',
       icon: Award,
-      color: 'green'
+      color: 'orange'
     },
     {
       title: 'Thiện nguyện',
-      date: '18/12/2025',
+      date: '16-28/12/2025',
       location: 'Đà Nẵng',
       icon: Heart,
       color: 'pink'
     },
     {
       title: 'Chung kết',
-      date: '28/12/2025',
+      date: '16/12-28/12/2025',
       location: 'Cung Tiên Sơn, ĐN',
       icon: Crown,
       color: 'gold'

@@ -3,9 +3,9 @@ export interface CheckinSubmission {
   phone: string
   email: string
   confirmed: boolean
-  round: 'hop-bao' | 'so-khao' | 'ban-ket' | 'chung-ket'
+  round: 'hop-bao' | 'so-tuyen' | 'so-khao' | 'ban-ket' | 'chung-ket'
   userType: 'thi-sinh' | 'bgk' | 'khan-gia' | 'khach-moi' // Phân loại user bắt buộc
-  region?: 'HN' | 'DN' | 'HCM'
+  region?: 'HN' | 'DN' | 'HCM' | 'CT'
   contestantId?: string
   timestamp: string
   confirmationCode: string // Required field for tracking

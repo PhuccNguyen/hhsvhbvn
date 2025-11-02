@@ -35,10 +35,10 @@ const HeroSection = () => {
   if (!mounted) return null
 
   const highlights = [
-    { icon: Users, text: '500+ thí sinh' },
+    { icon: Users, text: '1000+ thí sinh' },
     { icon: Globe, text: 'Quy mô toàn quốc' },
-    { icon: MapPin, text: '3 thành phố lớn' },
-    { icon: Award, text: 'Giải thưởng hấp dẫn' },
+    { icon: MapPin, text: '4 thành phố lớn' },
+    { icon: Award, text: 'Giải thưởng 2 tỷ đồng' },
     { icon: TrendingUp, text: 'Cơ hội nghề nghiệp' }
   ]
 
@@ -52,23 +52,31 @@ const HeroSection = () => {
     {
       icon: Mic,
       label: 'Họp báo',
-      status: 'đang diễn ra',
+      status: '17h00-21h00',
       details: '27/09/2025 - Đà Nẵng',
       isActive: true,
       link: 'https://hhsvhbvn.tingnect.com/checkin/hop-bao'
     },
     {
+      icon: Users,
+      label: 'Sơ Tuyển',
+      status: '27/09-25/11',
+      details: 'Sau họp báo, trước sơ khảo',
+      isActive: true,
+      link: 'https://hhsvhbvn.tingnect.com/checkin/so-tuyen'
+    },
+    {
       icon: Calendar,
       label: 'Sơ khảo',
-      status: 'T11/2025 - Đang mở',
-      details: 'HN 09/11 • ĐN 16/11 • HCM 23/11',
+      status: '06/11-30/11',
+      details: 'HN • ĐN • HCM • CT',
       isActive: true,
       link: 'https://hhsvhbvn.tingnect.com/checkin/so-khao'
     },
     {
       icon: Star,
       label: 'Công bố kết quả sơ khảo',
-      status: '28/11/2025',
+      status: '30/11/2025',
       isActive: false
     },
     {
@@ -88,7 +96,7 @@ const HeroSection = () => {
     {
       icon: Crown,
       label: 'Chung kết',
-      status: '28/12',
+      status: '16-28/12',
       details: 'Cung Tiên Sơn, Đà Nẵng',
       isActive: false,
       link: 'https://hhsvhbvn.tingnect.com/checkin/chung-ket'
@@ -169,7 +177,7 @@ const HeroSection = () => {
                 })}
                 <div className={styles.highlightChip}>
                   <MapPin size={14} />
-                  <span>Hà Nội • Đà Nẵng • TP.HCM</span>
+                  <span>Hà Nội • Đà Nẵng • TP.HCM • Cần Thơ</span>
                 </div>
               </motion.div>
 
@@ -193,7 +201,7 @@ const HeroSection = () => {
                 </Link>
                 <p className={styles.ctaMicrocopy}>Hoàn tất trong 30 giây</p>
                 <p className={styles.eligibilityNote}>
-                  Dành cho nữ sinh viên Việt Nam 18–24 tuổi
+                  Dành cho nữ sinh viên Việt Nam 18–25 tuổi
                 </p>
               </motion.div>
               {/* Mini Timeline */}
@@ -313,7 +321,7 @@ const HeroSection = () => {
                 Cuộc thi danh giá dành cho nữ sinh viên Việt Nam
               </h1>
               <p className={styles.slogan}>
-                Xinh đẹp • Trí tuệ • Bản lĩnh • Nhân ái
+                Xinh đẹp • Trí tuệ • Bản lĩnh • Nhân ái • Yêu Hòa Bình
               </p>
             </motion.div>
 
@@ -335,7 +343,7 @@ const HeroSection = () => {
               })}
               <div className={styles.highlightChip}>
                 <MapPin size={16} />
-                <span>Hà Nội • Đà Nẵng • TP.HCM</span>
+                <span>Hà Nội • Đà Nẵng • TP.HCM • Cần Thơ</span>
               </div>
             </motion.div>
 
@@ -359,7 +367,7 @@ const HeroSection = () => {
               </Link>
               <p className={styles.ctaMicrocopy}>Hoàn tất trong 30 giây</p>
               <p className={styles.eligibilityNote}>
-                Dành cho nữ sinh viên Việt Nam 18–24 tuổi
+                Dành cho nữ sinh viên Việt Nam 18–25 tuổi
               </p>
             </motion.div>
 

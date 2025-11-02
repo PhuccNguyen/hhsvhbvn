@@ -28,6 +28,7 @@ const CheckinHub = () => {
   const getEventIcon = (eventId: string) => {
     switch (eventId) {
       case 'hop-bao': return Calendar
+      case 'so-tuyen': return Users
       case 'so-khao': return Users
       case 'ban-ket': return Crown
       case 'chung-ket': return Trophy
@@ -38,6 +39,7 @@ const CheckinHub = () => {
   const getEventColor = (eventId: string) => {
     switch (eventId) {
       case 'hop-bao': return 'purple'
+      case 'so-tuyen': return 'green'
       case 'so-khao': return 'blue'
       case 'ban-ket': return 'orange'
       case 'chung-ket': return 'gold'
@@ -48,6 +50,7 @@ const CheckinHub = () => {
   const getCountdownText = (eventId: string) => {
     const countdowns = {
       'hop-bao': 'Đang Diễn Ra',
+      'so-tuyen': 'Mở đăng ký có thể đăng ký',
       'so-khao': 'Mở đăng ký có thể đăng ký',
       'ban-ket': 'Sắp diễn ra có thể đăng ký',
       'chung-ket': 'Sắp diễn ra có thể đăng ký'
@@ -56,10 +59,11 @@ const CheckinHub = () => {
   }
 
   const timelineEvents = [
-    { name: 'Họp báo', date: '27/09/2025', status: 'completed', icon: Calendar },
-    { name: 'Sơ khảo', date: '05/10-25/11/2025', status: 'active', icon: Users },
-    { name: 'Bán kết', date: '15/12/2025', status: 'upcoming', icon: Crown },
-    { name: 'Chung kết', date: '28/12/2025', status: 'upcoming', icon: Trophy }
+    { name: 'Họp báo', date: '27/09/2025 17h-21h', status: 'completed', icon: Calendar },
+    { name: 'Sơ Tuyển', date: '27/09-25/11/2025', status: 'active', icon: Users },
+    { name: 'Sơ khảo', date: '06/11-30/11/2025', status: 'active', icon: Users },
+    { name: 'Bán kết', date: '05/12-15/12/2025', status: 'upcoming', icon: Crown },
+    { name: 'Chung kết', date: '16/12-28/12/2025', status: 'upcoming', icon: Trophy }
   ]
 
   const quickStats = [

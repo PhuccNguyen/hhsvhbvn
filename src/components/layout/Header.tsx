@@ -40,10 +40,11 @@ const Header = () => {
   }, [pathname])
 
   const checkinRounds = [
-    { href: '/checkin/hop-bao', label: 'Họp báo', date: '27/09/2025' },
-    { href: '/checkin/so-khao', label: 'Sơ khảo', date: '05/10-25/11' },
-    { href: '/checkin/ban-ket', label: 'Bán kết', date: '15/12/2025' },
-    { href: '/checkin/chung-ket', label: 'Chung kết', date: '28/12/2025' }
+    { href: '/checkin/hop-bao', label: 'Họp báo', date: '27/09/2025 17h-21h' },
+    { href: '/checkin/so-tuyen', label: 'Sơ Tuyển', date: '27/09-25/11/2025' },
+    { href: '/checkin/so-khao', label: 'Sơ khảo', date: '06/11-30/11/2025' },
+    { href: '/checkin/ban-ket', label: 'Bán kết', date: '05/12-15/12/2025' },
+    { href: '/checkin/chung-ket', label: 'Chung kết', date: '16/12-28/12/2025' }
   ]
 
   const mainNavigationItems = [

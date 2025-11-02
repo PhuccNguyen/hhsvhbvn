@@ -529,7 +529,8 @@ const CheckinForm = ({ event, onSuccess }: CheckinFormProps) => {
                 <span className={styles.summaryLabel}>Khu vực:</span>
                 <span className={styles.summaryValue}>
                   {formData.region === 'HN' ? 'Hà Nội' : 
-                   formData.region === 'DN' ? 'Đà Nẵng' : 'TP.HCM'}
+                   formData.region === 'DN' ? 'Đà Nẵng' : 
+                   formData.region === 'CT' ? 'Cần Thơ' : 'TP.HCM'}
                 </span>
               </div>
             )}
@@ -924,9 +925,10 @@ const CheckinForm = ({ event, onSuccess }: CheckinFormProps) => {
                   aria-invalid={hasFieldError('region')}
                 >
                   <option value="">-- Chọn khu vực --</option>
-                  <option value="HN">Hà Nội (09/11/2025)</option>
-                  <option value="DN">Đà Nẵng (16/11/2025)</option>
-                  <option value="HCM">TP.HCM (23/11/2025)</option>
+                  <option value="HN">Hà Nội</option>
+                  <option value="DN">Đà Nẵng</option>
+                  <option value="HCM">TP.HCM</option>
+                  <option value="CT">Cần Thơ</option>
                 </select>
                 <AnimatePresence>
                   {hasFieldError('region') && (
