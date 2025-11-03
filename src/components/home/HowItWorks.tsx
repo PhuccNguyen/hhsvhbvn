@@ -78,7 +78,7 @@ const HowItWorks = () => {
     },
     {
       icon: Mail,
-      text: 'Bạn sẽ nhận email/SMS xác nhận (nếu bật).'
+      text: 'Bạn sẽ nhận thông báo Mã Check-in.'
     },
     {
       icon: Clock,
@@ -343,7 +343,7 @@ const HowItWorks = () => {
               </div>
               <div className={styles.contactRow}>
                 <Phone size={16} />
-                <span>0902 031 034</span>
+                <span>0395 552 929</span>
               </div>
             </div>
           </div>

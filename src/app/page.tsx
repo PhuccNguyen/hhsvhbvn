@@ -7,6 +7,7 @@ import Purpose from '@/components/home/Purpose'
 import SlideImage from '@/components/home/SlideImage'
 import HowItWorks from '@/components/home/HowItWorks'
 import FAQ from '@/components/home/FAQ'
+import News from '@/components/home/News'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://hhsvhbvn.tingnect.com'
 const OG_IMAGE = `${SITE_URL}/images/og/hhsvhbvn-og.jpg`
@@ -54,6 +55,7 @@ export default function HomePage() {
       <Purpose />
       <HowItWorks />
       <FAQ />
+      <News />
 
       {/* JSON-LD cho riêng trang Home: WebPage + BreadcrumbList
          (Organization / WebSite / Event đặt ở layout.tsx để tránh trùng lặp) */}

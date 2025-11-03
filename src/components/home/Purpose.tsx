@@ -2,7 +2,6 @@
 
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
-import Image from 'next/image'
 import { Sparkles, Heart, Star, Crown } from 'lucide-react'
 import styles from './Purpose.module.css'
 
@@ -12,34 +11,34 @@ const Purpose = () => {
 
   const purposeItems = [
     {
-      id: 'first-time',
+      id: 'honor-students',
       icon: <Crown size={20} />,
-      title: 'Cuộc thi Hòa Bình đầu tiên tại Việt Nam',
-      description: 'Lần đầu tiên tại Việt Nam, một cuộc thi mang biểu tượng Hòa Bình dành cho nữ sinh viên Việt Nam – nơi tôn vinh trí tuệ, nhan sắc và tinh thần hòa bình.',
+      title: 'Tôn Vinh Sinh Viên Việt Nam',
+      description: 'Khám phá và tôn vinh vẻ đẹp toàn diện của nữ sinh viên: Nhan sắc - Trí tuệ - Bản lĩnh - Lòng nhân ái - Yêu nước - Yêu Hòa bình.',
       gradient: 'from-pink-400 to-rose-500'
     },
     {
-      id: 'tourism',
-      icon: <Star size={20} />,
-      title: 'Quảng bá du lịch & văn hóa Việt Nam',
-      description: 'Quảng bá du lịch Đà Nẵng và di sản – văn hóa Việt Nam thông qua các hoạt động truyền thông của cuộc thi.',
+      id: 'peace-message',
+      icon: <Heart size={20} />,
+      title: 'Lan Tỏa Thông Điệp Hòa Bình',
+      description: 'Mang đến hành trình ý nghĩa, nơi sinh viên trở thành đại sứ lan tỏa giá trị hòa bình, nhân văn và niềm tự hào dân tộc.',
       gradient: 'from-blue-400 to-indigo-500'
     }
   ]
 
   const meaningItems = [
     {
-      id: 'playground',
-      icon: <Heart size={20} />,
-      title: 'Nơi uy tín để phát triển bản thân',
-      description: 'Nơi uy tín để sinh viên giao lưu, học hỏi, hoàn thiện bản thân, phát huy tài năng – vẻ đẹp, xây dựng nhân hiệu cho tương lai.',
+      id: 'national-opportunity',
+      icon: <Star size={20} />,
+      title: 'Cơ Hội Tỏa Sáng cho Sinh Viên Việt Nam Toàn Quốc',
+      description: 'Lần đầu tiên tổ chức với quy mô quốc gia, cuộc thi mở ra sân chơi lớn để nữ sinh viên thể hiện tài năng, bản lĩnh và khát vọng tuổi trẻ.',
       gradient: 'from-emerald-400 to-teal-500'
     },
     {
-      id: 'talents',
+      id: 'personal-journey',
       icon: <Sparkles size={20} />,
-      title: 'Tìm kiếm gương mặt trẻ tài năng',
-      description: 'Tìm kiếm gương mặt trẻ tài năng, khuyến khích sinh viên tham gia hoạt động về nguồn – văn hóa – giải trí lành mạnh, ca ngợi trí tuệ và đạo đức của sinh viên Việt Nam trong công cuộc phát triển đất nước.',
+      title: 'Hành Trình Khám Phá, Khai Mở, Phát Triển Bản Thân',
+      description: 'Thông qua các vòng thi và chương trình truyền hình thực tế, thí sinh được đào tạo, trải nghiệm và hoàn thiện bản thân, góp phần lan tỏa thông điệp hòa bình và trở thành nguồn cảm hứng tích cực cho thế hệ sinh viên Việt Nam.',
       gradient: 'from-amber-400 to-orange-500'
     }
   ]
@@ -115,10 +114,10 @@ const Purpose = () => {
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
           <h2 className={styles.title}>
-            Mục đích & Ý nghĩa
+            Giới Thiệu Cuộc Thi
           </h2>
           <p className={styles.subtitle}>
-            Tôn vinh trí tuệ, nhan sắc & tinh thần hòa bình
+            Sân chơi quy mô quốc gia đầu tiên dành cho nữ sinh viên Việt Nam - Tôn vinh vẻ đẹp: Xinh đẹp – Trí tuệ – Bản lĩnh – Nhân ái
           </p>
         </motion.div>
 
@@ -136,11 +135,11 @@ const Purpose = () => {
                 <div className={styles.blockIcon}>
                   <Crown size={24} />
                 </div>
-                <h3 className={styles.blockTitle}>Mục đích</h3>
+                <h3 className={styles.blockTitle}>Sứ Mệnh</h3>
               </div>
               
               <div className={styles.itemsGrid}>
-                {purposeItems.map((item, index) => (
+                {purposeItems.map((item) => (
                   <motion.div
                     key={item.id}
                     className={styles.purposeCard}
@@ -170,11 +169,11 @@ const Purpose = () => {
                 <div className={styles.blockIcon}>
                   <Sparkles size={24} />
                 </div>
-                <h3 className={styles.blockTitle}>Ý nghĩa</h3>
+                <h3 className={styles.blockTitle}>Giá Trị</h3>
               </div>
               
               <div className={styles.itemsGrid}>
-                {meaningItems.map((item, index) => (
+                {meaningItems.map((item) => (
                   <motion.div
                     key={item.id}
                     className={styles.purposeCard}
@@ -208,16 +207,23 @@ const Purpose = () => {
           >
             <div className={styles.imageContainer}>
               <div className={styles.imageFrame}>
-                <Image
-                  src="/images/nguoinoitieng/hoa-hau-ubg.jpg"
-                  alt="Hoa hậu đại diện tinh thần hòa bình và trí tuệ"
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 40vw, 500px"
+                <iframe
+                  src="https://www.youtube.com/embed/dDwm5Hf2MpM?si=EHVH6cu1DrM6OaN6&controls=1&rel=0&modestbranding=1&fs=1&cc_load_policy=0&iv_load_policy=3&enablejsapi=1"
+                  title="Hoa Hậu Sinh Viên Hòa Bình Việt Nam - Livestream"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
+                  allowFullScreen
                   className={styles.beautyImage}
-                  priority={false}
-                  loading="lazy"
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    border: 'none',
+                    borderRadius: '16px',
+                    pointerEvents: 'auto'
+                  }}
                 />
-                <div className={styles.imageOverlay} />
                 <div className={styles.goldBorder} />
               </div>
               
@@ -228,7 +234,7 @@ const Purpose = () => {
                 transition={{ delay: 0.8, duration: 0.5 }}
               >
                 <Sparkles size={14} />
-                <span>Đồng hành cùng Hòa Bình – Trí tuệ – Nhan sắc</span>
+                <span>Lan tỏa thông điệp Hòa Bình - Nhân Văn - Tự hào Dân tộc</span>
               </motion.div>
             </div>
           </motion.div>

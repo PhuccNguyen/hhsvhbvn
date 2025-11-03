@@ -27,87 +27,85 @@ interface FAQItem {
   category: 'general' | 'requirements' | 'process' | 'rewards'
 }
 
-const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL || 'https://hhsvhbvn.tingnect.com'
-
 /** ====== DATA ====== */
 const faqData: FAQItem[] = [
   {
     id: 'who-can-join',
     question: 'Cuộc thi này dành cho ai?',
     answer:
-      'Dành cho nữ sinh viên Việt Nam (trong nước & Việt kiều), độ tuổi 19–25, đang theo học ĐH/CĐ/HV.',
+      'Dành cho nữ sinh viên Việt Nam (bao gồm cả Việt kiều - có Cha hoặc Mẹ là người Việt Nam), độ tuổi từ 18-25 tuổi, đang theo học tại các trường Đại Học, Cao Đẳng và Học Viện.',
     icon: Users,
     category: 'general',
   },
   {
     id: 'meaning',
-    question: 'Mục tiêu và ý nghĩa của cuộc thi là gì?',
+    question: 'Mục đích và ý nghĩa của cuộc thi?',
     answer:
-      'Tôn vinh vẻ đẹp sinh viên gắn với trí tuệ – bản lĩnh – nhân ái – tinh thần yêu nước, lan tỏa văn hóa Việt và tạo sân chơi quốc gia cho kết nối – học hỏi – định hướng tương lai.',
+      'Cuộc thi quy mô quốc gia đầu tiên tôn vinh vẻ đẹp "Xinh đẹp – Trí tuệ – Bản lĩnh – Nhân ái - Hòa Bình", tạo sân chơi cho nữ sinh viên kết nối - giao lưu - học hỏi, đồng thời lan tỏa lòng nhân ái, yêu nước và quảng bá văn hóa - di sản Việt Nam.',
     icon: Target,
     category: 'general',
   },
   {
     id: 'requirements',
-    question: 'Thể lệ nổi bật cần lưu ý?',
+    question: 'Các tiêu chí tham gia bắt buộc?',
     answer:
-      'Chưa lập gia đình, không phẫu thuật thẩm mỹ, chiều cao từ 1m63; có CCCD/Passport còn hiệu lực; tuân thủ quy định truyền thông hình ảnh của BTC.',
+      'Chưa lập gia đình, chưa sinh con; không phẫu thuật thẩm mỹ; chiều cao từ 1m63 trở lên; có CCCD/Passport còn hiệu lực; không có tiền án; có giấy xác nhận độc thân từ chính quyền địa phương.',
     icon: FileText,
     category: 'requirements',
   },
   {
     id: 'special-entry',
-    question: 'Có diện đặc cách không?',
+    question: 'Có diện đặc cách vào Bán kết không?',
     answer:
-      'Có. Thí sinh có thành tích sắc đẹp (2021–2024) theo tiêu chí BTC có thể đặc cách vào Chung khảo (vẫn phải đáp ứng điều kiện dự thi & hồ sơ).',
+      'Có. Thí sinh đã vào Chung kết các cuộc thi sắc đẹp quy mô toàn quốc, vùng miền, tỉnh thành; Hoa khôi, Á khôi các cuộc thi cấp tỉnh/trường ĐH/CĐ từ năm 2021-2024 được đặc cách vào Bán kết (vẫn phải đáp ứng đầy đủ điều kiện và hồ sơ).',
     icon: Star,
     category: 'requirements',
   },
   {
     id: 'documents',
-    question: 'Hồ sơ cần những gì?',
+    question: 'Hồ sơ dự thi cần những gì?',
     answer:
-      'Đơn đăng ký; thẻ SV; CCCD/Passport; ảnh mới ≤ 3 tháng (chân dung/bán thân/toàn thân, áo dài/dân tộc/dạ hội/thể thao); clip dọc tự giới thiệu; giấy xác nhận độc thân; giấy tờ ưu tiên (nếu có).',
+      'Đơn đăng ký + Sơ yếu lý lịch (theo mẫu BTC); bản sao công chứng thẻ SV + CCCD/Passport; 02 ảnh 3x4 + 03 ảnh 10x15cm (áo dài, váy dạ hội, trang phục dân tộc, áo tắm - chụp trong 3 tháng); video clip giới thiệu bản thân 1-3 phút (dọc, HD 1920x1080); giấy chứng nhận danh hiệu (nếu đặc cách).',
     icon: FileText,
     category: 'requirements',
   },
   {
     id: 'timeline',
-    question: 'Thời gian nộp hồ sơ?',
-    answer: '20/08/2025 – 25/11/2025. Hồ sơ online qua website/fanpage chính thức.',
+    question: 'Thời gian nộp hồ sơ và các vòng thi?',
+    answer:
+      'Sơ tuyển: 27/09-25/11/2025 (online qua website/email hoặc offline tại VP BTC). Sơ khảo: 06/11-30/11 tại 4 khu vực (Cần Thơ, TP.HCM, Hà Nội, Đà Nẵng). Bán kết: 05-15/12 tại Đà Nẵng. Chung kết: 28/12/2025 tại Cung Tiên Sơn, Đà Nẵng.',
     icon: Calendar,
     category: 'process',
   },
   {
-    id: 'important-dates',
-    question: 'Các mốc quan trọng?',
+    id: 'registration-methods',
+    question: 'Làm sao để đăng ký dự thi?',
     answer:
-      'Tuyển sinh (đang mở) → Sơ khảo 11/2025 → Bán kết 05–15/12/2025 → Chung kết 28/12/2025 (Cung Tiên Sơn, Đà Nẵng).',
-    icon: Calendar,
+      'Online: Nộp qua website hoahausinhvienhoabinh.com/dang-ky hoặc email tuyensinh.hhsvhbvn@gmail.com. Offline: Nộp trực tiếp tại Văn phòng Công ty Cổ Phần Thương Mại Gia Phạm. Hạn cuối: 25/11/2025.',
+    icon: Users,
     category: 'process',
   },
   {
     id: 'voting',
     question: 'Bình chọn hoạt động thế nào?',
     answer:
-      'Hồ sơ hợp lệ được đăng tải trên kênh chính thức; khán giả bình chọn tại Tingnect.com. Kết quả bình chọn minh bạch và là một phần trong cơ chế chấm điểm.',
+      'Hồ sơ hợp lệ được đăng tải trên kênh chính thức. Khán giả bình chọn qua Tingnect.com. Giải "Người đẹp được khán giả yêu thích nhất" trị giá 50 triệu VNĐ + cơ hội du học quốc tế + khóa học hàng không chuyên nghiệp.',
     icon: Heart,
     category: 'process',
   },
   {
-    id: 'media',
-    question: 'Truyền hình & truyền thông có gì đặc sắc?',
+    id: 'preliminary-rounds',
+    question: 'Vòng Sơ khảo diễn ra như thế nào?',
     answer:
-      'Hành trình truyền hình thực tế (VTV, YouTube, fanpage), sân khấu hiện đại, biểu tượng Sen & Bồ câu; lan tỏa mạnh mẽ đến cộng đồng sinh viên cả nước.',
-    icon: Star,
+      'Tổ chức tại 4 khu vực: Cần Thơ (06/11), TP.HCM (14/11), Hà Nội (17-23/11), Đà Nẵng (24-30/11). Thí sinh trình diễn catwalk theo nhạc và trả lời câu hỏi phản ứng nhanh để thể hiện phong thái, sự tự tin và khả năng ứng biến.',
+    icon: Calendar,
     category: 'process',
   },
   {
     id: 'prizes',
-    question: 'Giải thưởng ra sao?',
+    question: 'Giải thưởng của cuộc thi?',
     answer:
-      'Tổng giải thưởng lên tới 2 tỷ đồng (tiền mặt, vương miện, gói truyền thông, học bổng/visa…); nhiều danh hiệu đại sứ và giải phụ hấp dẫn.',
+      'TỔNG: 2 tỷ VNĐ. Hoa hậu: 2 tỷ + học bổng Mỹ 100k USD. Á hậu 1: 1 tỷ + visa 50k USD. Á hậu 2: 500 triệu. Á hậu 3: 250 triệu. Các giải phụ: 50 triệu/giải (Thân thiện, Trang phục truyền thống, Khán giả yêu thích, Ảnh, Phong cách, Đại sứ Hòa Bình, Đại sứ Khởi nghiệp, Đại sứ Tài năng, Đại sứ Nhân ái).',
     icon: Trophy,
     category: 'rewards',
   },

@@ -14,7 +14,6 @@ import {
   Star,
   Crown,
   Calendar,
-  Clock,
   Award,
   Heart,
   Users,
@@ -85,31 +84,31 @@ const Footer = () => {
 
   const socialLinks = [
     {
-      type: 'website',
-      label: 'Website chính thức',
-      value: 'hoahausinhvienhoabinh.com',
-      href: 'https://hoahausinhvienhoabinh.com',
-      icon: Globe
-    },
-    {
-      type: 'fanpage',
-      label: 'Facebook Fanpage',
-      value: 'HHSV Hòa Bình VN',
+      type: 'facebook',
+      label: 'Facebook',
+      value: '@hoahausinhvienhoabinhvn',
       href: 'https://www.facebook.com/hoahausinhvienhoabinhvn',
       icon: Facebook
     },
     {
       type: 'instagram',
       label: 'Instagram',
-      value: '@hhsvhoabinhvn',
-      href: 'https://www.instagram.com/hoahausinhvienhoabinhvn/',
+      value: '@hoahausinhvienhoabinhvn',
+      href: 'https://www.instagram.com/hoahausinhvienhoabinhvn',
       icon: Instagram
     },
     {
+      type: 'tiktok',
+      label: 'TikTok',
+      value: '@hoahausinhvienhoabinhvn',
+      href: 'https://www.tiktok.com/@hoahausinhvienhoabinhvn',
+      icon: Globe
+    },
+    {
       type: 'youtube',
-      label: 'YouTube Channel',
-      value: 'HHSV Hòa Bình VN',
-      href: 'https://youtube.com/@hoahausinhvienhoabinhvn',
+      label: 'YouTube',
+      value: '@hoahausinhvienhoabinhvn',
+      href: 'https://www.youtube.com/@hoahausinhvienhoabinhvn',
       icon: Youtube
     }
   ]
@@ -138,9 +137,16 @@ const Footer = () => {
     },
     {
       type: 'hotline',
+      label: 'Tổng đài liên hệ',
+      value: '1800 8338',
+      href: 'tel:18008338',
+      icon: Phone
+    },
+    {
+      type: 'mobile',
       label: 'Hotline',
-      value: '0902 031 034 (Mr. Sơn Phạm)',
-      href: 'tel:0902031034',
+      value: '0395 552 929',
+      href: 'tel:0395552929',
       icon: Phone
     }
   ]
@@ -169,29 +175,30 @@ const Footer = () => {
             transition={{ duration: 0.6 }}
           >
             <div className={styles.logoWrapper}>
-              <div className={styles.tpaLogo}>
-                <Image
-                  src="/images/logo/Logo_tpa.svg"
-                  alt="TPA Entertainment"
-                  width={36}
-                  height={36}
-                  className={styles.logoImage}
-                />
-              </div>
-              <div className={styles.logoCross}>×</div>
-              <div className={styles.tingnectLogo}>
+                            <div className={styles.tingnectLogo}>
                 <Image
                   src="/images/logo/tingnect-logo.png"
                   alt="TingNect"
-                  width={100}
-                  height={26}
+                  width={120}
+                  height={30}
+                  className={styles.logoImage}
+                />
+              </div>
+              
+              <div className={styles.logoCross}>×</div>
+<div className={styles.tpaLogo}>
+                <Image
+                  src="/images/logo/Logo_tpa.svg"
+                  alt="TPA Entertainment"
+                  width={60}
+                  height={60}
                   className={styles.logoImage}
                 />
               </div>
             </div>
             <div className={styles.brandText}>
               <h3 className={styles.brandTitle}>Hoa Hậu Sinh Viên Hòa Bình Việt Nam 2025</h3>
-              <p className={styles.brandSubtitle}>Xinh đẹp • Trí tuệ • Bản lĩnh • Nhân ái</p>
+              <p className={styles.brandSubtitle}>Xinh đẹp • Trí tuệ • Bản lĩnh • Nhân ái • Hòa bình</p>
             </div>
           </motion.div>
 

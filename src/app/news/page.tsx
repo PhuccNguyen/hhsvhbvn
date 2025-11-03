@@ -4,77 +4,17 @@
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
-import { 
-  Facebook,
-  Twitter} from 'lucide-react'
 import {
   DocumentTextIcon,
   MapPinIcon,
   EnvelopeIcon,
   PhoneIcon,
   UserGroupIcon,
-  CalendarIcon,
-  TrophyIcon
+  CalendarIcon
 } from '@heroicons/react/24/outline'
-import { 
-  StarIcon,
-  SparklesIcon,
-  HeartIcon
-} from '@heroicons/react/24/solid'
 import styles from './news.module.css'
 
 export default function NewsPage() {
-  const heroImages = [
-    {
-      alt: 'Gala trao giải HHSV 2024',
-      caption: 'Đêm Gala hoành tráng của mùa giải trước'
-    },
-    {
-      src: '/images/news/hero-2.jpg',
-      alt: 'Thí sinh tham gia vòng sơ khảo',
-      caption: 'Các thí sinh xuất sắc tại vòng sơ khảo'
-    }
-  ]
-
-  const highlights = [
-    {
-      icon: <StarIcon className={styles.highlightIcon} />,
-      title: "Lần đầu tiên",
-      description: "Cuộc thi sinh viên mang biểu tượng Hòa Bình quy mô quốc gia"
-    },
-    {
-      icon: <SparklesIcon className={styles.highlightIcon} />,
-      title: "Quảng bá Đà Nẵng",
-      description: "& di sản Việt Nam ra thế giới"
-    },
-    {
-      icon: <HeartIcon className={styles.highlightIcon} />,
-      title: "Thông điệp",
-      description: "\"Sinh viên Việt Nam tiếp nối câu chuyện Hòa Bình\""
-    },
-    {
-      icon: <TrophyIcon className={styles.highlightIcon} />,
-      title: "Tổng giải thưởng",
-      description: "2 tỷ VNĐ + 01 du học Mỹ 100.000 USD"
-    }
-  ]
-
-  const people = [
-    { name: "Phạm Xuân Hải", title: "Trưởng BTC", image: "/images/nguoinoitieng/hoa-hau-ubg.jpg" },
-    { name: "Nguyễn Văn Chung", title: "Nhạc sĩ", image: "/images/nguoinoitieng/nhac-si-nguyen-van-chung.jpg" },
-    { name: "Chú Tấn Văn", title: "MC", image: "/images/nguoinoitieng/mc-chu-tan-van.jpg" },
-    { name: "Anh Quân Idol", title: "Ca sĩ", image: "/images/nguoinoitieng/ca-si-anh-quan-idol.jpg" },
-    { name: "Duyên Quỳnh", title: "Ca sĩ", image: "/images/nguoinoitieng/ca-si-nguyen-duyen-quynh.jpg" }
-  ]
-
-  const sponsorTiers = [
-    "15T Độc quyền",
-    "10T Kim cương", 
-    "3T Vàng",
-    "1T Bạc",
-    "500M Đồng",
-    "100M Đồng hành"
-  ]
 
   return (
     <article className={styles.newsPage}>
@@ -162,43 +102,12 @@ export default function NewsPage() {
             transition={{ delay: 0.1, duration: 0.5 }}
           >
             <p>
-              Lần đầu tiên tại Việt Nam, <strong>Hoa Hậu Sinh Viên Hòa Bình Việt Nam 2025</strong> ra đời với sứ mệnh tôn vinh vẻ đẹp toàn diện của nữ sinh viên theo tiêu chí <em>“Xinh Đẹp – Trí Tuệ – Bản Lĩnh – Nhân Ái”</em>. Cuộc thi không chỉ là nơi các thí sinh thể hiện tài năng và cá tính mà còn là cầu nối quảng bá hình ảnh thành phố Đà Nẵng và di sản văn hóa Việt Nam ra thế giới.
+              Lần đầu tiên tại Việt Nam, <strong>Hoa Hậu Sinh Viên Hòa Bình Việt Nam 2025</strong> ra đời với sứ mệnh tôn vinh vẻ đẹp toàn diện của nữ sinh viên theo tiêu chí <em>“Xinh Đẹp – Trí Tuệ – Bản Lĩnh – Nhân Ái - Hòa Bình”</em>. Cuộc thi không chỉ là nơi các thí sinh thể hiện tài năng và cá tính mà còn là cầu nối quảng bá hình ảnh thành phố Đà Nẵng và di sản văn hóa Việt Nam ra thế giới.
             </p>
             <p>
               Với thông điệp <strong>“Sinh viên Việt Nam tiếp nối câu chuyện Hòa Bình”</strong>, cuộc thi khuyến khích thế hệ trẻ lan tỏa giá trị hòa bình và phát triển bền vững, đồng thời tạo cơ hội để các nữ sinh viên hoàn thiện bản thân và kết nối cộng đồng.
             </p>
           </motion.div>
-        </div>
-      </section>
-
-      {/* Highlights Section */}
-      <section className={styles.section}>
-        <div className={styles.container}>
-          <motion.h2
-            className={styles.sectionTitle}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            Điểm nhấn nổi bật
-          </motion.h2>
-          <div className={styles.highlightsGrid}>
-            {highlights.map((highlight, index) => (
-              <motion.div
-                key={index}
-                className={styles.highlightCard}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: index * 0.1, duration: 0.4 }}
-              >
-                <div className={styles.highlightIconWrapper}>
-                  {highlight.icon}
-                </div>
-                <h3 className={styles.highlightTitle}>{highlight.title}</h3>
-                <p className={styles.highlightDescription}>{highlight.description}</p>
-              </motion.div>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -211,7 +120,7 @@ export default function NewsPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            Thể lệ tham gia
+            Đối Tượng Dự Thi
           </motion.h2>
           <motion.div
             className={styles.sectionContent}
@@ -220,20 +129,24 @@ export default function NewsPage() {
             transition={{ delay: 0.1, duration: 0.5 }}
           >
             <p>
-              Cuộc thi mở cửa cho các nữ sinh viên đáp ứng các điều kiện sau:
+              Nữ sinh viên Việt Nam từ <strong>18 đến 25 tuổi</strong> đáp ứng các tiêu chí sau:
             </p>
             <ul className={styles.requirementsList}>
               <li className={styles.requirement}>
                 <DocumentTextIcon className={styles.requirementIcon} />
-                <span><strong>Đối tượng:</strong> Nữ sinh viên từ 19-25 tuổi</span>
+                <span><strong>Quốc tịch:</strong> Việt Nam hoặc người Việt định cư nước ngoài</span>
               </li>
               <li className={styles.requirement}>
                 <DocumentTextIcon className={styles.requirementIcon} />
-                <span><strong>Chiều cao:</strong> ≥ 1m63</span>
+                <span><strong>Độ tuổi:</strong> 18-25 tuổi (theo CCCD/Hộ chiếu)</span>
               </li>
               <li className={styles.requirement}>
                 <DocumentTextIcon className={styles.requirementIcon} />
-                <span><strong>Tình trạng:</strong> Chưa kết hôn, không có con</span>
+                <span><strong>Chiều cao:</strong> Từ 1m63 trở lên</span>
+              </li>
+              <li className={styles.requirement}>
+                <DocumentTextIcon className={styles.requirementIcon} />
+                <span><strong>Tình trạng:</strong> Chưa kết hôn, chưa sinh con</span>
               </li>
               <li className={styles.requirement}>
                 <DocumentTextIcon className={styles.requirementIcon} />
@@ -241,13 +154,12 @@ export default function NewsPage() {
               </li>
               <li className={styles.requirement}>
                 <DocumentTextIcon className={styles.requirementIcon} />
-                <span><strong>Hồ sơ:</strong> Đầy đủ giấy tờ, ảnh theo chuẩn BTC</span>
-              </li>
-              <li className={styles.requirement}>
-                <DocumentTextIcon className={styles.requirementIcon} />
-                <span><strong>Thời hạn nộp:</strong> <span className={styles.deadline}>20/08 - 25/11/2025</span></span>
+                <span><strong>Thời hạn nộp:</strong> <span className={styles.deadline}>Đến 25/11/2025</span></span>
               </li>
             </ul>
+            <p className={styles.votingNote}>
+              <strong>Hồ sơ gồm:</strong> Đơn đăng ký, Sơ yếu lý lịch, CCCD, Thẻ sinh viên, Ảnh & Video giới thiệu
+            </p>
           </motion.div>
         </div>
       </section>
@@ -261,7 +173,7 @@ export default function NewsPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            Lịch trình cuộc thi
+            Lịch Trình Cuộc Thi
           </motion.h2>
           <motion.div
             className={styles.sectionContent}
@@ -273,35 +185,39 @@ export default function NewsPage() {
               <div className={styles.timelineItem}>
                 <div className={styles.timelineDate}>27/09</div>
                 <div className={styles.timelineContent}>
-                  <h4>Họp báo ra mắt</h4>
-                  <p>Đà Nẵng - Giới thiệu cuộc thi</p>
+                  <h4>Họp Báo Khởi Động</h4>
+                  <p>Nhà Hát Trưng Vương, Đà Nẵng (17h00 - 21h00)</p>
                 </div>
               </div>
               <div className={styles.timelineItem}>
-                <div className={styles.timelineDate}>09-23/11</div>
+                <div className={styles.timelineDate}>27/09 - 25/11</div>
                 <div className={styles.timelineContent}>
-                  <h4>Vòng sơ khảo</h4>
-                  <p>Hà Nội (09/11) • Đà Nẵng (16/11) • TP.HCM (23/11)</p>
+                  <h4>Vòng Sơ Tuyển</h4>
+                  <p>Đăng ký Online & Offline - Nộp hồ sơ qua website và email</p>
                 </div>
               </div>
               <div className={styles.timelineItem}>
-                <div className={styles.timelineDate}>05-15/12</div>
+                <div className={styles.timelineDate}>06/11 - 30/11</div>
                 <div className={styles.timelineContent}>
-                  <h4>Vòng bán kết</h4>
-                  <p>Trưng Vương - Đà Nẵng</p>
+                  <h4>Vòng Sơ Khảo - 4 Khu Vực</h4>
+                  <p>Cần Thơ (06/11) • TP.HCM (14/11) • Hà Nội (17-23/11) • Đà Nẵng (24-30/11)</p>
+                </div>
+              </div>
+              <div className={styles.timelineItem}>
+                <div className={styles.timelineDate}>05/12 - 15/12</div>
+                <div className={styles.timelineContent}>
+                  <h4>Vòng Bán Kết - TOP 50</h4>
+                  <p>Đà Nẵng - Chọn thí sinh xuất sắc nhất vào Chung kết</p>
                 </div>
               </div>
               <div className={styles.timelineItem}>
                 <div className={styles.timelineDate}>28/12</div>
                 <div className={styles.timelineContent}>
-                  <h4>Chung kết</h4>
-                  <p>Cung Tiên Sơn - <strong>Live VTV</strong></p>
+                  <h4>Đêm Chung Kết Hoành Tráng</h4>
+                  <p>Đà Nẵng - Trao vương miện Hoa Hậu Sinh Viên Hòa Bình Việt Nam 2025</p>
                 </div>
               </div>
             </div>
-            <p className={styles.votingNote}>
-              <strong>Lưu ý:</strong> Bình chọn qua <em>Tingnect.com</em> (không ảnh hưởng chấm thi)
-            </p>
           </motion.div>
         </div>
       </section>
@@ -315,7 +231,7 @@ export default function NewsPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            Giải thưởng giá trị
+            Cơ Cấu Giải Thưởng
           </motion.h2>
           <motion.div
             className={styles.sectionContent}
@@ -326,102 +242,32 @@ export default function NewsPage() {
             <div className={styles.awardsGrid}>
               <div className={styles.awardItem}>
                 <div className={styles.awardRank}>👑</div>
-                <h4>Hoa hậu</h4>
-                <div className={styles.awardPrize}>2 tỷ VNĐ</div>
-                <div className={styles.awardBonus}>+ Học bổng Mỹ 100k USD</div>
+                <h4>Hoa Hậu</h4>
+                <div className={styles.awardPrize}>2.000.000.000 VNĐ</div>
+                <div className={styles.awardBonus}>+ Du học Mỹ 100.000 USD</div>
               </div>
               <div className={styles.awardItem}>
                 <div className={styles.awardRank}>🥈</div>
-                <h4>Á hậu 1</h4>
-                <div className={styles.awardPrize}>1 tỷ VNĐ</div>
-                <div className={styles.awardBonus}>+ Visa 50k USD</div>
+                <h4>Á Hậu 1</h4>
+                <div className={styles.awardPrize}>1.000.000.000 VNĐ</div>
+                <div className={styles.awardBonus}>+ Visa Mỹ 50.000 USD</div>
               </div>
               <div className={styles.awardItem}>
                 <div className={styles.awardRank}>🥉</div>
-                <h4>Á hậu 2</h4>
-                <div className={styles.awardPrize}>500 triệu VNĐ</div>
+                <h4>Á Hậu 2</h4>
+                <div className={styles.awardPrize}>500.000.000 VNĐ</div>
+                <div className={styles.awardBonus}>+ Visa Mỹ 50.000 USD</div>
               </div>
               <div className={styles.awardItem}>
                 <div className={styles.awardRank}>🏆</div>
-                <h4>Á hậu 3</h4>
-                <div className={styles.awardPrize}>250 triệu VNĐ</div>
+                <h4>Á Hậu 3</h4>
+                <div className={styles.awardPrize}>250.000.000 VNĐ</div>
+                <div className={styles.awardBonus}>+ Vương miện & Quà tặng</div>
               </div>
             </div>
             <p className={styles.specialAwards}>
-              <strong>Giải phụ:</strong> 50 triệu VNĐ mỗi giải
+              <strong>9 Giải Phụ:</strong> 50.000.000 VNĐ/giải (Người đẹp thân thiện, Truyền thống, Yêu thích nhất, Ảnh, Phong cách, Đại sứ Hòa Bình, Khởi nghiệp, Tài năng, Nhân ái)
             </p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Sponsors Section */}
-      <section className={styles.section}>
-        <div className={styles.container}>
-          <motion.h2
-            className={styles.sectionTitle}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            Nhà tài trợ đồng hành
-          </motion.h2>
-          <motion.div
-            className={styles.sponsorTiers}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1, duration: 0.5 }}
-          >
-            {sponsorTiers.map((tier, index) => (
-              <div key={index} className={styles.sponsorChip}>
-                {tier}
-              </div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* People Section */}
-      <section className={styles.section}>
-        <div className={styles.container}>
-          <motion.h2
-            className={styles.sectionTitle}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            Ban tổ chức và giám khảo
-          </motion.h2>
-          <motion.div
-            className={styles.peopleCarousel}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1, duration: 0.5 }}
-          >
-            <div className={styles.peopleTrack}>
-              {people.map((person, index) => (
-                <motion.div
-                  key={index}
-                  className={styles.personCard}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.1, duration: 0.4 }}
-                >
-                  <div className={styles.personImageContainer}>
-                    <Image
-                      src={person.image}
-                      alt={`${person.name} - ${person.title}`}
-                      fill
-                      className={styles.personImage}
-                      sizes="(max-width: 768px) 25vw, 200px"
-                    />
-                  </div>
-                  <div className={styles.personInfo}>
-                    <h4 className={styles.personName}>{person.name}</h4>
-                    <p className={styles.personTitle}>{person.title}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
           </motion.div>
         </div>
       </section>
@@ -463,19 +309,25 @@ export default function NewsPage() {
                 <div className={styles.contactItem}>
                   <PhoneIcon className={styles.contactIcon} />
                   <div>
-                    <a href="tel:0902031034">
-                      0902031034 (Mr Sơn Phạm)
-                    </a>
+                    <strong>Tổng đài:</strong>{' '}
+                    <a href="tel:18008338">1800 8338</a>
+                  </div>
+                </div>
+                <div className={styles.contactItem}>
+                  <PhoneIcon className={styles.contactIcon} />
+                  <div>
+                    <strong>Hotline:</strong>{' '}
+                    <a href="tel:0395552929">0395 552 929</a>
                   </div>
                 </div>
               </div>
               <div className={styles.socialLinks}>
                 <h3>Kênh chính thức</h3>
                 <div className={styles.socialGrid}>
-                  <a href="#" className={styles.socialLink}>Facebook</a>
-                  <a href="#" className={styles.socialLink}>Instagram</a>
-                  <a href="#" className={styles.socialLink}>TikTok</a>
-                  <a href="#" className={styles.socialLink}>YouTube</a>
+                  <a href="https://www.facebook.com/hoahausinhvienhoabinhvn" target="_blank" rel="noopener noreferrer" className={styles.socialLink}>Facebook</a>
+                  <a href="https://www.instagram.com/hoahausinhvienhoabinhvn" target="_blank" rel="noopener noreferrer" className={styles.socialLink}>Instagram</a>
+                  <a href="https://www.tiktok.com/@hoahausinhvienhoabinhvn" target="_blank" rel="noopener noreferrer" className={styles.socialLink}>TikTok</a>
+                  <a href="https://www.youtube.com/@hoahausinhvienhoabinhvn" target="_blank" rel="noopener noreferrer" className={styles.socialLink}>YouTube</a>
                 </div>
               </div>
             </div>

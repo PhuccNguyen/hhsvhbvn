@@ -15,17 +15,35 @@ interface Celebrity {
 
 const celebrities: Celebrity[] = [
   {
-    id: 'nguyen-van-chung',
-    name: 'Nguyễn Văn Chung',
-    title: 'Nhạc sĩ, "Cha đẻ ca khúc Viết tiếp câu chuyện Hòa Bình"',
-    image: '/images/nguoinoitieng/nhac-si-nguyen-van-chung.jpg',
+    id: 'truong-thi-thu-trang',
+    name: 'Trương Thị Thu Trang',
+    title: 'Chủ tịch TPA Entertainment - Nhà sáng lập dự án - Trưởng Ban tổ chức',
+    image: '/images/nguoinoitieng/truong-thi-thu-trang.jpg',
     isSpotlight: true,
   },
   {
-    id: 'anh-quan',
+    id: 'mc-quoc-tri',
+    name: 'MC Quốc Trí',
+    title: 'MC',
+    image: '/images/nguoinoitieng/mc-quoc-tri.jpg',
+  },
+  {
+    id: 'mc-chu-tan-van',
+    name: 'MC Chu Tấn Văn',
+    title: 'MC',
+    image: '/images/nguoinoitieng/mc-chu-tan-van.jpg',
+  },
+  {
+    id: 'nguyen-van-chung',
+    name: 'Nhạc sĩ Nguyễn Văn Chung',
+    title: 'Nhạc sĩ - Cha đẻ của ca khúc viết tiếp câu chuyện Hòa Bình',
+    image: '/images/nguoinoitieng/nhac-si-nguyen-van-chung.jpg',
+  },
+  {
+    id: 'anh-quan-idol',
     name: 'Anh Quân Idol',
     title: 'Ca sĩ',
-    image: '/images/nguoinoitieng/ca-si-anh-quan-idol.jpg',
+    image: '/images/nguoinoitieng/ca-si-anh-quan-idols.jpg',
   },
   {
     id: 'duyen-quynh',
@@ -34,51 +52,53 @@ const celebrities: Celebrity[] = [
     image: '/images/nguoinoitieng/ca-si-nguyen-duyen-quynh.jpg',
   },
   {
+    id: 'annie-nguyen',
+    name: 'Annie Nguyễn',
+    title: 'Hoa hậu - Đại sứ truyền thông',
+    image: '/images/nguoinoitieng/hoa-hau-annie-nguyen.jpg',
+  },
+  {
+    id: 'hua-vi-van',
+    name: 'Hứa Vĩ Văn',
+    title: 'Diễn viên',
+    image: '/images/nguoinoitieng/dien-vien-hua-vi-van.png',
+  },
+  {
+    id: 'ngo-ba-luc',
+    name: 'Ngô Bá Lục',
+    title: 'Nhà báo - Giám khảo',
+    image: '/images/nguoinoitieng/giam-khao-nha-bao-ngo-ba-luc.jpg',
+  },
+  {
     id: 'ngo-thai-ngan',
     name: 'Ngô Thái Ngân',
-    title: 'Grand Võin Miss Grand Việt Nam',
+    title: 'Miss Grand Việt Nam',
     image: '/images/nguoinoitieng/miss-grand-vietnam-ngo-thai-ngan.jpg',
-  },
-  {
-    id: 'dinh-y-quyen',
-    name: 'Đinh Y Quyên',
-    title: 'Á 3 Miss Grand Việt Nam',
-    image: '/images/nguoinoitieng/miss-grand-vietnam-dinh-y-quyen.jpg',
-  },
-  {
-    id: 'pham-nhu-thuy',
-    name: 'Phạm Như Thùy',
-    title: 'Top 10 Miss Grand Việt Nam',
-    image: '/images/nguoinoitieng/top10-miss-grand-vietnam-pham-nhu-thuy.jpg',
-  },
-  {
-    id: 'chu-tan-van',
-    name: 'Chú Tấn Văn',
-    title: 'MC',
-    image: '/images/nguoinoitieng/mc-chu-tan-van.jpg',
-  },
-  {
-    id: 'nam-vuong',
-    name: 'Nam Vương',
-    title: 'Á vương siêu mẫu',
-    image: '/images/nguoinoitieng/nam-vuong.jpg',
   },
 ]
 
 export default function SlideImage() {
   const [currentSlide, setCurrentSlide] = useState(0)
+  const [currentDesktopSlide, setCurrentDesktopSlide] = useState(0)
   const [isAutoPlaying, setIsAutoPlaying] = useState(true)
   const [touchStart, setTouchStart] = useState<number | null>(null)
   const [touchEnd, setTouchEnd] = useState<number | null>(null)
   const slideRef = useRef<HTMLDivElement>(null)
   const autoPlayRef = useRef<NodeJS.Timeout | null>(null)
+  const desktopAutoPlayRef = useRef<NodeJS.Timeout | null>(null)
 
-  // Auto-play functionality for desktop
+  // Desktop slides: 5 hình mỗi slide, 2 slides total
+  const desktopSlides = [
+    celebrities.slice(0, 5),  // Slide 1: 5 hình đầu
+    celebrities.slice(5, 10), // Slide 2: 5 hình tiếp theo
+  ]
+
+  // Auto-play functionality for mobile
   useEffect(() => {
-    if (isAutoPlaying && window.innerWidth >= 768) {
+    if (isAutoPlaying && window.innerWidth < 768) {
       autoPlayRef.current = setInterval(() => {
         setCurrentSlide((prev) => (prev + 1) % celebrities.length)
-      }, 5500)
+      }, 4000)
     }
 
     return () => {
@@ -87,6 +107,21 @@ export default function SlideImage() {
       }
     }
   }, [isAutoPlaying])
+
+  // Auto-play functionality for desktop (chuyển slide mỗi 6 giây)
+  useEffect(() => {
+    if (isAutoPlaying && window.innerWidth >= 768) {
+      desktopAutoPlayRef.current = setInterval(() => {
+        setCurrentDesktopSlide((prev) => (prev + 1) % desktopSlides.length)
+      }, 6000)
+    }
+
+    return () => {
+      if (desktopAutoPlayRef.current) {
+        clearInterval(desktopAutoPlayRef.current)
+      }
+    }
+  }, [isAutoPlaying, desktopSlides.length])
 
   // Touch handlers for mobile swipe
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -115,14 +150,6 @@ export default function SlideImage() {
 
   const goToSlide = (index: number) => {
     setCurrentSlide(index)
-  }
-
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % celebrities.length)
-  }
-
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + celebrities.length) % celebrities.length)
   }
 
   const handleMouseEnter = () => {
@@ -231,102 +258,68 @@ export default function SlideImage() {
           </div>
         </div>
 
-        {/* Desktop Hero Layout */}
+        {/* Desktop Hero Layout - 5 hình mỗi slide */}
         <div className={styles.desktopHero}>
           <div className={styles.heroLayout}>
-            {/* Side Images Left */}
-            <div className={styles.sideImages}>
-              {celebrities.slice(1, 3).map((celebrity, index) => (
-                <div key={celebrity.id} className={styles.sideImageContainer}>
+            {desktopSlides[currentDesktopSlide].map((celebrity, index) => (
+              <div 
+                key={celebrity.id} 
+                className={`${styles.desktopCard} ${index === 2 ? styles.centerCard : ''}`}
+              >
+                <div className={styles.desktopImageContainer}>
                   <Image
                     src={celebrity.image}
                     alt={`${celebrity.name} - ${celebrity.title}`}
                     fill
-                    className={styles.sideImage}
-                    loading="lazy"
-                    sizes="(max-width: 1200px) 25vw, 320px"
+                    className={styles.desktopImage}
+                    loading={index === 0 ? 'eager' : 'lazy'}
+                    priority={index === 0}
+                    sizes="(max-width: 1200px) 20vw, 280px"
                   />
-                  <div className={styles.sideCaption}>
-                    <h4 className={styles.sideName}>{celebrity.name}</h4>
-                    <p className={styles.sideTitle}>{celebrity.title}</p>
-                  </div>
+                  {celebrity.isSpotlight && <div className={styles.spotlightGlow} />}
                 </div>
-              ))}
-            </div>
-
-            {/* Central Spotlight */}
-            <div className={styles.centralSpotlight}>
-              <div className={styles.spotlightContainer}>
-                <Image
-                  src={celebrities[0].image}
-                  alt={`${celebrities[0].name} - ${celebrities[0].title}`}
-                  fill
-                  className={styles.spotlightImage}
-                  priority
-                  sizes="(max-width: 1200px) 50vw, 600px"
-                />
-                <div className={styles.spotlightBorder} />
-                <div className={styles.spotlightGlow} />
-              </div>
-              
-              <div className={styles.spotlightCaption}>
-                <h3 className={styles.spotlightName}>{celebrities[0].name}</h3>
-                <p className={styles.spotlightTitle}>
-                  Nhạc sĩ, <em className={styles.songQuote}>&ldquo;Cha đẻ ca khúc Viết tiếp câu chuyện Hòa Bình&rdquo;</em>
-                </p>
-              </div>
-            </div>
-
-            {/* Side Images Right */}
-            <div className={styles.sideImages}>
-              {celebrities.slice(3, 5).map((celebrity, index) => (
-                <div key={celebrity.id} className={styles.sideImageContainer}>
-                  <Image
-                    src={celebrity.image}
-                    alt={`${celebrity.name} - ${celebrity.title}`}
-                    fill
-                    className={styles.sideImage}
-                    loading="lazy"
-                    sizes="(max-width: 1200px) 25vw, 320px"
-                  />
-                  <div className={styles.sideCaption}>
-                    <h4 className={styles.sideName}>{celebrity.name}</h4>
-                    <p className={styles.sideTitle}>{celebrity.title}</p>
-                  </div>
+                
+                <div className={styles.desktopCaption}>
+                  <h3 className={styles.desktopName}>{celebrity.name}</h3>
+                  <p className={styles.desktopTitle}>{celebrity.title}</p>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
 
           {/* Desktop Navigation */}
           <div className={styles.desktopNavigation}>
             <button
               className={styles.navButton}
-              onClick={prevSlide}
+              onClick={() => {
+                setCurrentDesktopSlide((prev) => (prev - 1 + desktopSlides.length) % desktopSlides.length)
+              }}
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
-              aria-label="Xem nghệ sĩ trước"
+              aria-label="Xem slide trước"
             >
               <ChevronLeftIcon className={styles.navIcon} />
             </button>
 
             <div className={styles.desktopDots}>
-              {celebrities.map((_, index) => (
+              {desktopSlides.map((_, index) => (
                 <button
                   key={index}
-                  className={`${styles.desktopDot} ${index === currentSlide ? styles.activeDesktopDot : ''}`}
-                  onClick={() => goToSlide(index)}
-                  aria-label={`Xem ${celebrities[index].name}`}
+                  className={`${styles.desktopDot} ${index === currentDesktopSlide ? styles.activeDesktopDot : ''}`}
+                  onClick={() => setCurrentDesktopSlide(index)}
+                  aria-label={`Xem slide ${index + 1}`}
                 />
               ))}
             </div>
 
             <button
               className={styles.navButton}
-              onClick={nextSlide}
+              onClick={() => {
+                setCurrentDesktopSlide((prev) => (prev + 1) % desktopSlides.length)
+              }}
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
-              aria-label="Xem nghệ sĩ tiếp theo"
+              aria-label="Xem slide tiếp theo"
             >
               <ChevronRightIcon className={styles.navIcon} />
             </button>

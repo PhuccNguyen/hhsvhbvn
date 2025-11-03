@@ -154,7 +154,7 @@ const HeroSection = () => {
                   Hoa Hậu Sinh Viên<br />Hòa Bình Việt Nam 2025
                 </h1>
                 <p className={styles.slogan}>
-                  ✦ Xinh đẹp • Trí tuệ • Bản lĩnh • Nhân ái ✦
+                  ✦ Xinh đẹp • Trí tuệ • Bản lĩnh • Nhân ái • Yêu Hòa Bình ✦
                 </p>
               </motion.div>
 
@@ -265,11 +265,11 @@ const HeroSection = () => {
                   <Image
                     src="/images/logo/Logo_tpa.svg"
                     alt="TPA Entertainment logo"
-                    width={30}
-                    height={30}
-                    className={styles.creditLogoTPA}
+                    width={40}
+                    height={40}
+                    className={styles.creditLogoTPAs}
                   />
-                  <span className={styles.creditName}>TPA Entertainment</span>
+                  <span className={styles.creditNames}>Entertainment</span>
                 </div>
                 <div className={styles.creditItem}>
                   <span className={styles.creditLabel}>Công nghệ:</span>
@@ -388,7 +388,7 @@ const HeroSection = () => {
                   height={35}
                   className={styles.creditLogoTPA}
                 />
-                <span className={styles.creditName}>TPA Entertainment</span>
+                <span className={styles.creditName}>Entertainment</span>
               </div>
               <div className={styles.creditItem}>
                 <span className={styles.creditLabel}>Công nghệ:</span>

@@ -506,6 +506,7 @@ class GoogleSheetsService {
   private getSheetName(round: string): string {
     const sheetNames = {
       'hop-bao': 'HopBao',
+      'so-tuyen': 'SoTuyen',
       'so-khao': 'SoKhao', 
       'ban-ket': 'BanKet',
       'chung-ket': 'ChungKet',

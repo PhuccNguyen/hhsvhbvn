@@ -221,23 +221,19 @@
 }
 
 .heroLayout {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: clamp(2rem, 4vw, 3rem);
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: clamp(1rem, 2vw, 1.5rem);
   margin-bottom: 2rem;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.sideImages {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  opacity: 0.85;
-}
-
-.sideImageContainer {
+/* Desktop Card Styles */
+.desktopCard {
   position: relative;
-  width: clamp(180px, 25vw, 240px);
+  width: 100%;
   aspect-ratio: 3/4;
   border-radius: 16px;
   overflow: hidden;
@@ -245,111 +241,65 @@
   transition: all 0.4s ease;
 }
 
-.sideImageContainer:hover {
-  transform: translateY(-4px);
+.desktopCard:hover {
+  transform: translateY(-8px);
   border-color: #E7C873;
-  box-shadow: 0 8px 24px rgba(231, 200, 115, 0.2);
+  box-shadow: 0 12px 32px rgba(231, 200, 115, 0.3);
 }
 
-.sideImage {
+/* Center card gets extra emphasis */
+.centerCard {
+  border: 2px solid rgba(231, 200, 115, 0.5);
+}
+
+.centerCard:hover {
+  border-color: #E7C873;
+  box-shadow: 0 16px 40px rgba(231, 200, 115, 0.4);
+}
+
+.desktopImageContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.desktopImage {
   object-fit: cover;
   object-position: center top;
   transition: transform 0.5s ease;
 }
 
-.sideImageContainer:hover .sideImage {
+.desktopCard:hover .desktopImage {
   transform: scale(1.1);
 }
 
-.sideCaption {
+.desktopCaption {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  background: rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(8px);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 1rem;
   text-align: center;
 }
 
-.sideName {
+.desktopName {
   font-family: 'Inter', sans-serif;
-  font-size: 0.9375rem;
+  font-size: clamp(0.875rem, 1.2vw, 1rem);
   font-weight: 600;
   color: #F4F7FA;
   margin-bottom: 0.25rem;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
 }
 
-.sideTitle {
+.desktopTitle {
   font-family: 'Inter', sans-serif;
-  font-size: 0.8125rem;
+  font-size: clamp(0.75rem, 1vw, 0.875rem);
   color: #EAF2FF;
-  opacity: 0.9;
-}
-
-/* Central Spotlight */
-.centralSpotlight {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.5rem;
-}
-
-.spotlightContainer {
-  position: relative;
-  width: clamp(320px, 40vw, 480px);
-  aspect-ratio: 3/4;
-  border-radius: 24px;
-  overflow: hidden;
-}
-
-.spotlightImage {
-  object-fit: cover;
-  object-position: center top;
-  transition: transform 0.6s ease;
-}
-
-.spotlightContainer:hover .spotlightImage {
-  transform: scale(1.05);
-}
-
-.spotlightBorder {
-  position: absolute;
-  top: -3px;
-  left: -3px;
-  right: -3px;
-  bottom: -3px;
-  border-radius: 27px;
-  background: linear-gradient(135deg, #E7C873, #F3DFA2, #E7C873, #D9B661);
-  z-index: -1;
-  animation: rotateBorder 4s linear infinite;
-}
-
-.spotlightCaption {
-  text-align: center;
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 16px;
-  padding: 1.5rem 2rem;
-  max-width: 500px;
-}
-
-.spotlightName {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(1.5rem, 3vw, 1.75rem);
-  font-weight: 700;
-  color: #F4F7FA;
-  margin-bottom: 0.5rem;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
-}
-
-.spotlightTitle {
-  font-family: 'Inter', sans-serif;
-  font-size: clamp(1rem, 2.5vw, 1.125rem);
-  color: #EAF2FF;
-  line-height: 1.5;
+  opacity: 0.95;
+  line-height: 1.4;
 }
 
 /* Desktop Navigation */
@@ -489,17 +439,36 @@
   }
 }
 
+/* Tablet: Show 3 cards */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .heroLayout {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  
+  /* Hide 4th and 5th cards on tablets */
+  .desktopCard:nth-child(4),
+  .desktopCard:nth-child(5) {
+    display: none;
+  }
+}
+
+/* Large Desktop: Increase spacing */
 @media (min-width: 1200px) {
   .heroLayout {
-    gap: 4rem;
+    gap: 2rem;
   }
   
-  .sideImageContainer {
-    width: 280px;
+  .desktopCaption {
+    padding: 1.25rem;
   }
   
-  .spotlightContainer {
-    width: 560px;
+  .desktopName {
+    font-size: 1.0625rem;
+  }
+  
+  .desktopTitle {
+    font-size: 0.9375rem;
   }
 }
 

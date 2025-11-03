@@ -11,6 +11,7 @@ const CROCKFORD_ALPHABET = '0123456789ABCDEFGHJKMNPQRSTVWXYZ';
 export function generateConfirmationCode(round: string): string {
   const prefixes = {
     'hop-bao': 'HB',
+    'so-tuyen': 'ST',
     'so-khao': 'SK',
     'ban-ket': 'BK',
     'chung-ket': 'CK'
