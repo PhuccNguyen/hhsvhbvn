@@ -22,9 +22,9 @@ export const metadata: Metadata = {
   // Canonical TUYỆT ĐỐI để tránh cảnh báo
   alternates: { canonical: SITE_URL },
   keywords: [
-    'hoa hậu sinh viên',
-    'HHSV 2025',
-    'hoa hậu hòa bình việt nam',
+    'hoa hậu sinh viên hòa binh',
+    'HHSVHBVN 2025',
+    'hoa hậu sinh viên hòa bình việt nam',
     'đăng ký dự thi',
     'check-in thí sinh',
   ],
@@ -54,8 +54,9 @@ export default function HomePage() {
       <SlideImage />
       <Purpose />
       <HowItWorks />
+            <News />
+
       <FAQ />
-      <News />
 
       {/* JSON-LD cho riêng trang Home: WebPage + BreadcrumbList
          (Organization / WebSite / Event đặt ở layout.tsx để tránh trùng lặp) */}

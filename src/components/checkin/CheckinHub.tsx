@@ -67,7 +67,7 @@ const CheckinHub = () => {
   ]
 
   const quickStats = [
-    { icon: Users, label: 'Thí sinh đăng ký', value: '500+', color: 'blue' },
+    { icon: Users, label: 'Thí sinh đăng ký', value: '1000+', color: 'blue' },
     { icon: MapPin, label: 'Khu vực tổ chức', value: '3', color: 'green' },
     { icon: Award, label: 'Giải thưởng', value: '2 tỷ+', color: 'gold' },
     { icon: Heart, label: 'Thiện nguyện', value: '1M+', color: 'pink' }

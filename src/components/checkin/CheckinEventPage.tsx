@@ -132,11 +132,11 @@ const CheckinEventPage = ({ event }: CheckinEventPageProps) => {
         return [
           { icon: Users, label: 'Thí sinh', value: '1000+', color: 'green' },
           { icon: MapPin, label: 'Khu vực', value: '4', color: 'blue' },
-          { icon: Star, label: 'Vào SK', value: '500+', color: 'gold' }
+          { icon: Star, label: 'Vào SK', value: '1000+', color: 'gold' }
         ]
       case 'so-khao':
         return [
-          { icon: Users, label: 'Thí sinh', value: '500+', color: 'blue' },
+          { icon: Users, label: 'Thí sinh', value: '1000+', color: 'blue' },
           { icon: MapPin, label: 'Khu vực', value: '4', color: 'green' },
           { icon: Star, label: 'Vào BK', value: '50', color: 'gold' }
         ]
